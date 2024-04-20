@@ -45,11 +45,40 @@
 ### Jvm architecture
 
 ### Java modifier scope: public, private, protected, default scope
+Access modifiers in Java are used to control access to classes, variables, methods, and constructors. The main access modifiers include public, private, protected and default. Their scope of action is as follows:
+public:
+Classes, methods and variables modified by public can be accessed anywhere within the same package or in different packages.
+The public access modifier has the greatest access rights, interfaces and functions exposed to the outside world.
+private:
+Classes, methods and variables modified by private can only be accessed within the class in which they are defined, and cannot be directly accessed by other classes.
+The private access modifier provides the strictest access control and is used to hide the internal implementation details of the class.
+protected:
+Protected classes, methods and variables can be accessed within the same package and subclasses, but cannot be directly accessed in other packages.
+The protected access modifier allows subclasses to access protected members of the parent class and is used to implement inheritance and polymorphism.
+default:
+When no access modifier is used for a member, the default access modifier is package-level access.
+The default access modifier limits the access scope of classes, methods and variables to the same package and cannot be accessed by other packages.
 
 ### What is static scope
+Static scope (Static Scope) means that the visible range of variables in the program is determined at compile time, not at run time. In a static scope, the visibility of a variable depends on where the variable is declared and the structure of the program, regardless of the execution path of the code.
+In static scope, the scope of a variable begins at its declaration and extends to the end of the code block or function that contains the declaration. This means that variables declared in a code block or function are visible and accessible only within this code block or function, and are not visible in external code blocks or functions.
+Static scope can ensure the reliability and maintainability of the program because the scope of the variable is determined at compile time and will not be affected by the runtime state of the program. This makes it easier for programmers to understand and debug code, avoiding errors caused by unclear variable scope.
+Corresponding to the static scope is the dynamic scope (Dynamic Scope). The dynamic scope means that the visibility of the variable depends on the execution path and call stack of the program, rather than the declaration location of the variable. In dynamic scoping, a variable's scope is determined by the program's execution path and may have different visibility in different function calls. However, in most programming languages, including Java, static scoping is commonly used.
 
 ### how does classloader work
-
+The class loader (ClassLoader) is an important component of the Java Virtual Machine (JVM), responsible for loading bytecode into memory and converting it into runtime classes. The class loader mainly completes the following tasks:
+Loading: The class loader is responsible for finding and loading the bytecode file of the class. When a program needs to use a class, the class loader will find the corresponding bytecode file based on the name of the class and load it into memory.
+Linking: The class loader links the loaded bytecode file into an executable binary format. The linking process includes three stages: verification, preparation and parsing:
+Verification: Ensure that the loaded bytecode file complies with the Java virtual machine specifications and will not endanger the security of the virtual machine.
+Preparation: Allocate memory for static variables of the class and initialize default values.
+Resolution: Convert symbolic references into direct references, that is, resolve references to classes, fields, and methods into memory addresses.
+Initialization: The class loader will perform static initialization of the class after the link is completed. This includes performing assignments to static variables and performing initialization logic in static code blocks.
+The Java virtual machine has three built-in class loaders: Bootstrap ClassLoader, Extension ClassLoader and Application ClassLoader. They are respectively responsible for loading class libraries under different paths:
+Bootstrap ClassLoader: Responsible for loading the Java core class library, usually stored in the lib directory of the JRE.
+Extension ClassLoader: Responsible for loading jar packages in the JRE extension directory, usually stored in the JRE's lib/ext directory.
+Application ClassLoader: Also known as the system class loader, it is responsible for loading the class library specified on the user classpath (classpath).
+In addition to these three built-in class loaders, Java also supports custom class loaders. Custom class loaders can load classes from different sources based on specific needs, such as loading classes from the network, database, or other non-traditional storage media. The implementation of ClassLoader usually inherits the ClassLoader class and overrides its methods, such as findClass() method and loadClass() method.
+In short, the class loader is an important component of the Java virtual machine, responsible for loading bytecode into memory and converting it into runtime classes. It implements class loading through loading, linking, and initialization processes, providing Java applications with the ability to dynamically load and run-time expansion.
 
 ### Homework 3 Question List (write necessary code to answer the following questions)
 
