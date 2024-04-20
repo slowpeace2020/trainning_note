@@ -256,7 +256,7 @@ How They Interact
 - Range: `true` or `false`
 - Use: For simple flags that track true/false conditions.
 
-Primitive type, reference type
+### Primitive type, reference type
 Primitive types in Java are predefined by the language and named by a reserved keyword. They represent the most basic data types available and hold their values directly in memory.When you declare a primitive type, Java allocates memory for the value directly in the stack, which makes accessing and manipulating these types fast and efficient.
 
 Reference types in Java are any data types that derive from a class rather than being predefined by the language. When you declare a variable of a reference type, the variable holds a reference (or address) to the actual object in memory, not the object itself.
