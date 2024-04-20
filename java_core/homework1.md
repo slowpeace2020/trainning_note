@@ -1,31 +1,214 @@
 ## Homework  1 List (write necessary code to answer the following questions)
 ### List vs Set
+Set is unordered and contains different elements, whereas the list is ordered and can contain the same elements in it
+
 
 ### LinkedList vs ArrayList
+1. ArrayList
+   - Resizable-array implementation of the `List` interface.
+   - Provides fast random access and is very efficient for storing and accessing data.
+   - Not synchronized.
+
+2. LinkedList
+   - Doubly-linked list implementation of the `List` and `Deque` interfaces.
+   - Offers better performance than `ArrayList` when elements are added or removed from the middle of the list.
+   - Can also be used as a queue or a stack.
 
 ### What is Map Interface
+No Duplicate Keys: Each key in a Map must be unique. If a duplicate key is used in an attempt to put a value, the old value associated with that key will be overwritten with the new value.
+Each Key Maps to Exactly One Value: A key can map to any value, including null (unless the Map implementation restricts null values).
+Ordering: The Map interface itself does not guarantee any specific order of its elements. However, some implementations, like LinkedHashMap, maintain elements in the order they were inserted, and TreeMap sorts the keys according to their natural ordering or using a specified comparator.
+How does HashMap work
+HashMap uses an array-based structure internally to store its entries, which are essentially key-value pairs. Each entry in the array is a bucket that can hold zero or more entries, typically in the form of a linked list or, in more recent Java versions, as a balanced tree when buckets become too large.
 
-### How does HashMap work
+When you add a key-value pair to a HashMap, it uses the key’s hashCode() method to compute an initial hash value. This hash is then transformed to reduce the impact of poor quality hash functions and to better distribute the keys across the available buckets. This transformation typically involves rehashing the initial hash to ensure a more uniform distribution of entries.
+
+Once the hash is computed, HashMap determines the index in its array by using the hash and the length of the array.
 
 ### What is hash collision
+A hash collision occurs when two distinct keys produce the same hash code or hash to the same index in a hash table, despite being different in actual value.
 
 ### What is Collections used for
+Collections are used to store groups of objects. Unlike arrays, most collection classes automatically manage the size of the data structure, which means they can grow or shrink dynamically as items are added or removed.
+
+Collections provide methods to manipulate data efficiently. Common operations include adding, removing, and updating elements. Advanced operations like sorting, shuffling, and reversing lists are also supported directly by methods in the Collections class.
+
+Collections provide mechanisms to search for elements and filter data based on certain criteria. For example, a HashSet can be used for fast existence checks, a TreeMap can store sorted data, and a HashMap offers quick retrieval of data based on a key.
+
+Collections can be iterated using iterator patterns provided by the framework. This makes it easy to loop through the elements of a collection, such as a list, set, or map, and perform operations on each element in a controlled way.
+
+Collections simplify the implementation of various data access patterns, such as FIFO (First In, First Out), LIFO (Last In, First Out), and key-value pair mapping. For instance, LinkedList can be used as a queue or a stack, and HashMap provides an associative array functionality.
+
 
 ### What is immutable class
+A type of immutable class whose instances cannot be modified after they are created. This means that once an instance of an immutable class is instantiated, its fields or state cannot change in any way. Immutable objects are useful for building reliable and secure applications, as they can simplify concurrency and offer strong guarantees against data alteration.
+
+Final Class: The class itself is often declared final to prevent subclassing, which could potentially add mutable behavior.
+Final Fields: All fields of the class are usually declared final so they can be assigned only once.
+No Setter Methods: Immutable classes do not provide "setter" methods that modify fields or objects referred to by fields.
+Initialization via Constructors: All fields of an immutable object are typically initialized in the constructor. Once set, these fields cannot be changed.
+Deep Copies for Complex Fields: If an immutable object has fields that refer to mutable objects, such as arrays or collections, these fields should ideally point to copies of these objects, not to the original instances. This practice ensures that the mutable objects cannot be changed from outside the immutable object.
+Returning Copies Instead of Original References: Any method that returns information about the object's state should return a new copy of the object, rather than a direct reference to a mutable field.
+
 
 ### HashTable vs HashMap vs ConcurrentHashmap
+In Java, `HashTable`, `HashMap`, and `ConcurrentHashMap` are all implementations of the `Map` interface but have different characteristics and are suited to different use cases.
+
+1. HashTable
+
+- Thread Safety: `HashTable` is synchronized, which means it is thread-safe. Every method call is wrapped in a synchronized block, thus only one thread can access the table at a time. This can introduce a significant performance cost due to contention between threads.
+- Null Keys and Values: `HashTable` does not allow null keys or null values. Attempting to use a null key or value will throw a `NullPointerException`.
+- Iteration Order: It does not guarantee any specific order of the entries in the map.
+- Performance: While `HashTable` is thread-safe, the coarse-grained locking strategy significantly hinders performance when high levels of concurrency are involved.
+- Historical Note: `HashTable` is considered a legacy class. Much of its functionality has been superseded by `ConcurrentHashMap` in environments requiring concurrency and by `HashMap` in single-threaded applications.
+
+2. HashMap
+
+- Thread Safety: `HashMap` is not synchronized, which means it is not thread-safe if multiple threads modify the map concurrently without proper synchronization. It is suitable for single-threaded applications or read-only scenarios.
+- Null Keys and Values: `HashMap` allows one null key and multiple null values, which provides greater flexibility than `HashTable`.
+- Iteration Order: Like `HashTable`, `HashMap` does not guarantee any order of its entries. However, `LinkedHashMap` (a subclass of `HashMap`) maintains elements in the order they were inserted.
+- Performance: `HashMap` provides constant-time performance for the basic operations (`get` and `put`), assuming the hash function disperses elements properly across the buckets.
+
+3. ConcurrentHashMap
+
+- Thread Safety: `ConcurrentHashMap` is an implementation of the `Map` interface that supports full concurrency of retrievals and high expected concurrency for updates. It is designed to optimize retrieval operations at the expense of a moderate performance hit on updates.
+- Null Keys and Value*: Like `HashTable`, `ConcurrentHashMap` does not allow null keys or null values.
+- Iteration Order: `ConcurrentHashMap` does not guarantee any specific iteration order of its entries.
+- Performance: It uses a segment-based locking mechanism which is more fine-grained than `HashTable`. This allows a higher level of concurrency without blocking the entire map for updates. It performs much better in environments where read operations are much more common than writes.
+
+Use Cases
+
+- HashTable: Best used in legacy applications where thread safety is a concern, but where updates are infrequent or moderate, and high concurrency is not required.
+- HashMap: Ideal for non-threaded applications or ones where synchronization is handled externally or not required. It offers the fastest access times of the three.
+- ConcurrentHashMap: Suitable for highly concurrent applications, particularly where reads greatly outnumber writes. It is a part of the standard `java.util.concurrent` package, designed to support concurrent Java programming.
 
 ### String vs StringBuilder vs StringBuffer
+1. String
+- Immutability: `String` objects are immutable. Once a `String` object is created, its content cannot be changed. Any method that seems to modify a `String` actually creates a new `String` object with the modified content and returns it. This behavior simplifies coding but can lead to inefficiencies when extensive modifications are required.
+- Usage: Due to its immutability, `String` is thread-safe and can be shared between threads without synchronization. This makes it ideal for values that are read frequently but seldom changed, like file names, configuration settings, or natural keys in maps.
+
+2. StringBuilder
+
+- Mutability: Unlike `String`, `StringBuilder` is mutable. It allows in-place modification of its content, which means you can add, remove, or change characters within the same `StringBuilder` object. This leads to better performance when performing frequent modifications because it avoids creating new objects for each modification.
+- Thread Safety: `StringBuilder` is not synchronized, which means it is not thread-safe. This design decision enhances performance in single-threaded scenarios.
+- Usage: `StringBuilder` is suitable for use in a single-threaded environment where you need to construct or modify strings frequently, such as in loops or when generating dynamic content.
+
+3. StringBuffer
+
+- Mutability: Like `StringBuilder`, `StringBuffer` is also mutable. It allows in-place modifications to the string it represents.
+- Thread Safety: `StringBuffer` is synchronized, which makes it thread-safe. All of its public methods are synchronized, which means that only one thread can modify it at a time, preventing concurrent modifications that could lead to data corruption.
+- Usage: `StringBuffer` should be used in scenarios where string data is shared across multiple threads, or when thread safety is a concern. However, due to its synchronization overhead, it is slower than `StringBuilder` and is generally only preferred in multi-threaded environments.
 
 ### Comparator vs Comparable, when to use which one
+Comparable is an interface that should be implemented by a class if it has a natural ordering. The class must define a single method, compareTo(Object o), which compares this object with the specified object for order.
+When a class implements Comparable, it modifies the class itself. Thus, every instance of the class has this one comparison method, and it can be used automatically by sorting methods, such as Collections.sort() or Arrays.sort(), without requiring additional parameters.
+
+Comparator is a functional interface that defines an external comparison strategy. It requires implementing a single method, compare(Object o1, Object o2), which compares its two arguments for order.
+Use Comparator when you need a specific sort order that is different from the natural ordering of a class, or when you want to sort instances of a class that does not implement
+
+Use Comparable when:
+You want to enforce a single natural ordering on the objects of your class.
+The comparison logic can be embedded within the class itself.
+You control the source code of the class that needs ordering.
+Use Comparator when:
+You need multiple different ways to sort types, perhaps in different parts of your application.
+You need to sort instances of classes that you do not control, and these classes do not implement Comparable.
+You want to decouple the sorting logic from the class definition to adhere to the single responsibility principle.
+You are dealing with lambda expressions or method references, which can make Comparator implementations concise and flexible.
 
 ### Overriding vs overloading
+overloading occurs when two or more methods in the same class have the same name but different parameters (different type, number, or both). Overloading is a way of providing greater flexibility in programming by allowing multiple methods to perform similar but slightly different tasks.
+Parameter Differences: The overloaded methods must differ in the type and/or number of their parameters.
+Return Type: The return type can be the same or different across overloaded methods; it does not participate in distinguishing overloaded methods.
+Scope: Occurs within a single class, though it can happen in two classes if inheritance is involved.
+
+overriding happens when a subclass provides a specific implementation for a method that is already provided by one of its parent classes or implemented interfaces. Overriding allows a subclass to offer a specific behavior for a method that is already defined in its superclass.
+Same Signature: The method in the subclass that overrides the method from the superclass must have the same name, return type, and parameters.
+Access Level: The access level can't be more restrictive than the method in the superclass.
+Runtime Polymorphism: Method overriding is a foundation for runtime polymorphism, meaning that the method to be executed is determined at runtime based on the object’s actual class type.
 
 ### JRE vs JDK vs JVM
+In Java development and execution environment, three key components are involved: the Java Virtual Machine (JVM), the Java Runtime Environment (JRE), and the Java Development Kit (JDK). Each serves a different role in the overall ecosystem of Java programming. Here's an explanation of each component and how they relate to each other:
+
+1. Java Virtual Machine (JVM)
+- Definition: The JVM is an abstract computing machine that enables a computer to run a Java program. It is platform-dependent in its implementation but provides a platform-independent execution environment for Java applications.
+- Functionality: The JVM performs several tasks, including loading code, verifying code, executing code, and providing runtime environment. It acts as the engine that drives Java applications, executing the bytecode compiled from Java source files.
+- Key Role: The primary role of the JVM is to ensure that Java applications can run on any device or operating system without needing to be rewritten or recompiled by developers, thereby upholding Java's write once, run anywhere (WORA) capability.
+
+2. Java Runtime Environment (JRE)
+- Definition: The JRE consists of the JVM and the core libraries necessary to run Java applications. It does not include development tools such as compilers or debuggers.
+- Components: The JRE includes:
+   - The Java Virtual Machine (JVM).
+   - Core libraries and other components needed for the JVM to execute Java applications.
+- Purpose: The JRE provides a minimal environment to run Java applications on a computer. It is intended for users who just want to run Java programs but do not need to develop them. This makes the JRE sufficient for most end-users of Java applications.
+
+3. Java Development Kit (JDK)
+- Definition: The JDK includes the JRE and the tools needed for developing, debugging, and monitoring Java applications.
+- Components: The JDK comprises:
+   - The Java Runtime Environment (JRE) – all the components needed to run Java applications.
+   - Compiler (`javac`) – to convert Java source code into bytecode.
+   - JavaDoc – tool to create HTML documentation from Java source code.
+   - Debugger – to debug Java applications.
+   - Various other development tools.
+- Purpose: The JDK is essential for Java developers as it provides all the necessary tools to develop Java applications. It is used to write, compile, and debug Java code before it is run by the JRE.
+
+How They Interact
+- JVM is the base, running the programs.
+- JRE is the container that provides a runtime environment, including the JVM.
+- JDK is the full suite, providing both runtime environment and tools needed for development.
+
+- If you just want to run Java applications, you need the JRE.
+- If you want to develop Java applications, you need the JDK, which also includes the JRE to run the applications you develop.
+- The JVM is a part of both the JRE and JDK, acting as the engine that executes the bytecode.
+
+
 
 ### Java 8 basic data types
+1. Byte
+- Size: 8 bits (1 byte)
+- Range: -128 to 127
+- Use: Very small integer values, saves space over using `int`.
 
-### Primitive type, reference type
+2. Short
+- Size: 16 bits (2 bytes)
+- Range: -32,768 to 32,767
+- Use: Shorter integers, saving space over `int`.
+
+3. Int
+- Size: 32 bits (4 bytes)
+- Use: Default data type for integral values unless there is a concern about space.
+
+4. Long
+- Size: 64 bits (8 bytes)
+- Use: Larger integer values than `int` can handle.
+
+5. Float
+- Type: Floating Point
+- Size: 32 bits (4 bytes)
+- Use: Single precision floating point. Used when a fractional component is required. It saves space over `double`.
+
+6. Double
+- Type: Floating Point
+- Size: 64 bits (8 bytes)
+- Use: Double precision floating point. It is the default data type for decimal values.
+
+7. Char
+- Type: Character
+- Size: 16 bits (2 bytes)
+- Use: To store any character.
+
+8. Boolean
+- Type: Boolean
+- Size: Not precisely specified, but effectively 1 bit of information (true or false)
+- Range: `true` or `false`
+- Use: For simple flags that track true/false conditions.
+
+Primitive type, reference type
+Primitive types in Java are predefined by the language and named by a reserved keyword. They represent the most basic data types available and hold their values directly in memory.When you declare a primitive type, Java allocates memory for the value directly in the stack, which makes accessing and manipulating these types fast and efficient.
+
+Reference types in Java are any data types that derive from a class rather than being predefined by the language. When you declare a variable of a reference type, the variable holds a reference (or address) to the actual object in memory, not the object itself.
+Memory for objects of reference types is allocated on the heap, and the variable stores a reference to this memory location. This allows for more complex interactions than with primitive types.
+
 
 ## Homework 2 Question List (write necessary code to answer the following questions)
 ### What is final keyword
