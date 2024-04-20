@@ -1,3 +1,56 @@
+## Homework 1
+
+- [List vs Set](#list-vs-set)
+- [LinkedList vs ArrayList](#linkedlist-vs-arraylist)
+- [What is Map Interface](#what-is-map-interface)
+- [How does HashMap work](#how-does-hashmap-work)
+- [What is hash collision](#what-is-hash-collision)
+- [What is Collections used for](#what-is-collections-used-for)
+- [What is immutable class](#what-is-immutable-class)
+- [HashTable vs HashMap vs ConcurrentHashmap](#hashtable-vs-hashmap-vs-concurrenthashmap)
+- [String vs StringBuilder vs StringBuffer](#string-vs-stringbuilder-vs-stringbuffer)
+- [Comparator vs Comparable, when to use which one](#comparator-vs-comparable-when-to-use-which-one)
+- [Overriding vs overloading](#overriding-vs-overloading)
+- [JRE vs JDK vs JVM](#jre-vs-jdk-vs-jvm)
+- [Java 8 basic data types](#java-8-basic-data-types)
+- [Primitive type, reference type](#primitive-type-reference-type)
+
+## Homework 2
+
+- [What is final keyword](#what-is-final-keyword)
+- [Create a Student immutable class, with fields student id, first name, last name, List<Course> courses](#create-a-student-immutable-class-with-fields-student-id-first-name-last-name-list-course-courses)
+- [What is volatile, transient, synchronized](#what-is-volatile-transient-synchronized)
+- [throw vs throws](#throw-vs-throws)
+- [final vs finally vs finalize](#final-vs-finally-vs-finalize)
+- [this vs super](#this-vs-super)
+- [abstract class vs interface](#abstract-class-vs-interface)
+- [Jvm architecture](#jvm-architecture)
+- [Java modifier scope: public, private, protected, default scope](#java-modifier-scope-public-private-protected-default-scope)
+- [What is static scope](#what-is-static-scope)
+- [how does classloader work](#how-does-classloader-work)
+
+## Homework 3
+
+- [Describe the difference between unchecked and checked exceptions in Java](#describe-the-difference-between-unchecked-and-checked-exceptions-in-java)
+- [What is the difference between finally, final, and finalize in Java](#what-is-the-difference-between-finally-final-and-finalize-in-java)
+- [Define try-with resource. How can you say that it differs from an ordinary try](#define-try-with-resource-how-can-you-say-that-it-differs-from-an-ordinary-try)
+- [Define Runtime Exception. Describe it with the help of an example](#define-runtime-exception-describe-it-with-the-help-of-an-example)
+- [What is the difference between NoClassDefFoundError and ClassNotFoundException in Java](#what-is-the-difference-between-noclassdeffounderror-and-classnotfoundexception-in-java)
+- [Why should we clean up activities such as I/O resources in the finally block](#why-should-we-clean-up-activities-such-as-io-resources-in-the-finally-block)
+- [Describe OutofMemoryError in exception handling](#describe-outofmemoryerror-in-exception-handling)
+- [What is Generics in Java? What are the advantages of using Generics](#what-is-generics-in-java-what-are-the-advantages-of-using-generics)
+- [How Generics works in Java? What is type erasure](#how-generics-works-in-java-what-is-type-erasure)
+- [What is the difference between List<? extends T> and List <? super T>](#what-is-the-difference-between-list-extends-t-and-list--super-t)
+- [what is Optional class (write a demo code to use ofNullable, orElse, orElseThrow method)](#what-is-optional-class-write-a-demo-code-to-use-ofnullable-orelse-orelsethrow-method)
+- [what is functional interface](#what-is-functional-interface)
+- [what is default method](#what-is-default-method)
+- [what is the difference between Predicate, Supplier, Consumer, Function?](#what-is-the-difference-between-predicate-supplier-consumer-function)
+- [write a piece of code to use the Predicate, Supplier, Consumer, Function interface](#write-a-piece-of-code-to-use-the-predicate-supplier-consumer-function-interface)
+- [what is method reference](#what-is-method-reference)
+
+
+
+
 ## Homework  1 List (write necessary code to answer the following questions)
 ### List vs Set
 Set is unordered and contains different elements, whereas the list is ordered and can contain the same elements in it
