@@ -557,10 +557,10 @@ The `CompletableFuture` class in Java provides several common APIs for working w
 These are some of the common APIs provided by `CompletableFuture` for asynchronous programming in Java. They allow for composing, combining, and handling asynchronous computations in a flexible and expressive manner.
 
 ### Use CompletableFuture to implement the following logic
-initial Num = 1
-async: num += 10
-sync: num *=4
-async: consume result and print
+initial Num = 1\n
+async: num += 10\n
+sync: num *=4\n
+async: consume result and print\n
 exception: if exception, handle it
 
 
