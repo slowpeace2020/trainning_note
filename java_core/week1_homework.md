@@ -568,34 +568,21 @@ In summary, static scope in Java refers to the visibility and accessibility of s
 
 
 ### how does classloader work
-The Java ClassLoader is a crucial component of the Java Runtime Environment (JRE) responsible for loading Java classes into memory during runtime. It follows a hierarchical structure and is responsible for locating and loading class files from various sources, such as the file system, network, or other custom sources. Here's how the ClassLoader works:
 
-1. **Loading**:
-   - When a Java program is executed, the JVM is responsible for loading classes into memory as they are referenced by the program.
-   - The ClassLoader is invoked whenever a class is first referenced in the program, either explicitly (e.g., through the `new` keyword or method invocation) or implicitly (e.g., when a class is referenced as a superclass or interface).
-   - The ClassLoader searches for the class file in the classpath, which includes directories, JAR files, and other locations specified by the runtime environment.
+Java Classloader is a part of the Java Runtime Environment (JRE) responsible for loading class bytecode into memory and creating corresponding Class objects. The main task of Java Classloader is to dynamically load classes at runtime so that programs can reference and use them.
 
-2. **Delegation Model**:
-   - The ClassLoader follows a delegation model, where each ClassLoader delegates the class-loading request to its parent ClassLoader before attempting to load the class itself.
-   - This parent delegation continues recursively until the Bootstrap ClassLoader, which is responsible for loading core Java classes from the bootstrap classpath, is reached.
-   - If the parent ClassLoader cannot find the requested class, the child ClassLoader attempts to load the class itself.
+The process of Java Classloader works as follows:
 
-3. **Class Resolution**:
-   - Once a class is located, the ClassLoader reads the bytecode from the class file and defines the class structure in memory.
-   - It performs bytecode verification to ensure the class is well-formed and does not violate security constraints.
-   - If the class has not been loaded before, the ClassLoader also initializes static fields and performs static initialization blocks.
+1. **Loading:** Loading refers to the process where the Classloader searches for and loads the class bytecode file. When a Java program needs to use a class, the Classloader attempts to locate the bytecode file of the class in the classpath. If the bytecode file is found, it is loaded into memory.
 
-4. **Class Loading Mechanisms**:
-   - Java supports multiple ClassLoader implementations, each with its own loading mechanisms.
-   - The most common ClassLoader implementations include the Bootstrap ClassLoader, Extension ClassLoader, System ClassLoader, and custom ClassLoaders.
-   - Custom ClassLoaders can be used to load classes from non-standard locations, such as databases or remote servers.
+2. **Linking:** The linking phase connects the loaded class with existing classes or interfaces. The linking process includes three stages: verification, preparation, and resolution:
+   - **Verification:** Ensures that the loaded class bytecode complies with the Java Virtual Machine specification and does not compromise the security of the virtual machine.
+   - **Preparation:** Allocates memory space for the class's static variables and initializes these variables to default values.
+   - **Resolution:** Replaces symbolic references in the class with direct references.
 
-5. **Class Unloading**:
-   - While classes are loaded into memory dynamically, they are not unloaded automatically when they are no longer needed.
-   - Instead, classes are subject to garbage collection like other objects in the JVM.
-   - However, custom ClassLoader implementations may allow for class unloading in specific scenarios, such as when a custom ClassLoader is discarded.
+3. **Initialization:** The initialization phase is the final step of class loading, responsible for executing the class's initialization code, including assigning values to static variables and executing static blocks.
 
-Overall, the ClassLoader plays a crucial role in the dynamic loading and resolution of Java classes during runtime, enabling Java programs to adapt to changing runtime environments and load classes from various sources.
+Java Classloader adopts the Parent Delegation Model to perform class loading. When a Classloader receives a request to load a class, it first delegates the loading request to its parent Classloader for processing. If the parent Classloader cannot load the class, then the child Classloader attempts to load it. This design allows Classloaders to form a hierarchical structure, where each Classloader is responsible for loading only the classes it is responsible for, ensuring class uniqueness and security.
 
 ### Homework 3 Question List (write necessary code to answer the following questions)
 
