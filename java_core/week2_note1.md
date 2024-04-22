@@ -8,7 +8,7 @@
 - [Thread Creation](#thread-creation)
 - [Runnable vs Callable](#runnable-vs-callable)
 - [Thread Pool](#thread-pool)
-#### [newFixedThreadPool vs newSingleThreadExecutor vs newCachedThreadPool](#newfixedthreadpool-vs-newsinglethreadexecutor-vs-newcachedthreadpool)
+- [newFixedThreadPool vs newSingleThreadExecutor vs newCachedThreadPool](#newfixedthreadpool-vs-newsinglethreadexecutor-vs-newcachedthreadpool)
 
 ### Stream API
 
