@@ -126,20 +126,21 @@ Here's a brief comparison between intermediate and terminal operations:
 In summary, intermediate operations are used to transform and manipulate the elements of a stream, while terminal operations are used to produce a final result from the stream.
 
 ### Thread lifecycle, how does thread transfer from one state to another
-The lifecycle of a thread in Java consists of several states, and transitions between these states are governed by the actions performed on the thread and the scheduling decisions made by the JVM and operating system. Here's an overview of the thread lifecycle states and how a thread transitions between them:
+In the thread lifecycle, a thread transitions from one state to another based on its execution and external conditions. Here's how a thread typically moves through its lifecycle states:
 
-### Thread Lifecycle States:
-1. **New:** When a thread is created but has not yet started, it is in the new state. At this stage, the thread has been instantiated but has not been started with the `start()` method.
+1. **New:** A thread is in the "New" state when it's created but not yet started using the `start()` method.
 
-2. **Runnable:** Once the `start()` method is called, the thread moves to the runnable state. In this state, the thread is ready to run, but it may not be currently executing because the scheduler has not yet selected it to run.
+2. **Runnable:** After calling the `start()` method, the thread becomes "Runnable." It's ready to run but might not be executing immediately because the scheduler hasn't selected it yet.
 
-3. **Running:** When the scheduler selects the thread from the runnable pool and the thread's `run()` method begins execution, the thread is in the running state. In this state, the thread's instructions are being executed on the CPU.
+3. **Blocked:** The thread can transition to the "Blocked" state when it's waiting for a lock to be released by another thread. This happens when it attempts to access a synchronized block or method already locked by another thread.
 
-4. **Blocked or Waiting:** Threads can transition to a blocked or waiting state for various reasons, such as waiting for I/O operations to complete, waiting for a lock, or waiting for a condition to be satisfied. In this state, the thread is not eligible to run until the condition it is waiting for is satisfied.
+4. **Waiting:** Threads can enter the "Waiting" state when they explicitly wait for another thread to notify them or when they wait for a specific period of time using methods like `wait()` or `sleep()`. They remain in this state until they're either notified or the timeout expires.
 
-5. **Timed Waiting:** Threads can enter a timed waiting state when they are waiting for a specified period of time. This can occur when a thread calls methods like `sleep()` or `join()` with a timeout parameter.
+5. **Timed Waiting:** This state is similar to the "Waiting" state, but it's distinguished by a specific timeout period. Threads enter the "Timed Waiting" state when they call methods like `sleep()` or `join()` with a timeout parameter.
 
-6. **Terminated:** When a thread completes its execution or is explicitly terminated by calling the `stop()` method, it enters the terminated state. Once a thread is terminated, it cannot be restarted or run again.
+6. **Terminated:** Finally, a thread enters the "Terminated" state when it completes its execution or is explicitly terminated by calling the `stop()` method. Once terminated, the thread cannot be restarted.
+
+Each transition in the thread lifecycle occurs based on specific actions taken by the thread or external events, such as acquiring or releasing locks, waiting for notifications, or completing execution. Understanding these state transitions is crucial for effective multithreaded programming.
 
 ### Thread State Transitions:
 - **New -> Runnable:** Transition occurs when the `start()` method is called, and the thread becomes eligible to run.
@@ -157,8 +158,8 @@ In Java, there are several ways to create a thread. Here are four common methods
 
 1. Extending the Thread class.
 2. Implementing the Runnable interface.
-3. Using a lambda expression with the Runnable interface.
-4. Using the Callable and Future interfaces.
+3. Using the Callable and Future interfaces.
+4. Thread Pool
 
 #### 1. Extending the Thread class:
 
@@ -194,20 +195,7 @@ public class Main {
 }
 ```
 
-#### 3. Using a lambda expression with the Runnable interface:
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        Thread thread = new Thread(() -> {
-            System.out.println("Thread is running...");
-        });
-        thread.start(); // Start the thread
-    }
-}
-```
-
-#### 4. Using the Callable and Future interfaces:
+#### 3. Using the Callable and Future interfaces:
 
 ```java
 import java.util.concurrent.Callable;
@@ -233,8 +221,56 @@ public class Main {
 }
 ```
 
-These are four common methods for creating threads in Java. Each method has its own advantages and use cases, so choose the one that best fits your requirements.
+#### 4. thread pool:
 
+Using a thread pool is a common and efficient way to manage threads in Java, especially in applications that require frequent creation and execution of tasks. Java provides the `ExecutorService` framework to work with thread pools. Here's an example of how to create and use a thread pool:
+
+```java
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class Main {
+    public static void main(String[] args) {
+        // Create a thread pool with a fixed number of threads
+        int numberOfThreads = 5;
+        ExecutorService executor = Executors.newFixedThreadPool(numberOfThreads);
+        
+        // Submit tasks to the thread pool
+        for (int i = 0; i < 10; i++) {
+            Runnable task = new MyTask(i);
+            executor.submit(task);
+        }
+        
+        // Shutdown the thread pool
+        executor.shutdown();
+    }
+}
+
+class MyTask implements Runnable {
+    private int taskId;
+
+    public MyTask(int taskId) {
+        this.taskId = taskId;
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Task " + taskId + " is running on thread " + Thread.currentThread().getName());
+    }
+}
+```
+
+In this example:
+
+1. We create a `ThreadPoolExecutor` using the `Executors.newFixedThreadPool()` factory method, specifying the desired number of threads in the pool.
+
+2. We submit tasks to the thread pool using the `submit()` method, passing instances of `Runnable` or `Callable` implementations.
+
+3. Each task is executed concurrently by one of the threads in the pool.
+
+4. Finally, we shut down the thread pool using the `shutdown()` method to release the resources associated with it once all tasks have been completed.
+
+Using a thread pool helps manage the lifecycle of threads efficiently, reduces the overhead of thread creation, and ensures optimal resource utilization.
 
 ### How does thread pool work
 A thread pool is a collection of pre-initialized threads that are ready to perform tasks. Instead of creating a new thread for every task, a thread pool maintains a pool of threads and reuses them to execute multiple tasks over the lifetime of the application. Thread pools offer several advantages, including improved performance, better resource management, and reduced overhead associated with thread creation and destruction.
