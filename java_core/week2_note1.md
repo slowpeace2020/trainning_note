@@ -1,5 +1,4 @@
 ## Day4
-## [Day4](#day4)
 
 - [Stream API](#stream-api)
 - [Intermediate Operation vs Terminal Operation](#intermediate-operation-vs-terminal-operation)
