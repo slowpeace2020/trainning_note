@@ -1,17 +1,15 @@
 # Day5
 
-## [CompletableFuture](#completablefuture)
-- [Future and CompletionState](#future-and-completionstate)
+- [CompletableFuture](#completablefuture)
 
-## [Lock](#lock)
+- [Lock](#lock)
 - [parallel vs concurrent](#parallel-vs-concurrent)
 - [Lock Usage, Category, Interface](#lock-usage-category-interface)
 
-### [Synchronized Keyword](#synchronized-keyword)
+- [Synchronized Keyword](#synchronized-keyword)
 
-### [ReentrantLock](#reentrantlock)
-- [Fair Lock vs. Unfair Lock](#fair-lock-vs-unfair-lock)
-- [Condition](#condition)
+- [ReentrantLock](#reentrantlock)
+
 
 ### CompletableFuture
 Future and CompletionState
