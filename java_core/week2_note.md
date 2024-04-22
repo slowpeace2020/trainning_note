@@ -1,47 +1,27 @@
 ## Day4
 ## [Day4](#day4)
 
-### [Stream API](#stream-api)
-
-#### [Intermediate Operation vs Terminal Operation](#intermediate-operation-vs-terminal-operation)
-
-#### [Thread vs Process](#thread-vs-process)
-
-#### [Thread State](#thread-state)
-
-#### [Thread Creation](#thread-creation)
-
-#### [Runnable vs Callable](#runnable-vs-callable)
-
-#### [Thread Pool](#thread-pool)
-
-#### [newFixedThreadPool vs newSingleThreadExecutor vs newCachedThreadPool](#newfixedthreadpool-vs-newsinglethreadexecutor-vs-newcachedthreadpool)
-
-#### [Future](#future)
-
-#### [CompletableFuture](#completablefuture)
-
-#### [Future vs CompletableFuture](#future-vs-completablefuture)
-
-#### [Lock vs Synchronized](#lock-vs-synchronized)
-
-#### [wait(), notify(), notifyAll(), join()](#wait-notify-notifyall-join)
-
-#### [Deadlock](#deadlock)
-
-#### [How to Create Deadlock (Using ReentrantLock)](#how-to-create-deadlock-using-reentrantlock)
-
-#### [How to Prevent Deadlock and Why](#how-to-prevent-deadlock-and-why)
-
-#### [CompletableFuture vs Future](#completablefuture-vs-future)
-
-#### [CompletableFuture Common API](#completablefuture-common-api)
-
-#### [Use CompletableFuture to Implement the Following Logic](#use-completablefuture-to-implement-the-following-logic)
-
-#### [Producer and Consumer Model (Using synchronized Keyword)](#producer-and-consumer-model-using-synchronized-keyword)
-
-#### [Synchronized Normal Method vs Synchronized Static Method](#synchronized-normal-method-vs-synchronized-static-method)
+- [Stream API](#stream-api)
+- [Intermediate Operation vs Terminal Operation](#intermediate-operation-vs-terminal-operation)
+- [Thread vs Process](#thread-vs-process)
+- [Thread State](#thread-state)
+- [Thread Creation](#thread-creation)
+- [Runnable vs Callable](#runnable-vs-callable)
+- [Thread Pool](#thread-pool)
+- [newFixedThreadPool vs newSingleThreadExecutor vs newCachedThreadPool](#newfixedthreadpool-vs-newsinglethreadexecutor-vs-newcachedthreadpool)
+- [Future](#future)
+- [CompletableFuture](#completablefuture)
+- [Future vs CompletableFuture](#future-vs-completablefuture)
+- [Lock vs Synchronized](#lock-vs-synchronized)
+- [wait(), notify(), notifyAll(), join()](#wait-notify-notifyall-join)
+- [Deadlock](#deadlock)
+- [How to Create Deadlock (Using ReentrantLock)](#how-to-create-deadlock-using-reentrantlock)
+- [How to Prevent Deadlock and Why](#how-to-prevent-deadlock-and-why)
+- [CompletableFuture vs Future](#completablefuture-vs-future)
+- [CompletableFuture Common API](#completablefuture-common-api)
+- [Use CompletableFuture to Implement the Following Logic](#use-completablefuture-to-implement-the-following-logic)
+- [Producer and Consumer Model (Using synchronized Keyword)](#producer-and-consumer-model-using-synchronized-keyword)
+- [Synchronized Normal Method vs Synchronized Static Method](#synchronized-normal-method-vs-synchronized-static-method)
 
 
 ### Stream API
