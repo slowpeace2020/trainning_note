@@ -3,6 +3,7 @@
 - [Stream API](#stream-api)
 - [Intermediate Operation vs Terminal Operation](#intermediate-operation-vs-terminal-operation)
 - [Thread vs Process](#thread-vs-process)
+- [Communication between threads](#communication-between-threads)
 - [Thread State](#thread-state)
 - [Thread Creation](#thread-creation)
 - [Runnable vs Callable](#runnable-vs-callable)
@@ -23,9 +24,41 @@
 Thread: independent stack, PC register
 Process: independent memory space, stack,heap, os resources
 
+Yes, that's a succinct way to differentiate between threads and processes based on their independent components:
+
+**Thread**:
+- **Independent Stack**: Each thread within a process has its own stack, which stores local variables, function parameters, and return addresses.
+- **Program Counter (PC) Register**: Each thread has its own program counter register, which keeps track of the currently executing instruction within the thread's context.
+
+**Process**:
+- **Independent Memory Space**: Each process has its own memory space, which includes code, data, and stack segments. This isolation ensures that one process cannot directly access the memory of another process.
+- **Stack and Heap**: Each process has its own stack and heap. The stack is used for storing local variables and function call information, while the heap is used for dynamic memory allocation.
+- **Operating System Resources**: Each process is allocated various operating system resources, such as file descriptors, handles, and other system-level resources necessary for its execution.
+
+These independent components contribute to the distinction between threads and processes and have implications for how they interact with each other and with the underlying operating system.
+
+#### Communication between threads
+In Java, there are several ways for threads to communicate with each other:
+
+1. **wait() and notify() Methods**:
+   - The wait() method causes a thread to enter a waiting state until another thread calls notify() or notifyAll() to wake it up. The notify() method wakes up one waiting thread, while notifyAll() wakes up all waiting threads.
+   - Additionally, there is the wait(long timeout) method, which causes a thread to enter a waiting state until another thread calls notify() to wake it up or until the specified timeout period elapses.
+
+2. **join() Method**:
+   - The join() method causes one thread to wait for another thread to complete its execution. When one thread calls the join() method on another thread, the current thread will be blocked until the other thread finishes executing.
+
+3. **Lock and Condition Interface**:
+   - The Lock interface provides a more flexible locking mechanism compared to the synchronized keyword. The Condition interface provides a more flexible waiting/notification mechanism.
+   - Threads acquire locks using the lock() method of the Lock interface and release locks using the unlock() method. Threads can wait for a condition using the await() method of the Condition interface, and other threads can signal waiting threads using the signal() method or wake up all waiting threads using the signalAll() method.
+
+4. **BlockingQueue**:
+   - BlockingQueue is a queue that supports blocking operations. When the queue is empty, threads trying to retrieve elements from it are blocked until the queue becomes non-empty. Similarly, when the queue is full, threads trying to insert elements into it are blocked until the queue has space available.
+
+These mechanisms provide different levels of flexibility and are suitable for various scenarios of thread communication and coordination.
+
 #### thread state
 
-new, runnale,blocked, $waiting, time waiting, terminated
+new, runnale,blocked, waiting, time waiting, terminated
 ![thread state](./img/Thread_state.png)
 
 #### thread creation

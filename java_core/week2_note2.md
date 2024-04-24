@@ -6,6 +6,7 @@
 - [Lock Usage, Category, Interface](#lock-usage-category-interface)
 
 - [Synchronized Keyword](#synchronized-keyword)
+- [Synchronized vs lock](#synchronized-vs-lock)
 
 - [ReentrantLock](#reentrantlock)
 
@@ -178,6 +179,31 @@ You can use `synchronized` in two ways:
 - Keep synchronized blocks as small as possible to minimize contention and improve performance.
 - Always release locks in a `finally` block to ensure they are released even if an exception occurs.
 - Consider using higher-level concurrency utilities like `java.util.concurrent` package classes when appropriate, as they offer more flexibility and features compared to `synchronized`.
+
+### Synchronized vs lock
+Synchronized and Lock are both mechanisms used to achieve synchronization between threads, but there are some differences between them.
+
+1. **Lock Type**:
+   - `synchronized`: A keyword in Java used to synchronize code blocks or methods.
+   - `Lock`: An interface in Java with multiple implementations like ReentrantLock and ReadWriteLock.
+
+2. **Usage**:
+   - `synchronized`: Implicit lock management by the JVM, no need for manual control.
+   - `Lock`: Requires explicit lock acquisition and release using lock() and unlock() methods.
+
+3. **Interruptibility**:
+   - `synchronized`: Thread waits indefinitely until it acquires the lock.
+   - `Lock`: Provides interruptibility; the waiting thread can be interrupted during lock acquisition.
+
+4. **Fairness**:
+   - `synchronized`: Does not guarantee fairness in lock acquisition.
+   - `Lock`: Can specify fairness through constructor, allowing the longest-waiting thread to acquire the lock first.
+
+5. **Condition Variables**:
+   - `Lock`: Provides a Condition interface for implementing thread wait/notify mechanisms.
+   - `synchronized`: Achieves similar functionality using wait(), notify(), and notifyAll() methods of the Object class.
+
+In summary, `synchronized` is simple and easy to use, suitable for most synchronization scenarios. On the other hand, `Lock` provides more flexibility and features, suitable for complex synchronization scenarios. In terms of performance, `Lock` is usually more efficient than `synchronized`, but it requires manual management of lock acquisition and release, which can lead to errors if not handled properly.
 
 ### ReentrantLock
 fair lock vs. unfair lock
