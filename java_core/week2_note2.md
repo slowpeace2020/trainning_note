@@ -114,8 +114,7 @@ Both parallelism and concurrency are important concepts in modern software devel
 #### lock usage,category,interface
 In Java, locks are used to control access to shared resources in a multithreaded environment. They ensure that only one thread can access the resource at a time, preventing concurrent access that might lead to data corruption or inconsistency. Locks are classified into several categories based on their behavior and features. Additionally, Java provides various interfaces and classes for implementing locks. Let's explore these aspects:
 
-### Categories of Locks:
-
+### Categories of Locks
 1. **ReentrantLocks**: These locks allow a thread to acquire the lock multiple times without causing a deadlock. They implement the `Lock` interface and provide more flexibility and features compared to intrinsic locks obtained using the `synchronized` keyword.
 
 2. **ReadWriteLocks**: This type of lock allows multiple threads to read a resource simultaneously but enforces exclusive access for writing. It consists of two locks: one for reading (`ReadLock`) and one for writing (`WriteLock`). This approach can improve concurrency in scenarios where reads are more frequent than writes.
@@ -180,7 +179,8 @@ You can use `synchronized` in two ways:
 - Always release locks in a `finally` block to ensure they are released even if an exception occurs.
 - Consider using higher-level concurrency utilities like `java.util.concurrent` package classes when appropriate, as they offer more flexibility and features compared to `synchronized`.
 
-### ReentrantLock, fair lock vs. unfair lock
+### ReentrantLock
+fair lock vs. unfair lock
 `ReentrantLock` is a class in Java that provides a flexible and powerful alternative to intrinsic locks obtained using the `synchronized` keyword. It implements the `Lock` interface and supports reentrant locking, meaning a thread can acquire the lock multiple times without blocking itself, as long as it releases the lock the same number of times.
 
 #### Fair Lock vs. Unfair Lock:
