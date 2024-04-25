@@ -12,9 +12,25 @@
 
 ### Stream API
 
+The Java Stream API is a feature introduced in Java 8 that provides a more convenient and efficient way to process collections of data. The Stream API allows developers to perform various operations on collection data in a declarative manner, such as filtering, mapping, sorting, and aggregating, without the need to write cumbersome loops and conditional statements.
+
+The main features of the Stream API include:
+
+1. **Support for Functional Programming**: The Stream API encourages a functional programming style, allowing behaviors to be easily passed to collection elements using lambda expressions, making the code more concise and readable.
+
+2. **Chained Operations**: The Stream API provides a series of operation methods that can be chained together, forming a pipeline-like processing flow. This design makes the code more fluent and enables easier composition of multiple operations.
+
+3. **Lazy Evaluation**: Intermediate operations in Stream operations (such as filtering, mapping, etc.) are typically lazily evaluated, meaning that actual computation is triggered only when encountering a terminal operation. This can improve efficiency by avoiding unnecessary computation.
+
+4. **Support for Parallel Operations**: The Stream API supports parallel streams, allowing for the utilization of multi-core processors to process data in parallel, thus improving processing speed.
+
+5. **Built-in Operations**: The Stream API provides a rich set of intermediate and terminal operations, such as `filter()`, `map()`, `sorted()`, `collect()`, etc., to meet various data processing needs.
+
+In summary, the Java Stream API offers a more concise and efficient way to process collection data, greatly enhancing code readability and development efficiency.
+
 #### intermediate operation vs terminal operation
 
-| intermediate operation            | intermediate operation     | 
+| intermediate operation            | terminal operation         | 
 |-----------------------------------|----------------------------| 
 | return stream                     | return other type          | 
 | filter,map, flatmap,disinct,limit | collect, foreach, min, max |
