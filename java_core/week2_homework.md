@@ -591,6 +591,7 @@ The `CompletableFuture` class in Java provides several common APIs for working w
     - `join()`: Waits for the completion of the `CompletableFuture` and returns its result, throwing an unchecked exception if the computation completed exceptionally.
 
 These are some of the common APIs provided by `CompletableFuture` for asynchronous programming in Java. They allow for composing, combining, and handling asynchronous computations in a flexible and expressive manner.\
+
 [CompletableFuture example](https://modouxiansheng.top/2019/08/13/%E4%B8%8D%E5%AD%A6%E6%97%A0%E6%95%B0-Java8-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B-2019/)
 
 ### Use CompletableFuture to implement the following logic
@@ -781,4 +782,6 @@ public class SynchronizedExample {
 ```
 
 In this example, `incrementInstanceCounter` is a synchronized normal method, and `incrementStaticCounter` is a synchronized static method. Each method ensures that only one thread can execute it at a time based on the type of lock it acquires.
+
+## What is the static variable?
 
