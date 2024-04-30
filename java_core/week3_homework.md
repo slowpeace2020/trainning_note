@@ -13,30 +13,28 @@
 
 ### Homework 7 Question List
 1. [HTTP Status Codes](#http-status-codes)
-2. [HTTP](#http)
-3. [HTTP Methods](#http-methods)
-    - [GET, POST, PUT, DELETE, PATCH](#get-post-put-delete-patch)
-    - [POST vs PATCH](#post-vs-patch)
-    - [POST vs PUT](#post-vs-put)
+2. [What is HTTP](#what-is-http)
+3. [What is get, post, put, delete, patch method](#what-is-get-post-put-delete-patch-method)
 4. [TCP 3-Way Handshaking](#tcp-3-way-handshaking)
 5. [TCP vs UDP](#tcp-vs-udp)
 6. [Tomcat](#tomcat)
-    - [Basic Components of Tomcat](#basic-components-of-tomcat)
-7. [Spring IOC](#spring-ioc)
-    - [IOC Container](#ioc-container)
-    - [Advantages of IOC](#advantages-of-ioc)
-8. [Dependency Injection (DI)](#dependency-injection-di)
-    - [Demo Code for Dependency Injection](#demo-code-for-dependency-injection)
-    - [How to Do Dependency Injection](#how-to-do-dependency-injection)
-9. [Annotations in Spring](#annotations-in-spring)
-    - [`@Component` vs `@Bean`](#component-vs-bean)
-    - [`@Configuration`](#configuration)
-10. [Aspect-Oriented Programming (AOP)](#aspect-oriented-programming-aop)
-    - [JoinPoint and Aspect in AOP](#joinpoint-and-aspect-in-aop)
-11. [Spring Bean Scopes](#spring-bean-scopes)
+7. [Basic Components of Tomcat](#basic-components-of-tomcat)
+8. [Spring IOC](#spring-ioc)
+9. [IOC Container](#ioc-container)
+10. [Advantages of IOC](#advantages-of-ioc)
+11. [Dependency Injection (DI)](#dependency-injection-di)
+12. [Demo Code for Dependency Injection](#demo-code-for-dependency-injection)
+13. [How to Do Dependency Injection](#how-to-do-dependency-injection)
+14. [Annotations in Spring](#annotations-in-spring)
+15. [`@Component` vs `@Bean`](#component-vs-bean)
+16. [`@Configuration`](#configuration)
+17. [Aspect-Oriented Programming (AOP)](#aspect-oriented-programming-aop)
+18. [JoinPoint and Aspect in AOP](#joinpoint-and-aspect-in-aop)
+19. [Spring Bean Scopes](#spring-bean-scopes)
 
 ### Homework 6 Question List
-### Write Out the Optimized Singleton Version and Explain Each Line of Code
+
+### 1. Write Out the Optimized Singleton Version and Explain Each Line of Code
 Sure, here's an example of an optimized Singleton pattern implementation in Java:
 
 ```java
@@ -82,7 +80,7 @@ Explanation of each line of code:
 
 This implementation is optimized as it provides lazy initialization, thread safety, and performance improvement through double-checked locking.
 
-### Use Cases for Singleton
+### 2. Use Cases for Singleton
 The Singleton pattern is used in scenarios where you need to ensure that a class has only one instance and provides a global point of access to that instance. Some common use cases for the Singleton pattern include:
 
 1. **Logger Classes**: Logger classes are often implemented as Singletons to ensure that there is a single point of access to log messages throughout an application.
@@ -99,8 +97,8 @@ The Singleton pattern is used in scenarios where you need to ensure that a class
 
 In summary, the Singleton pattern is useful in situations where you need to ensure that there is only one instance of a class and provide a global point of access to that instance. It helps in managing resources efficiently and ensuring that certain aspects of the application are globally accessible and consistent.
 
-### Research on Factory, Builder, Observer, Decorator, Static and Dynamic Proxy Patterns
-- #### Factory Pattern
+### 3. Research on Factory, Builder, Observer, Decorator, Static and Dynamic Proxy Patterns
+- #### 3.1. Factory Pattern
 The Factory Pattern is a creational design pattern that provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created. It promotes loose coupling by eliminating the need for classes to directly instantiate objects.
 
 #### Use Cases:
@@ -124,7 +122,7 @@ The Factory Pattern is a creational design pattern that provides an interface fo
 
 Overall, the Factory Pattern is a powerful tool for managing object creation in a flexible and decoupled manner, making it especially useful in scenarios where the type of objects to be created may vary at runtime.
 
-- #### Builder Pattern
+- #### 3.2. Builder Pattern
 The Builder Pattern is a creational design pattern that separates the construction of a complex object from its representation, allowing the same construction process to create different representations. It is particularly useful when dealing with objects that have many optional parameters or configurations.
 
 #### Use Cases:
@@ -149,7 +147,7 @@ The Builder Pattern is a creational design pattern that separates the constructi
 
 Overall, the Builder Pattern is a powerful tool for constructing complex objects with multiple configurations in a flexible and readable manner. It is particularly useful in scenarios where objects have many optional parameters or configurations that need to be set during construction.
 
-- #### Observer Pattern
+- #### 3.3. Observer Pattern
 The Observer Pattern is a behavioral design pattern where an object, known as the subject, maintains a list of dependents, known as observers, and notifies them of any changes in its state. This pattern promotes loose coupling between objects, allowing them to communicate with each other without having direct knowledge of each other's implementation.
 
 #### Use Cases:
@@ -174,7 +172,7 @@ The Observer Pattern is a behavioral design pattern where an object, known as th
 
 Overall, the Observer Pattern is a powerful tool for implementing communication and coordination between objects in a flexible and decoupled manner. It is particularly useful in scenarios where objects need to react to changes in the state of other objects, such as event-driven systems or distributed architectures.
 
-- #### Decorator Pattern
+- #### 3.4. Decorator Pattern
 The Decorator Pattern is a structural design pattern that allows behavior to be added to individual objects dynamically, without affecting the behavior of other objects from the same class. It is useful for adding new functionality to existing objects without altering their structure.
 
 #### Use Cases:
@@ -199,7 +197,7 @@ The Decorator Pattern is a structural design pattern that allows behavior to be 
 
 Overall, the Decorator Pattern is a powerful tool for adding flexible and reusable functionality to objects in a modular and maintainable way. It is particularly useful in scenarios where the behavior of objects needs to be extended or modified dynamically at runtime.
 
-- #### Static Proxy Pattern
+- #### 3.5. Static Proxy Pattern
 The Static Proxy Pattern is a structural design pattern where a proxy class is used as an intermediary to control access to another class, called the subject or real object. The proxy class mimics the interface of the subject and delegates requests to it, while also providing additional functionality such as logging, security checks, or caching.
 
 #### Use Cases:
@@ -223,7 +221,7 @@ The Static Proxy Pattern is a structural design pattern where a proxy class is u
 
 Overall, the Static Proxy Pattern is a useful tool for controlling access to objects and adding additional functionality in a modular and reusable way. It is particularly useful in scenarios where cross-cutting concerns need to be addressed without modifying the core functionality of the real object.
 
-- #### Dynamic Proxy Pattern
+- #### 3.6. Dynamic Proxy Pattern
 The Dynamic Proxy Pattern is a structural design pattern where a proxy class is created dynamically at runtime to control access to another class, called the target or real object. Unlike the static proxy pattern, where the proxy class is created manually, dynamic proxies are created automatically using reflection and the Java Proxy API.
 
 #### Use Cases:
@@ -247,7 +245,7 @@ The Dynamic Proxy Pattern is a structural design pattern where a proxy class is 
 
 Overall, the Dynamic Proxy Pattern is a powerful tool for controlling access to objects and adding additional functionality at runtime. It is particularly useful in scenarios where cross-cutting concerns need to be addressed dynamically without modifying the core functionality of the real object.
 
-### What Is Reflection?
+### 4. What Is Reflection?
 Reflection is a powerful feature in Java that allows programs to inspect and modify their own structure, behavior, and state at runtime. It provides a way to analyze classes, interfaces, methods, and fields dynamically, without having prior knowledge of their names or types at compile time.
 
 Using reflection, you can perform the following tasks:
@@ -262,7 +260,7 @@ Reflection is primarily used in frameworks, libraries, and tools that require dy
 
 However, reflection comes with some performance overhead and security considerations. It is slower than direct method calls and field accesses, and it can bypass access modifiers, potentially compromising encapsulation and security. Therefore, reflection should be used judiciously and only when necessary, with proper security measures in place.
 
-#### How Does Annotation Work in Spring?
+#### 5. How Does Annotation Work in Spring?
 In Spring, annotations are used extensively to provide metadata and configuration information to the Spring container, which allows it to manage beans, wire dependencies, and apply aspects to components. Annotations in Spring are processed using reflection and aspect-oriented programming (AOP) techniques to enhance the behavior of Spring-managed components.
 
 Here's how annotations work in Spring:
@@ -281,7 +279,8 @@ Overall, annotations play a crucial role in configuring Spring applications and 
 
 ### Homework 7 Question List
 
-### HTTP Status Codes, 200/ 201/202/ 204/ 307/ 301/ 400/ 401/ 403/ 404/ 500
+### HTTP Status Codes
+HTTP Status Codes, 200/ 201/202/ 204/ 307/ 301/ 400/ 401/ 403/ 404/ 500
 HTTP status codes are standardized responses that are sent by a server in response to a client's request to indicate the outcome of the request. Here's an explanation of the HTTP status codes you mentioned:
 
 1. **200 OK**: The request has succeeded. The client's request was successfully received, understood, and accepted by the server.
