@@ -398,26 +398,29 @@ The three-way handshake ensures that both the client and server are ready to exc
 Once the connection is established through the three-way handshake, data can be transmitted bidirectionally between the client and server. After the data exchange is complete, the connection can be terminated using a similar process called the TCP four-way handshake.
 
 ### TCP vs UDP
-TCP (Transmission Control Protocol) uses a three-way handshake process to establish a reliable connection between a client and a server before data can be transmitted. The three-way handshake ensures that both the client and server agree on the parameters of the connection and are ready to exchange data. Here's how the TCP three-way handshake works:
+Sure! Here's the comparison of TCP (Transmission Control Protocol) and UDP (User Datagram Protocol):
 
-1. **SYN (Synchronize)**:
-    - The process begins when the client sends a TCP segment to the server with the SYN flag set to 1 (indicating a synchronization request) and an initial sequence number (ISN) randomly chosen by the client.
-    - This segment also specifies the TCP options supported by the client, such as maximum segment size (MSS) and window scaling.
+1. **Connection-Oriented**:
+   - TCP is a connection-oriented protocol. It establishes a reliable connection between the client and server before communication begins, ensuring reliability through a three-way handshake.
+   - UDP is connectionless. Each datagram (packet) is independent, and there's no establishment of a connection between sender and receiver.
 
-2. **SYN-ACK (Synchronize-Acknowledgment)**:
-    - Upon receiving the SYN segment from the client, the server responds with a TCP segment containing the SYN and ACK flags set to 1.
-    - The SYN flag indicates that the server is also requesting synchronization, while the ACK flag acknowledges the client's SYN segment.
-    - The server also selects its own initial sequence number (ISN) and includes it in the segment.
+2. **Reliability**:
+   - TCP provides reliable data transmission. It employs acknowledgment and retransmission mechanisms to ensure data delivery and sequencing.
+   - UDP doesn't provide reliability guarantees. It doesn't acknowledge receipt or retransmit lost packets.
 
-3. **ACK (Acknowledgment)**:
-    - Finally, upon receiving the SYN-ACK segment from the server, the client sends an acknowledgment back to the server.
-    - The client sets the ACK flag to 1 to acknowledge the server's SYN segment, and it also sends an acknowledgment number that confirms receipt of the server's data.
-    - At this point, the connection is established, and both the client and server can begin transmitting data over the TCP connection.
+3. **Flow Control and Congestion Control**:
+   - TCP incorporates flow control and congestion control mechanisms to adjust the rate of data transmission and handle network congestion.
+   - UDP lacks flow control and congestion control. It doesn't adjust transmission rates based on network conditions.
 
-The three-way handshake ensures that both the client and server are ready to exchange data and that they agree on the sequence numbers and other parameters required for reliable communication. It also helps in preventing unnecessary connections and ensures that both parties are synchronized before transmitting any data.
+4. **Packet Size Limitation**:
+   - TCP doesn't have a fixed packet size limit. It dynamically adjusts packet size to accommodate network conditions.
+   - UDP has a fixed packet size limit, typically 64KB.
 
-Once the connection is established through the three-way handshake, data can be transmitted bidirectionally between the client and server. After the data exchange is complete, the connection can be terminated using a similar process called the TCP four-way handshake.
+5. **Use Cases**:
+   - TCP is suitable for applications requiring reliability and ordered data delivery, such as web browsing, file transfer, email, etc.
+   - UDP is suitable for applications where real-time delivery is critical, data volume is small, and loss of some data packets won't significantly impact usability, such as audio/video streaming, online gaming, etc.
 
+In summary, TCP is suitable for scenarios where data reliability is paramount, while UDP is suitable for scenarios where real-time delivery is crucial.
 ### Tomcat
 Tomcat is an open-source web server and servlet container developed by the Apache Software Foundation. It implements the Java Servlet, JavaServer Pages (JSP), and WebSocket specifications, providing a platform for deploying Java-based web applications. Here are some key points about Tomcat:
 
