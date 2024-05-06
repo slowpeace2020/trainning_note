@@ -134,7 +134,6 @@ The target, also known as the target object or target method, refers to the comp
     - **Performance**: BeanFactory initializes beans lazily, meaning beans are created only when they are requested. This can lead to faster startup times compared to ApplicationContext, especially in applications with a large number of beans where eager initialization might cause performance issues.
 
 - ### Different types of DI and their pros and cons
-```markdown
 - **Types of Dependency Injection (DI)**:
 
     1. **Constructor Injection**:
@@ -180,8 +179,6 @@ The target, also known as the target object or target method, refers to the comp
     - **Setter Injection** offers flexibility and is suitable for optional dependencies or scenarios where dependencies may change at runtime.
     - **Field Injection** is convenient but can lead to issues with testability and maintainability.
     - **Interface Injection** is deprecated in favor of other injection methods due to its disadvantages.
-```
-This markdown snippet outlines different types of Dependency Injection (DI) and discusses their pros and cons, along with a comparison of each method.
 
 ### Homework 9
 
