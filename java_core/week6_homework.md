@@ -961,63 +961,6 @@ Using Docker in a real project can greatly simplify the development, deployment,
 By following these steps, you can effectively use Docker in a real project to streamline your development workflow, improve deployment consistency, and simplify operations at scale.
 
 ### AWS Services and How to Use Them in a Project
-
-#### EC2
-#### ECS
-#### ECR
-#### RDS
-#### DocumentDB
-#### DynamoDB
-#### Lambda Function
-#### API Gateway
-#### AWS Kinesis
-#### IAM
-#### SNS, SQS
-
-Amazon Web Services (AWS) offers a wide range of cloud computing services that provide scalable, reliable, and cost-effective solutions for building and deploying applications. Here's an overview of some key AWS services and how to use them in a project:
-
-1. **Amazon EC2 (Elastic Compute Cloud)**:
-   - Amazon EC2 provides resizable compute capacity in the cloud, allowing you to quickly provision virtual servers (instances) to run your applications.
-   - To use EC2 in a project, you can create EC2 instances with the desired configuration (e.g., operating system, instance type, storage), install your application on them, and manage them using the AWS Management Console, CLI, or SDKs.
-
-2. **Amazon S3 (Simple Storage Service)**:
-   - Amazon S3 offers scalable object storage for storing and retrieving data, such as images, videos, documents, and backups.
-   - To use S3 in a project, you can create buckets to store your data, upload objects to these buckets, and control access to them using bucket policies and access control lists (ACLs).
-
-3. **Amazon RDS (Relational Database Service)**:
-   - Amazon RDS manages relational databases in the cloud, such as MySQL, PostgreSQL, Oracle, and SQL Server, making it easy to set up, operate, and scale databases.
-   - To use RDS in a project, you can create database instances with the desired engine, instance class, and storage capacity, connect to them using your application, and manage them using the AWS Management Console or CLI.
-
-4. **Amazon DynamoDB**:
-   - Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance at any scale.
-   - To use DynamoDB in a project, you can create tables to store and retrieve data using flexible, single-digit millisecond latency APIs, and manage them using the AWS Management Console, CLI, or SDKs.
-
-5. **Amazon ECS (Elastic Container Service)**:
-   - Amazon ECS is a fully managed container orchestration service that allows you to run, stop, and manage Docker containers on a cluster of EC2 instances.
-   - To use ECS in a project, you can create task definitions to specify how your containers should run, launch ECS clusters with EC2 instances, and deploy your containers to these clusters using the AWS Management Console or CLI.
-
-6. **Amazon Lambda**:
-   - Amazon Lambda is a serverless computing service that allows you to run code without provisioning or managing servers.
-   - To use Lambda in a project, you can upload your code as a Lambda function, configure event sources to trigger the function (e.g., API Gateway, S3, DynamoDB), and let Lambda automatically scale and manage the compute resources for you.
-
-7. **Amazon API Gateway**:
-   - Amazon API Gateway is a fully managed service that makes it easy to create, publish, maintain, monitor, and secure APIs at any scale.
-   - To use API Gateway in a project, you can create RESTful APIs or WebSocket APIs, define routes and methods, set up authentication and authorization, and integrate with other AWS services or external endpoints.
-
-8. **Amazon SQS (Simple Queue Service)**:
-   - Amazon SQS is a fully managed message queuing service that enables you to decouple and scale microservices, distributed systems, and serverless applications.
-   - To use SQS in a project, you can create queues to send, store, and receive messages between components of your application, and manage them using the AWS Management Console, CLI, or SDKs.
-
-9. **Amazon SNS (Simple Notification Service)**:
-   - Amazon SNS is a fully managed messaging service that enables you to send and receive messages or notifications to and from distributed systems or microservices.
-   - To use SNS in a project, you can create topics to publish messages to subscribers (e.g., email, SMS, HTTP endpoint), subscribe endpoints to topics, and manage them using the AWS Management Console, CLI, or SDKs.
-
-10. **Amazon CloudWatch**:
-   - Amazon CloudWatch is a monitoring and observability service that provides real-time monitoring, logging, and metrics for AWS resources and applications.
-   - To use CloudWatch in a project, you can collect and track metrics, monitor logs and events, set up alarms and notifications, and visualize performance data using the AWS Management Console or CLI.
-
-Let's briefly discuss each of these AWS services:
-
 #### EC2 (Elastic Compute Cloud):
 Amazon EC2 provides resizable compute capacity in the cloud. It allows you to quickly launch virtual servers (instances) to run your applications. EC2 instances can be customized based on your requirements, including the choice of operating system, instance type, and storage options.
 
@@ -1055,159 +998,42 @@ These AWS services provide the foundation for building scalable, reliable, and c
 
 ## Design: Online Shopping System Using Only AWS Services
 
+![ecommerce](./img/amazon.png)
 
-### Architecture Diagram:
-[Insert architecture diagram here]
-+------------------+
-| Static Website   |
-| Hosting (S3)     |
-|                  |
-+--------+---------+
-|
-|
-v
-+------------------+
-| CloudFront       |
-| CDN              |
-|                  |
-+--------+---------+
-|
-|
-v
-+---------------------+
-| Authentication      |
-| and Authorization  |
-| (Cognito)           |
-+---------------------+
-|
-|
-v
-+------------------+
-| Payment Gateway  |
-| Integration      |
-|                  |
-+--------+---------+
-|
-|
-v
-+--------------------------+
-|     API Gateway          |
-|                          |
-|    +------+              |
-|    | Lambda |<-----------|-------------+
-|    +------+              |             |
-|     |                    |             |
-+-----|--------------------+             |
-|                                  |
-|                                  |
-v                                  |
-+-------------+                           |
-| DynamoDB    |                           |
-| (Product    |                           |
-| Catalog,    |                           |
-| User        |                           |
-| Sessions,   |                           |
-| Cart)       |                           |
-+-------------+                           |
-|                                  |
-|                                  |
-v                                  |
-+-------------+                           |
-| S3          |                           |
-| (Media      |                           |
-| Storage)    |                           |
-+-------------+                           |
-|                                  |
-|                                  |
-v                                  |
-+--------------------------+                   |
-|      Event-Driven        |                   |
-|      Architecture        |                   |
-|                          |                   |
-|    +--------+            |                   |
-|    | SQS    |            |                   |
-|    +--------+            |                   |
-|                          |                   |
-|    +--------+            |                   |
-|    | SNS    |------------|-------------------+
-|    +--------+            |
-+--------------------------+
-|
-|
-v
-+---------------+
-| CloudWatch    |
-| (Monitoring   |
-| and Logging)  |
-+---------------+
-|
-|
-v
-+---------------------+
-| IAM                 |
-| (Security and       |
-| Access Management)  |
-+---------------------+
-|
-|
-v
-+---------------+
-| Auto Scaling   |
-| (EC2, Lambda)  |
-+---------------+
-|
-|
-v
-+-------------------+
-| Elastic Load      |
-| Balancing (ELB)   |
-+-------------------+
-|
-|
-v
-+-----------+
-| ElastiCache|
-| (Caching) |
-+-----------+
+User Devices to Amazon Route 53
 
+User requests (e.g., webpage, API calls) are sent to Amazon Route 53 for DNS resolution.
+Amazon Route 53 to AWS CloudFront
 
-### Explanation:
-[Explain the architecture of the online shopping system using AWS services]
-Designing an online shopping system using only AWS services requires careful consideration of various components, including the front-end, back-end, database, storage, and scalability. Below is a high-level architecture for an online shopping system built entirely on AWS services:
+Route 53 directs the requests to AWS CloudFront for content delivery.
+AWS CloudFront Interactions
 
-### Front-End:
-1. **Static Website Hosting**: Host the front-end application using Amazon S3 to store static web content and Amazon CloudFront as a content delivery network (CDN) for fast and secure delivery to users worldwide.
+With User Devices: Serves cached static content directly to users.
+With API Gateway: Forwards dynamic content requests to the API Gateway.
+API Gateway Interactions
 
-2. **Authentication and Authorization**: Implement user authentication and authorization using Amazon Cognito, which provides user identity management and user pools for handling user registration, sign-in, and access control.
+With Lambda Functions: Forwards API requests to appropriate Lambda functions for processing.
+With S3 Bucket: Manages access to static content stored in S3 (e.g., product images).
+Lambda Functions to ECS/EKS
 
-3. **Payment Gateway Integration**: Integrate with a payment gateway service like Amazon Pay or a third-party provider such as Stripe or PayPal for secure payment processing.
+Lambda functions execute specific application logic or microservices hosted on ECS/EKS.
+ECS/EKS with Databases
 
-### Back-End:
-4. **Serverless Computing**: Develop the back-end logic using AWS Lambda functions, which allow you to execute code without provisioning or managing servers. Lambda functions can be triggered by various events, such as API Gateway requests or changes to DynamoDB tables.
+With Amazon RDS: Manages relational data such as product catalogs and orders.
+With DynamoDB: Handles non-relational data such as user sessions and shopping carts.
+ECS/EKS with Amazon Elasticsearch
 
-5. **API Gateway**: Create RESTful APIs using Amazon API Gateway to expose the back-end functionality to the front-end application. API Gateway enables you to define, deploy, and manage APIs with features like authentication, authorization, and rate limiting.
+Interacts with Elasticsearch for product search functionality and real-time analytics.
+Amazon Elasticsearch with SNS & SQS
 
-### Database and Storage:
-6. **Product Catalog**: Store product information in Amazon DynamoDB, a fully managed NoSQL database service. DynamoDB provides fast and scalable storage for product catalogs, with support for flexible data models and automatic scaling based on demand.
+Sends search and analytics results to SNS for notifications or SQS for queuing.
+AWS Kinesis
 
-7. **User Sessions and Cart**: Use Amazon DynamoDB or Amazon Aurora for storing user sessions, shopping carts, and other session-related data. DynamoDB provides low-latency access to data and seamless scalability, while Aurora offers the performance and reliability of a traditional relational database.
+Collects and processes real-time streaming data, such as user activity logs and sales metrics.
+SNS & SQS Interactions
 
-8. **Media Storage**: Store product images, videos, and other media assets in Amazon S3 buckets. S3 provides durable and scalable object storage with features like versioning, encryption, and lifecycle management.
+With User Devices: Sends notifications about order updates, promotions, etc.
+Within ECS/EKS: Manages inter-service communication and decoupling through reliable messaging.
+IAM
 
-### Other Services:
-9. **Event-Driven Architecture**: Implement event-driven architecture using Amazon Simple Queue Service (SQS) and Amazon Simple Notification Service (SNS) to decouple and scale microservices within the system. Use SQS for message queuing and SNS for event notification and publishing.
-
-10. **Monitoring and Logging**: Monitor the health and performance of the system using Amazon CloudWatch, which provides metrics, logs, and alarms for monitoring AWS resources and applications. Use AWS CloudTrail for auditing and tracking API activity.
-
-11. **Security and Compliance**: Implement security best practices using AWS Identity and Access Management (IAM) for managing user permissions and access control. Enable encryption for data at rest and in transit using AWS Key Management Service (KMS) and SSL/TLS encryption.
-
-12. **High Availability and Fault Tolerance**: Deploy the system across multiple AWS Availability Zones (AZs) for high availability and fault tolerance. Use AWS Elastic Load Balancing (ELB) to distribute incoming traffic across EC2 instances or Lambda functions in different AZs.
-
-### Scalability and Elasticity:
-13. **Auto Scaling**: Configure auto scaling for EC2 instances or Lambda functions to automatically adjust capacity based on traffic demand. Use Amazon DynamoDB's auto scaling feature to handle increases in read and write capacity dynamically.
-
-14. **Elastic Load Balancing**: Distribute incoming traffic across multiple instances or Lambda functions using Elastic Load Balancing (ELB). ELB automatically scales and load balances traffic across instances or functions to ensure optimal performance and availability.
-
-15. **Caching**: Implement caching using Amazon ElastiCache to improve the performance and scalability of the system. ElastiCache provides managed caching services for popular caching engines like Redis and Memcached.
-
-By leveraging these AWS services, you can design and build a scalable, reliable, and cost-effective online shopping system that meets the needs of your business and provides a seamless experience for users.
+Controls access to all AWS services, ensuring security and compliance across the architecture.
