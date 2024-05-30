@@ -485,10 +485,7 @@ In summary, `UNION` and `UNION ALL` are SQL operators used to combine the result
 [Insert diagram here]
 
 ### Explanation:
-[Explain the design of YouTube]
-```plaintext
-[Insert diagram here]
-```
+![youtube](./img/youtube.png)
 
 ### Explanation:
 
@@ -821,12 +818,6 @@ Kibana is an open-source data visualization and exploration platform that provid
 4. **Alerting and Monitoring**: Kibana supports alerting and monitoring features that allow users to define threshold-based alerts and monitor system metrics in real-time. Users can receive notifications when predefined conditions are met or when anomalies are detected in their data.
 
 Overall, ELK is a comprehensive stack for centralized logging, log analysis, and visualization, enabling organizations to gain insights into their distributed systems, troubleshoot issues, and monitor performance effectively.
-
-
-
-
-
-
 
 #### Circuit Breaker:
 A Circuit Breaker is a design pattern used in distributed systems to improve the resilience and fault tolerance of applications by preventing cascading failures and handling failures gracefully. It is inspired by the electrical circuit breaker mechanism and is widely used in microservices architectures to manage dependencies between services.
