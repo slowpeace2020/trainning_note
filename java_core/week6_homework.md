@@ -1,9 +1,7 @@
 # Homework 11
 
 ## JDBC vs Hibernate
-# JDBC vs Hibernate
-
-## JDBC (Java Database Connectivity)
+### JDBC (Java Database Connectivity)
 
 JDBC is a Java API that enables Java programs to interact with databases. It provides a set of classes and interfaces to connect to a database, execute SQL queries, and process the results. Here are some key points about JDBC:
 
