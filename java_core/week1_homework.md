@@ -54,6 +54,123 @@
 ## Homework  1 List (write necessary code to answer the following questions)
 ### List vs Set
 Set is unordered and contains different elements, whereas the list is ordered and can contain the same elements in it
+In Java, `List` and `Set` are two common collection interfaces with distinct characteristics and use cases. Here’s a detailed comparison of `List` and `Set`:
+
+### List
+- **Ordered**: `List` maintains the order of elements as they were added.
+- **Allows Duplicates**: `List` can contain duplicate elements.
+- **Indexable**: You can access elements by their index.
+- **Common Implementations**: `ArrayList`, `LinkedList`, `Vector`, `Stack`.
+- **Usage Example**:
+  ```java
+  import java.util.ArrayList;
+  import java.util.List;
+
+  public class ListExample {
+      public static void main(String[] args) {
+          List<String> list = new ArrayList<>();
+          list.add("apple");
+          list.add("banana");
+          list.add("cherry");
+          list.add("apple"); // Allows duplicates
+          
+          System.out.println(list.get(1)); // Accesses the element at index 1, outputs "banana"
+          System.out.println(list); // Outputs [apple, banana, cherry, apple]
+      }
+  }
+  ```
+
+### Set
+- **Unordered**: `Set` does not maintain any specific order of elements.
+- **No Duplicates**: `Set` cannot contain duplicate elements; each element must be unique.
+- **Non-Indexable**: You cannot access elements by an index.
+- **Common Implementations**: `HashSet`, `LinkedHashSet`, `TreeSet`.
+- **Usage Example**:
+  ```java
+  import java.util.HashSet;
+  import java.util.Set;
+
+  public class SetExample {
+      public static void main(String[] args) {
+          Set<String> set = new HashSet<>();
+          set.add("apple");
+          set.add("banana");
+          set.add("cherry");
+          set.add("apple"); // Duplicate "apple" is ignored
+          
+          System.out.println(set.contains("banana")); // Checks if "banana" is in the set, outputs true
+          System.out.println(set); // Outputs elements in an unspecified order, e.g., [banana, apple, cherry]
+      }
+  }
+  ```
+
+### Key Differences
+1. **Order**:
+   - **List**: Maintains the insertion order of elements.
+   - **Set**: Does not maintain order (with the exception of `LinkedHashSet` which maintains insertion order, and `TreeSet` which maintains sorted order).
+
+2. **Duplicates**:
+   - **List**: Allows duplicate elements.
+   - **Set**: Does not allow duplicate elements.
+
+3. **Indexing**:
+   - **List**: Supports accessing elements by index.
+   - **Set**: Does not support indexing.
+
+4. **Performance**:
+   - **List**: Generally has efficient access by index but may have slower searches if not using a specialized list.
+   - **Set**: Generally provides faster searches and lookups due to the underlying hashing or tree structure.
+
+### Use Case Examples
+
+#### Using a List
+- **Scenario**: Maintaining a sequence of tasks where the order matters and duplicates are allowed.
+  ```java
+  import java.util.ArrayList;
+  import java.util.List;
+
+  public class TaskList {
+      public static void main(String[] args) {
+          List<String> tasks = new ArrayList<>();
+          tasks.add("Task 1");
+          tasks.add("Task 2");
+          tasks.add("Task 1"); // Duplicate task
+          
+          for (String task : tasks) {
+              System.out.println(task);
+          }
+          // Outputs:
+          // Task 1
+          // Task 2
+          // Task 1
+      }
+  }
+  ```
+
+#### Using a Set
+- **Scenario**: Maintaining a collection of unique user IDs where the order does not matter.
+  ```java
+  import java.util.HashSet;
+  import java.util.Set;
+
+  public class UserSet {
+      public static void main(String[] args) {
+          Set<String> userIds = new HashSet<>();
+          userIds.add("user123");
+          userIds.add("user456");
+          userIds.add("user123"); // Duplicate user ID
+
+          for (String userId : userIds) {
+              System.out.println(userId);
+          }
+          // Outputs:
+          // user123
+          // user456
+      }
+  }
+  ```
+
+In summary, the choice between `List` and `Set` in Java depends on the specific requirements of your application, such as the need for order, indexing, or uniqueness.
 
 
 ### LinkedList vs ArrayList
@@ -68,15 +185,233 @@ Set is unordered and contains different elements, whereas the list is ordered an
    - Can also be used as a queue or a stack.
 
 ### What is Map Interface
-No Duplicate Keys: Each key in a Map must be unique. If a duplicate key is used in an attempt to put a value, the old value associated with that key will be overwritten with the new value.
-Each Key Maps to Exactly One Value: A key can map to any value, including null (unless the Map implementation restricts null values).
-Ordering: The Map interface itself does not guarantee any specific order of its elements. However, some implementations, like LinkedHashMap, maintain elements in the order they were inserted, and TreeMap sorts the keys according to their natural ordering or using a specified comparator.
-How does HashMap work
-HashMap uses an array-based structure internally to store its entries, which are essentially key-value pairs. Each entry in the array is a bucket that can hold zero or more entries, typically in the form of a linked list or, in more recent Java versions, as a balanced tree when buckets become too large.
+In Java, the `Map` interface represents a collection of key-value pairs. Each key is associated with exactly one value. Maps are useful when you need to associate unique keys with specific values and are often used for tasks like dictionaries, caches, and data lookups.
 
-When you add a key-value pair to a HashMap, it uses the key’s hashCode() method to compute an initial hash value. This hash is then transformed to reduce the impact of poor quality hash functions and to better distribute the keys across the available buckets. This transformation typically involves rehashing the initial hash to ensure a more uniform distribution of entries.
+### Key Characteristics of `Map`
 
-Once the hash is computed, HashMap determines the index in its array by using the hash and the length of the array.
+- **Key-Value Pairs**: Each entry in a map consists of a key and a corresponding value.
+- **Unique Keys**: Keys in a map must be unique. If a key is added to the map that already exists, its value is updated to the new value.
+- **Non-Indexable**: Unlike lists, maps do not maintain order based on insertion or indexing, although some implementations like `LinkedHashMap` and `TreeMap` maintain specific orders.
+
+### Common Implementations of `Map`
+
+1. **HashMap**:
+   - **Order**: Does not maintain any order.
+   - **Performance**: Offers constant-time performance for basic operations like get and put, assuming the hash function disperses elements properly.
+   - **Usage Example**:
+     ```java
+     import java.util.HashMap;
+     import java.util.Map;
+
+     public class HashMapExample {
+         public static void main(String[] args) {
+             Map<String, Integer> map = new HashMap<>();
+             map.put("apple", 3);
+             map.put("banana", 5);
+             map.put("cherry", 2);
+             
+             System.out.println(map.get("banana")); // Outputs: 5
+             System.out.println(map); // Outputs: {apple=3, banana=5, cherry=2}
+         }
+     }
+     ```
+
+2. **LinkedHashMap**:
+   - **Order**: Maintains the order of insertion.
+   - **Usage Example**:
+     ```java
+     import java.util.LinkedHashMap;
+     import java.util.Map;
+
+     public class LinkedHashMapExample {
+         public static void main(String[] args) {
+             Map<String, Integer> map = new LinkedHashMap<>();
+             map.put("apple", 3);
+             map.put("banana", 5);
+             map.put("cherry", 2);
+             
+             System.out.println(map); // Outputs: {apple=3, banana=5, cherry=2}
+         }
+     }
+     ```
+
+3. **TreeMap**:
+   - **Order**: Maintains a sorted order of keys based on their natural ordering or a specified comparator.
+   - **Usage Example**:
+     ```java
+     import java.util.Map;
+     import java.util.TreeMap;
+
+     public class TreeMapExample {
+         public static void main(String[] args) {
+             Map<String, Integer> map = new TreeMap<>();
+             map.put("apple", 3);
+             map.put("banana", 5);
+             map.put("cherry", 2);
+             
+             System.out.println(map); // Outputs: {apple=3, banana=5, cherry=2}
+         }
+     }
+     ```
+
+### Basic Operations
+
+- **put(K key, V value)**: Adds a key-value pair to the map.
+- **get(Object key)**: Retrieves the value associated with the specified key.
+- **remove(Object key)**: Removes the key-value pair associated with the specified key.
+- **containsKey(Object key)**: Checks if the map contains the specified key.
+- **containsValue(Object value)**: Checks if the map contains the specified value.
+- **keySet()**: Returns a set of all the keys in the map.
+- **values()**: Returns a collection of all the values in the map.
+- **entrySet()**: Returns a set of all the key-value pairs in the map.
+
+### Example Code
+
+#### Basic Map Operations
+```java
+import java.util.HashMap;
+import java.util.Map;
+
+public class MapExample {
+    public static void main(String[] args) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("apple", 3);
+        map.put("banana", 5);
+        map.put("cherry", 2);
+        
+        // Accessing elements
+        System.out.println("Bananas: " + map.get("banana")); // Outputs: Bananas: 5
+        
+        // Checking key existence
+        System.out.println("Contains 'apple'? " + map.containsKey("apple")); // Outputs: Contains 'apple'? true
+        
+        // Removing an element
+        map.remove("cherry");
+        
+        // Iterating over the map
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+        // Outputs:
+        // apple: 3
+        // banana: 5
+    }
+}
+```
+
+### Use Cases
+- **Dictionaries**: Associating words with their definitions.
+- **Caches**: Storing temporary data for fast retrieval.
+- **Configuration Settings**: Mapping configuration keys to their values.
+- **Count Occurrences**: Counting occurrences of items (e.g., word frequencies in a document).
+
+In summary, the `Map` interface in Java is a powerful tool for associating unique keys with values, offering various implementations that cater to different needs regarding order and performance.
+
+### How does HashMap work
+Sure, let’s dive deeper into how `HashMap` works in Java.
+
+### Overview
+
+A `HashMap` in Java is part of the `java.util` package and implements the `Map` interface. It uses a hash table to store key-value pairs, and it allows for constant-time complexity for most operations, given a good hash function.
+
+### Key Concepts
+
+1. **Hash Table**: The underlying data structure of a `HashMap` is an array of buckets.
+2. **Hash Function**: Converts a key into a hash code, which is then mapped to a bucket index.
+3. **Buckets**: Each bucket can hold multiple entries in case of collisions, using a linked list or tree (since Java 8).
+4. **Collision Handling**: When multiple keys hash to the same bucket, a linked list or tree is used to store multiple entries.
+
+### Internal Structure
+
+- **Node Class**: Represents an entry in the `HashMap`. Each node contains a key, value, hash code, and a reference to the next node.
+  ```java
+  static class Node<K, V> implements Map.Entry<K, V> {
+      final int hash;
+      final K key;
+      V value;
+      Node<K, V> next;
+
+      Node(int hash, K key, V value, Node<K, V> next) {
+          this.hash = hash;
+          this.key = key;
+          this.value = value;
+          this.next = next;
+      }
+
+      // Implement Map.Entry methods
+  }
+  ```
+
+### Basic Operations
+
+#### `put(K key, V value)`
+
+1. **Hash Calculation**: Compute the hash code of the key using `key.hashCode()` and then transform it using bitwise operations.
+2. **Index Calculation**: Determine the bucket index using `(n - 1) & hash`, where `n` is the size of the hash table.
+3. **Bucket Access**: Access the bucket at the calculated index.
+4. **Collision Handling**:
+   - If the bucket is empty, create a new node.
+   - If the bucket is not empty, traverse the linked list or tree in the bucket to find if the key already exists. If it does, update the value. If it doesn't, append the new node to the end.
+5. **Resize**: If the load factor exceeds the threshold (default 0.75), the hash table is resized to twice its size, and all entries are rehashed.
+
+#### `get(Object key)`
+
+1. **Hash Calculation**: Compute the hash code of the key and transform it.
+2. **Index Calculation**: Determine the bucket index.
+3. **Bucket Access**: Access the bucket at the calculated index.
+4. **Search**: Traverse the linked list or tree in the bucket to find the node with the matching key.
+5. **Return Value**: If the key is found, return the associated value. If not, return `null`.
+
+### Example Code
+```java
+import java.util.HashMap;
+import java.util.Map;
+
+public class HashMapExample {
+    public static void main(String[] args) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("apple", 3);
+        map.put("banana", 5);
+        map.put("cherry", 2);
+
+        // Accessing elements
+        System.out.println("Bananas: " + map.get("banana")); // Outputs: Bananas: 5
+
+        // Checking key existence
+        System.out.println("Contains 'apple'? " + map.containsKey("apple")); // Outputs: Contains 'apple'? true
+
+        // Removing an element
+        map.remove("cherry");
+
+        // Iterating over the map
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+        // Outputs:
+        // apple: 3
+        // banana: 5
+    }
+}
+```
+
+### Resizing
+
+When the number of entries exceeds the product of the load factor and the current capacity, the hash table is resized:
+1. **New Capacity**: The capacity is typically doubled.
+2. **Rehashing**: All existing entries are rehashed and placed into new buckets.
+
+### Performance
+
+- **Time Complexity**: The average time complexity for `put`, `get`, and `remove` operations is O(1), assuming a good hash function and minimal collisions.
+- **Worst-Case Time Complexity**: In the worst case, operations can degrade to O(n) if many collisions occur, resulting in long chains or tree traversals.
+
+### Improvements in Java 8
+
+In Java 8, `HashMap` has been improved to handle high collision scenarios more efficiently by using balanced trees instead of linked lists once a certain threshold is reached (usually when the length of a bin exceeds 8). This change helps to maintain O(log n) complexity in the worst-case scenarios.
+
+### Summary
+
+A `HashMap` is a highly efficient and flexible way to store and retrieve key-value pairs, with a typical constant-time complexity for basic operations. Its internal use of hashing and handling of collisions through chaining and tree structures (in later versions) ensures robust performance, even with large datasets.
 
 ### What is hash collision
 A hash collision occurs when two distinct keys produce the same hash code or hash to the same index in a hash table, despite being different in actual value.
@@ -94,15 +429,100 @@ Collections simplify the implementation of various data access patterns, such as
 
 
 ### What is immutable class
-A type of immutable class whose instances cannot be modified after they are created. This means that once an instance of an immutable class is instantiated, its fields or state cannot change in any way. Immutable objects are useful for building reliable and secure applications, as they can simplify concurrency and offer strong guarantees against data alteration.
+An immutable class in Java is a class whose instances (objects) cannot be modified after they are created. Once you create an instance of an immutable class, its state (the values of its fields) cannot change. Immutable classes are particularly useful in multi-threaded environments because they are inherently thread-safe: their state cannot change, so there are no concerns about synchronization or concurrent modifications.
 
-Final Class: The class itself is often declared final to prevent subclassing, which could potentially add mutable behavior.
-Final Fields: All fields of the class are usually declared final so they can be assigned only once.
-No Setter Methods: Immutable classes do not provide "setter" methods that modify fields or objects referred to by fields.
-Initialization via Constructors: All fields of an immutable object are typically initialized in the constructor. Once set, these fields cannot be changed.
-Deep Copies for Complex Fields: If an immutable object has fields that refer to mutable objects, such as arrays or collections, these fields should ideally point to copies of these objects, not to the original instances. This practice ensures that the mutable objects cannot be changed from outside the immutable object.
-Returning Copies Instead of Original References: Any method that returns information about the object's state should return a new copy of the object, rather than a direct reference to a mutable field.
+### Characteristics of an Immutable Class
 
+To create an immutable class in Java, follow these guidelines:
+
+1. **Declare the Class as Final**: Prevents the class from being subclassed. If a class can be subclassed, its behavior could be altered.
+   ```java
+   public final class ImmutableClass {
+       // class definition
+   }
+   ```
+
+2. **Make All Fields Final and Private**: Fields should be private to prevent direct access and modification, and final to ensure they are assigned only once.
+   ```java
+   private final int value;
+   ```
+
+3. **Provide No Setters**: Do not provide any methods that modify fields or objects referred to by fields.
+   ```java
+   // No setter methods
+   ```
+
+4. **Initialize All Fields via a Constructor**: Assign values to all fields in the constructor.
+   ```java
+   public ImmutableClass(int value) {
+       this.value = value;
+   }
+   ```
+
+5. **Ensure Deep Immutability**: If the class has fields that refer to mutable objects (e.g., arrays, collections, or other mutable classes), ensure that these objects are also immutable or are not directly accessible.
+   - For mutable objects, perform a deep copy in the constructor and return a copy instead of the original in any accessor methods.
+   ```java
+   private final int[] array;
+
+   public ImmutableClass(int[] array) {
+       this.array = array.clone(); // Perform a deep copy
+   }
+
+   public int[] getArray() {
+       return array.clone(); // Return a copy, not the original
+   }
+   ```
+
+6. **Return Copies of Mutable Fields**: If a method returns a reference to a mutable object, return a copy of the object to maintain immutability.
+
+### Example of an Immutable Class
+
+Here is a simple example of an immutable class:
+
+```java
+public final class ImmutableClass {
+    private final int id;
+    private final String name;
+    private final int[] scores;
+
+    public ImmutableClass(int id, String name, int[] scores) {
+        this.id = id;
+        this.name = name;
+        // Create a defensive copy of the mutable array
+        this.scores = scores.clone();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int[] getScores() {
+        // Return a copy of the mutable array
+        return scores.clone();
+    }
+}
+```
+
+### Benefits of Immutable Classes
+
+1. **Thread-Safety**: Immutable objects are inherently thread-safe and can be shared freely between threads without synchronization.
+2. **Simplicity**: The state of an immutable object does not change after creation, making it simpler to understand and reason about.
+3. **Security**: Immutable objects are inherently more secure because their state cannot be altered.
+4. **Caching**: Immutable objects can be safely cached and reused without worrying about changes in state.
+
+### Common Immutable Classes in Java
+
+Java provides several immutable classes in the standard library, such as:
+- `String`
+- `Integer`, `Long`, `Double`, and other wrapper classes for primitive types
+- `BigInteger` and `BigDecimal`
+- `LocalDate`, `LocalTime`, `LocalDateTime`, and other classes in the `java.time` package
+
+By adhering to the principles outlined above, you can create your own immutable classes in Java, providing the benefits of simplicity, security, and thread-safety in your applications.
 
 ### HashTable vs HashMap vs ConcurrentHashmap
 In Java, `HashTable`, `HashMap`, and `ConcurrentHashMap` are all implementations of the `Map` interface but have different characteristics and are suited to different use cases.
@@ -265,7 +685,125 @@ Memory for objects of reference types is allocated on the heap, and the variable
 
 ## Homework 2 Question List (write necessary code to answer the following questions)
 ### What is final keyword
+The `final` keyword in Java is a modifier that can be applied to classes, methods, and variables. Its primary purpose is to define constants, prevent inheritance, and ensure that variables are not re-assigned after initialization. Here's a detailed look at the different uses of the `final` keyword:
 
+### `final` Classes
+
+When a class is declared as `final`, it cannot be subclassed. This is useful when you want to prevent other classes from extending your class and potentially altering its behavior.
+
+```java
+public final class FinalClass {
+    // class definition
+}
+```
+
+### `final` Methods
+
+When a method is declared as `final`, it cannot be overridden by subclasses. This is useful when you want to ensure that the implementation of a method remains unchanged in any subclasses.
+
+```java
+public class BaseClass {
+    public final void finalMethod() {
+        // method implementation
+    }
+}
+
+public class SubClass extends BaseClass {
+    // This will cause a compile-time error:
+    // public void finalMethod() { ... }
+}
+```
+
+### `final` Variables
+
+#### Final Instance Variables
+
+When an instance variable (field) is declared as `final`, it must be initialized once and cannot be changed afterwards. This is useful for defining constants within a class.
+
+```java
+public class FinalFieldClass {
+    private final int value;
+
+    public FinalFieldClass(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+}
+```
+
+#### Final Local Variables
+
+When a local variable in a method or a block is declared as `final`, it can only be assigned once.
+
+```java
+public class FinalLocalVariable {
+    public void method() {
+        final int localVar = 10;
+        // localVar = 20; // This will cause a compile-time error
+    }
+}
+```
+
+#### Final Parameters
+
+Method parameters can also be declared as `final`. This prevents the parameter from being reassigned within the method.
+
+```java
+public class FinalParameter {
+    public void method(final int param) {
+        // param = 20; // This will cause a compile-time error
+    }
+}
+```
+
+### `final` and Immutability
+
+The `final` keyword is often used in conjunction with immutable classes to ensure that once an object is created, its state cannot be changed. For example, the `String` class in Java is immutable, and it makes extensive use of `final` fields.
+
+### Example of Using `final` Keyword
+
+```java
+public final class ImmutableExample {
+    private final String name;
+    private final int age;
+
+    public ImmutableExample(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public static void main(String[] args) {
+        ImmutableExample obj = new ImmutableExample("Alice", 30);
+        System.out.println(obj.getName()); // Outputs: Alice
+        System.out.println(obj.getAge()); // Outputs: 30
+    }
+}
+```
+
+In this example:
+- The class `ImmutableExample` is `final`, so it cannot be subclassed.
+- The fields `name` and `age` are `final`, ensuring they can only be assigned once.
+- The class is effectively immutable because its state cannot be changed after creation.
+
+### Summary
+
+The `final` keyword in Java is a powerful modifier used to:
+- Prevent classes from being subclassed (`final` class).
+- Prevent methods from being overridden (`final` method).
+- Ensure variables are assigned only once (`final` variables).
+  It plays a crucial role in ensuring immutability, defining constants, and providing safety in concurrent programming.
+- 
 ### Create a Student immutable class, with fields student id, first name, last name, List<Course> courses,  (be careful with Course class)
 To create an immutable `Student` class with the specified fields, we need to follow these steps:
 
