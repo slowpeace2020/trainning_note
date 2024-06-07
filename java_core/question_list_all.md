@@ -221,3 +221,23 @@ Here's the provided list converted into Markdown format:
 - **AWS SQS vs RabbitMQ vs Kafka**
 - **AWS SNS vs SQS**
 
+### other
+[AngularJS](https://github.com/sudheerj/angular-interview-questions)
+#### What is Angular Framework?
+#### What are the key components of Angular?
+#### What are the differences between Component and Directive?
+#### What is a data binding?
+#### What is dependency injection in Angular?
+#### What are observables?
+#### What is a bootstrapping module?
+#### What is RxJS?
+#### What is an observable?
+#### What is the difference between promise and observable?
+#### What is Angular Router?
+
+
+#### What is Grafana & Prometheus
+#### What is AWS CloudWatch
+#### What is Kubernates
+#### What is Cassandra
+
