@@ -214,4 +214,49 @@ The Property Management Platform is designed to improve work efficiency for comm
 
 ---
 
-The Property Management Platform design document outlines the key aspects of the project, including its purpose, architecture, modules, APIs, data flow, and challenges. The integration of modern technologies and best practices ensures the system meets the high standards required for operational excellence and customer satisfaction.
+## 10. Additional Project Insights
+
+### Multithreading Usage
+In the Property Management Platform, we used multithreading to handle concurrent processing of visitor check-ins and asset status updates. This ensured that our system could efficiently manage multiple operations simultaneously without performance degradation.
+
+### Builder Design Pattern
+The Builder design pattern was employed in the Report Service to construct complex report objects. This pattern helped in managing the creation process, especially when reports required multiple optional parameters and complex configurations.
+
+### Team Composition
+As the team leader, I oversaw a team of six members:
+- **Backend Developers (2):** Focused on developing and maintaining the microservices.
+- **Frontend Developer (1):** Developed the user interface and ensured seamless user experience.
+- **QA Engineer (1):** Responsible for testing the platform and ensuring high-quality releases.
+- **DevOps Engineer (1):** Managed our CI/CD pipeline, AWS infrastructure, and ensured system reliability.
+- **Product Manager (1):** Coordinated requirements and worked with stakeholders to define features.
+
+### Jenkins Pipeline Design
+Our Jenkins pipeline for AWS included the following stages:
+1. **Code Checkout:** Retrieve the latest code from the repository.
+2. **Build:** Compile the code and run unit tests.
+3. **Docker Build:** Build Docker images for each microservice.
+4. **Security Scan:** Perform security checks on the Docker images.
+5. **Deploy to Staging:** Deploy the Docker images to the staging environment on AWS ECS.
+6. **Integration Tests:** Run integration tests in the staging environment.
+7. **Deploy to Production:** Upon successful tests, deploy the Docker images to the production environment on AWS ECS.
+8. **Notification:** Send deployment notifications to the team via Slack.
+
+### Monitoring Strategy
+Our monitoring setup included:
+- **AWS CloudWatch:** Used for monitoring the health and performance of our AWS resources.
+- **Prometheus and Grafana:** Implemented for detailed application metrics and dashboard visualizations.
+- **ELK Stack:** Utilized for log aggregation, searching, and analysis.
+
+### Usage Metrics
+- **Daily Users:** Approximately 2,000 active users daily.
+- **Transactions Per Second (TPS):** Average TPS of 50 during peak hours.
+- **Queries Per Second (QPS):** Average QPS of 100 for our database.
+
+### Frontend Story
+Our frontend, developed using React, provided an intuitive and responsive interface for users. We focused on creating a seamless user experience with features like real
+
+-time notifications, user-friendly forms for reporting issues, and dashboards for monitoring asset status and visitor information. The frontend communicated with backend microservices via REST APIs, ensuring efficient data exchange and updates.
+
+---
+
+
