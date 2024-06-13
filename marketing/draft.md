@@ -1,141 +1,183 @@
-# Database Design Document 
+### 7. Message Queue
 
-## Community Asset Module
+The message queue system is crucial for handling asynchronous communication between various microservices within the Property Management Platform. It ensures reliable message delivery, decouples microservices, and enhances system scalability and resilience.
 
-- **Community Table: community**
+#### Overview
 
-| Field Name                | Data Type      | Nullable | Description           |
-| ------------------------- | -------------- | -------- | --------------------- |
-| community_id              | bigint(20)     | NO       | Community ID          |
-| community_name            | varchar(128)   | YES      | Community Name        |
-| community_code            | varchar(128)   | YES      | Community Code        |
-| community_province_code   | varchar(32)    | YES      | Province Code         |
-| community_city_code       | varchar(32)    | YES      | City Code             |
-| community_town_code       | varchar(32)    | YES      | Town Code             |
-| community_detailed_address| varchar(128)   | YES      | Detailed Address      |
-| community_longitude       | varchar(32)    | YES      | Longitude             |
-| community_latitude        | varchar(32)    | YES      | Latitude              |
-| dept_id                   | bigint(32)     | YES      | Property ID           |
-| community_sort            | int(11)        | YES      | Sort Order            |
-| create_by                 | varchar(32)    | YES      | Creator               |
-| create_time               | datetime       | YES      | Creation Time         |
-| update_by                 | varchar(32)    | YES      | Updater               |
-| update_time               | datetime       | YES      | Update Time           |
-| remark                    | varchar(1024)  | YES      | Remark                |
-|                           |                |          |                       |
+**Purpose:**
+- To facilitate asynchronous communication between different services.
+- To decouple service dependencies.
+- To handle high throughput and ensure reliable message delivery.
 
-- **Building Table: building**
+**Components:**
+- **Message Broker:** Manages the message queues.
+- **Producers:** Services that send messages.
+- **Consumers:** Services that receive and process messages.
 
-| Field Name         | Data Type       | Nullable | Description   |
-| ------------------ | --------------- | -------- | ------------- |
-| building_id        | bigint(20)      | YES      | Building ID   |
-| building_name      | varchar(32)     | YES      | Building Name |
-| building_code      | varchar(32)     | YES      | Building Code |
-| building_acreage   | decimal(32,10)  | YES      | Building Area |
-| community_id       | bigint(20)      | YES      | Community ID  |
-| create_by          | varchar(32)     | YES      | Creator       |
-| create_time        | datetime        | YES      | Creation Time |
-| update_by          | varchar(32)     | YES      | Updater       |
-| update_time        | datetime        | YES      | Update Time   |
-| remark             | varchar(1024)   | YES      | Remark        |
-|                    |                 |          |               |
+**Technology:** RabbitMQ (chosen for its robustness and extensive support in the industry)
 
-- **Unit Table: unit**
+#### Key Message Queues
 
-| Field Name           | Data Type       | Nullable | Description      |
-| -------------------- | --------------- | -------- | ---------------- |
-| unit_id              | bigint(20)      | YES      | Unit ID          |
-| community_id         | bigint(20)      | YES      | Community ID     |
-| building_id          | bigint(20)      | YES      | Building ID      |
-| unit_name            | varchar(32)     | YES      | Unit Name        |
-| unit_code            | varchar(128)    | YES      | Unit Code        |
-| unit_level           | int(11)         | YES      | Number of Floors |
-| unit_acreage         | decimal(32,10)  | YES      | Building Area    |
-| unit_have_elevator   | varchar(32)     | YES      | Has Elevator     |
-| create_by            | varchar(32)     | YES      | Creator          |
-| create_time          | datetime        | YES      | Creation Time    |
-| update_by            | varchar(32)     | YES      | Updater          |
-| update_time          | datetime        | YES      | Update Time      |
-| remark               | varchar(1024)   | YES      | Remark           |
-|                      |                 |          |                  |
+1. **User Registration Queue:**
+    - **Producer:** User Service
+    - **Consumer:** Email Notification Service
+    - **Purpose:** To send a confirmation email after a user registers.
 
-- **Room Table: room**
+2. **Asset Management Queue:**
+    - **Producer:** Asset Service
+    - **Consumer:** Reporting Service
+    - **Purpose:** To update reports when new assets are added or updated.
 
-| Field Name                | Data Type       | Nullable | Description           |
-| ------------------------- | --------------- | -------- | --------------------- |
-| room_id                   | bigint(20)      | YES      | Room ID               |
-| community_id              | bigint(20)      | YES      | Community ID          |
-| building_id               | bigint(20)      | YES      | Building ID           |
-| unit_id                   | bigint(20)      | YES      | Unit ID               |
-| room_level                | int(11)         | YES      | Floor Number          |
-| room_code                 | varchar(32)     | YES      | Room Code             |
-| room_name                 | varchar(32)     | YES      | Room Name             |
-| room_acreage              | decimal(32,10)  | YES      | Building Area         |
-| room_cost                 | decimal(32,10)  | YES      | Cost Factor           |
-| room_status               | varchar(32)     | YES      | Room Status           |
-| room_is_shop              | varchar(32)     | YES      | Is Shop               |
-| room_is_commercial_house  | varchar(32)     | YES      | Is Commercial House   |
-| room_house_type           | varchar(32)     | YES      | House Type            |
-| create_by                 | varchar(32)     | YES      | Creator               |
-| create_time               | datetime        | YES      | Creation Time         |
-| update_by                 | varchar(32)     | YES      | Updater               |
-| update_time               | datetime        | YES      | Update Time           |
-| remark                    | varchar(1024)   | YES      | Remark                |
-|                           |                 |          |                       |
+3. **Visitor Management Queue:**
+    - **Producer:** Visitor Service
+    - **Consumer:** Security Notification Service
+    - **Purpose:** To notify security staff about visitor arrivals.
 
-- **Community Interaction Table: community_interaction**
+4. **Repair Request Queue:**
+    - **Producer:** Repair Service
+    - **Consumer:** Maintenance Staff Notification Service
+    - **Purpose:** To inform maintenance staff about new repair requests.
 
-| Field Name       | Data Type      | Nullable | Description           |
-| ---------------- | -------------- | -------- | --------------------- |
-| interaction_id   | bigint(20)     | NO       | Interaction ID        |
-| community_id     | bigint(20)     | YES      | Community ID          |
-| create_by        | varchar(32)    | YES      | Creator ID            |
-| update_by        | varchar(32)    | YES      | Updater ID            |
-| create_time      | datetime       | YES      | Creation Time         |
-| update_time      | datetime       | YES      | Update Time           |
-| content          | varchar(1024)  | YES      | Content               |
-| del_flag         | int(2)         | YES      | Deletion Status (0 default, 1 deleted) |
-| remark           | varchar(255)   | YES      | Remark                |
-| user_id          | bigint(20)     | YES      | User ID               |
-|                  |                |          |                       |
+5. **Complaint Management Queue:**
+    - **Producer:** Complaint Service
+    - **Consumer:** Customer Service Notification Service
+    - **Purpose:** To notify customer service about new complaints filed by residents.
 
-## Community Management Module
+6. **Reporting Queue:**
+    - **Producer:** Various Services (User, Asset, Visitor, etc.)
+    - **Consumer:** Reporting Service
+    - **Purpose:** To aggregate data for generating reports.
 
-- **Owner Table: zy_owner**
+7. **Notification Queue:**
+    - **Producer:** Various Services (User, Asset, Repair, Complaint, etc.)
+    - **Consumer:** Notification Service
+    - **Purpose:** To send notifications to users, admins, and staff about various events and updates.
 
-| Field Name           | Data Type      | Nullable | Description                     |
-| -------------------- | -------------- | -------- | ------------------------------- |
-| owner_id             | bigint(20)     | NO       | Owner ID                        |
-| owner_nickname       | varchar(30)    | YES      | Nickname                        |
-| owner_real_name      | varchar(30)    | YES      | Real Name                       |
-| owner_gender         | varchar(10)    | YES      | Gender (unknown/male/female)    |
-| owner_age            | int(3)         | YES      | Age                             |
-| owner_id_card        | varchar(20)    | YES      | ID Card Number                  |
-| owner_phone_number   | varchar(11)    | YES      | Phone Number                    |
-| owner_open_id        | varchar(64)    | YES      | OpenID                          |
-| owner_wechat_id      | varchar(64)    | YES      | WeChat ID                       |
-| owner_qq_number      | varchar(20)    | YES      | QQ Number                       |
-| owner_birthday       | date           | YES      | Birthday                        |
-| owner_portrait       | varchar(256)   | YES      | Portrait                        |
-| owner_signature      | varchar(64)    | YES      | Signature                       |
-| owner_status         | varchar(10)    | YES      | Status (enable/disable)         |
-| owner_logon_mode     | varchar(10)    | YES      | Registration Mode (WeChat/app/web) |
-| owner_type           | varchar(32)    | YES      | Owner Type                      |
-| owner_password       | varchar(128)   | YES      | Password                        |
-| create_by            | varchar(32)    | YES      | Creator                         |
-| create_time          | datetime       | YES      | Creation Time                   |
-| update_by            | varchar(32)    | YES      | Updater                         |
-| update_time          | datetime       | YES      | Update Time                     |
-| remark               | varchar(1024)  | YES      | Remark                          |
+#### Detailed Steps for Each Queue
 
-- **House Binding Table**
+##### User Registration Queue
 
-| Field Name      | Data Type      | Nullable | Description                        |
-| --------------- | -------------- | -------- | ---------------------------------- |
-| owner_room_id   | bigint(20)     | NO       | House Binding ID                   |
-| community_id    | bigint(20)     | YES      | Community ID                       |
-| building_id     | bigint(20)     | YES      | Building ID                        |
-| unit_id         | bigint(20)     | YES      | Unit ID                            |
-| room_id         | bigint(20)     | YES      | Room ID                            |
-| owner_id        | bigint(20)     | YES      | Owner ID                           |
-| owner_type      | varchar(32)    | YES      |
+**Detailed Steps:**
+
+1. **User Registers:**
+    - User submits registration details.
+2. **User Service Publishes Message:**
+    - User Service validates data and publishes a message to the User Registration Queue.
+3. **Email Notification Service Consumes Message:**
+    - Email Notification Service retrieves the message from the queue.
+4. **Send Confirmation Email:**
+    - Email Notification Service sends a confirmation email to the user.
+
+```
+User Registers --> User Service Publishes Message --> Message Broker (User Registration Queue) --> Email Notification Service Consumes Message --> Send Confirmation Email
+```
+
+##### Asset Management Queue
+
+**Detailed Steps:**
+
+1. **Add/Update Asset Info:**
+    - Community staff add or update asset information.
+2. **Asset Service Publishes Message:**
+    - Asset Service validates data and publishes a message to the Asset Management Queue.
+3. **Reporting Service Consumes Message:**
+    - Reporting Service retrieves the message from the queue.
+4. **Update Reports:**
+    - Reporting Service updates asset-related reports.
+
+```
+Add/Update Asset Info --> Asset Service Publishes Message --> Message Broker (Asset Management Queue) --> Reporting Service Consumes Message --> Update Reports
+```
+
+##### Visitor Management Queue
+
+**Detailed Steps:**
+
+1. **Register Visitor:**
+    - Visitor provides details at the entrance.
+2. **Visitor Service Publishes Message:**
+    - Visitor Service validates data and publishes a message to the Visitor Management Queue.
+3. **Security Notification Service Consumes Message:**
+    - Security Notification Service retrieves the message from the queue.
+4. **Notify Security Staff:**
+    - Security Notification Service sends notifications to security staff about visitor arrivals.
+
+```
+Register Visitor --> Visitor Service Publishes Message --> Message Broker (Visitor Management Queue) --> Security Notification Service Consumes Message --> Notify Security Staff
+```
+
+##### Repair Request Queue
+
+**Detailed Steps:**
+
+1. **Submit Repair Request:**
+    - Resident submits a repair request.
+2. **Repair Service Publishes Message:**
+    - Repair Service validates data and publishes a message to the Repair Request Queue.
+3. **Maintenance Staff Notification Service Consumes Message:**
+    - Maintenance Staff Notification Service retrieves the message from the queue.
+4. **Notify Maintenance Staff:**
+    - Maintenance Staff Notification Service notifies maintenance staff about the repair request.
+
+```
+Submit Repair Request --> Repair Service Publishes Message --> Message Broker (Repair Request Queue) --> Maintenance Staff Notification Service Consumes Message --> Notify Maintenance Staff
+```
+
+##### Complaint Management Queue
+
+**Detailed Steps:**
+
+1. **Submit Complaint:**
+    - Resident files a complaint.
+2. **Complaint Service Publishes Message:**
+    - Complaint Service validates data and publishes a message to the Complaint Management Queue.
+3. **Customer Service Notification Service Consumes Message:**
+    - Customer Service Notification Service retrieves the message from the queue.
+4. **Notify Customer Service:**
+    - Customer Service Notification Service notifies customer service staff about the new complaint.
+
+```
+Submit Complaint --> Complaint Service Publishes Message --> Message Broker (Complaint Management Queue) --> Customer Service Notification Service Consumes Message --> Notify Customer Service
+```
+
+##### Reporting Queue
+
+**Detailed Steps:**
+
+1. **Data Changes:**
+    - Various services trigger data changes (User, Asset, Visitor, etc.).
+2. **Service Publishes Message:**
+    - Relevant service publishes a message to the Reporting Queue.
+3. **Reporting Service Consumes Message:**
+    - Reporting Service retrieves the message from the queue.
+4. **Update Reports:**
+    - Reporting Service updates reports based on the new data.
+
+```
+Data Changes --> Service Publishes Message --> Message Broker (Reporting Queue) --> Reporting Service Consumes Message --> Update Reports
+```
+
+##### Notification Queue
+
+**Detailed Steps:**
+
+1. **Event Triggers:**
+    - Various events (User registration, asset update, repair request, etc.) occur.
+2. **Service Publishes Message:**
+    - Relevant service publishes a message to the Notification Queue.
+3. **Notification Service Consumes Message:**
+    - Notification Service retrieves the message from the queue.
+4. **Send Notification:**
+    - Notification Service sends notifications to the intended recipients.
+
+```
+Event Triggers --> Service Publishes Message --> Message Broker (Notification Queue) --> Notification Service Consumes Message --> Send Notification
+```
+
+### Benefits of Using Message Queues
+
+1. **Decoupling:** Services can operate independently without needing to wait for each other’s processes.
+2. **Scalability:** The system can handle increased load by scaling the message queue infrastructure.
+3. **Reliability:** Ensures messages are delivered even if some services are temporarily down.
+4. **Flexibility:** New services can be added to consume messages from existing queues without impacting the producers.
+5. **Resilience:** Provides fault tolerance, as messages are persisted in the queue until successfully processed.
