@@ -28,13 +28,76 @@
 The Property Management Platform is designed to improve work efficiency for community staff and enhance customer service quality. The platform offers comprehensive management services, including community asset management, visitor management, online repair reporting, and complaint management. The primary objective is to build a high-quality service platform that better serves community residents.
 
 ## 2. Features and Functionalities
-- **Community Asset Management:** Manage and monitor community assets, including facilities and equipment.
-- **Visitor Management:** Track and manage visitor information and access.
-- **Online Repair Reporting:** Allow residents to report repair issues and track their status.
-- **Complaint Management:** Enable residents to file complaints and monitor resolutions.
-- **Role and User Management:** Manage user roles, permissions, and authentication.
-- **Reporting:** Import and export reports, generate custom templates for data processing.
+#### Community Asset Management
+- **Description:** Manage and monitor community assets, including facilities and equipment.
+- **Functionalities:**
+    - Asset registration and tracking using **SpringBoot** on the backend and **AngularJS** on the frontend.
+    - Maintenance scheduling and history managed through **MySQL** database integration.
+    - Asset depreciation and valuation calculations handled within the backend services.
 
+#### Community Management
+- **Description:** Oversee and manage community operations and interactions.
+- **Functionalities:**
+    - Resident information management powered by **SpringBoot** and **AngularJS**.
+    - Community event planning and tracking, with data stored in **MySQL**.
+    - Internal communication channels for staff facilitated by the backend and frontend setup.
+
+#### Visitor Management
+- **Description:** Track and manage visitor information and access.
+- **Functionalities:**
+    - Visitor registration and check-in/check-out using **SpringBoot** for backend processing and **AngularJS** for frontend interface.
+    - Access control and monitoring, with visitor data stored in **MySQL**.
+    - Visitor history and reporting capabilities integrated into the system.
+
+#### Online Repair Reporting
+- **Description:** Allow residents to report repair issues and track their status.
+- **Functionalities:**
+    - Issue reporting through a user-friendly interface built with **AngularJS**.
+    - Real-time status updates and notifications managed by **SpringBoot**.
+    - Repair history and analytics, with data stored and processed in **MySQL**.
+
+#### Complaint Management
+- **Description:** Enable residents to file complaints and monitor resolutions.
+- **Functionalities:**
+    - Complaint submission and tracking facilitated by **SpringBoot** and **AngularJS**.
+    - Resolution status updates and notifications implemented in the backend.
+    - Historical data and trends analysis stored in **MySQL**.
+
+#### Role and User Management
+- **Description:** Manage user roles, permissions, and authentication.
+- **Functionalities:**
+    - User registration and profile management using **SpringBoot** and **AngularJS**.
+    - Role-based access control (RBAC) implemented with **SpringSecurity**, **JWT**, and **Redis**.
+    - Secure login/logout mechanisms, including multi-factor authentication for enhanced security.
+
+#### Reporting
+- **Description:** Import and export reports, generate custom templates for data processing.
+- **Functionalities:**
+    - EasyPOI integration for report import/export, managed by **SpringBoot**.
+    - Customizable report templates for Excel using **AngularJS** for frontend customization.
+    - Automated data processing and analytics stored in **MySQL**.
+
+#### API Standardization
+- **Description:** Standardize API responses to facilitate error handling and data consistency.
+- **Functionalities:**
+    - Uniform API response structure designed in **SpringBoot**.
+    - Enhanced error handling mechanisms integrated into the backend.
+    - Improved data consistency and reliability achieved through standardized APIs.
+
+#### Logging Configuration
+- **Description:** Utilize Logback for precise log levels and formats.
+- **Functionalities:**
+    - Configurable log levels for different environments set up using **Logback**.
+    - Integration with monitoring tools like **AWS CloudWatch** for real-time tracking.
+    - Enhanced troubleshooting capabilities facilitated by detailed logging.
+
+#### Data Integrity and Validation
+- **Description:** Ensure data integrity and enforce validation rules.
+- **Functionalities:**
+    - Comprehensive data validation mechanisms built into **SpringBoot** services.
+    - Improved data accuracy and consistency maintained through backend validation.
+    - Regular audits and data quality checks stored and managed in **MySQL**.
+  
 ## 3. Database Schema
 
 ### Tables
@@ -191,7 +254,95 @@ The Property Management Platform is designed to improve work efficiency for comm
 - **Notification Service:** Sends notifications and alerts to users.
 
 ### Module Pictures
-![Microservice Architecture](https://via.placeholder.com/600x400.png?text=Microservice+Architecture)
+
+```
+        +--------------------+       +--------------------+
+        |    User Service    |<----->| Authentication and |
+        | - Manages user     |       | Authorization      |
+        |   authentication,  |       | - Handles login,   |
+        |   roles, and       |       |   logout, and      |
+        |   permissions      |       |   permissions      |
+        +--------------------+       +--------------------+
+                    ^
+                    |
+                    v
+        +--------------------+       +--------------------+
+        |    Asset Service   |<----->|  Community Asset   |
+        | - Manages and      |       |  Management        |
+        |   monitors         |       | - Handles asset    |
+        |   community assets |       |   registration,    |
+        |                    |       |   maintenance, and |
+        +--------------------+       |   valuation        |
+                    ^
+                    |
+                    v
+        +--------------------+       +--------------------+
+        |   Visitor Service  |<----->|  Visitor Management|
+        | - Manages visitor  |       | - Handles visitor  |
+        |   information and  |       |   registration,    |
+        |   tracking         |       |   check-in/out, and|
+        |                    |       |   access control   |
+        +--------------------+       +--------------------+
+                    ^
+                    |
+                    v
+        +--------------------+       +--------------------+
+        |   Report Service   |<----->|  Report Generation |
+        | - Facilitates      |       |  and Management    |
+        |   report generation|       | - Handles report   |
+        |   and management   |       |   import/export and|
+        |                    |       |   analytics        |
+        +--------------------+       +--------------------+
+                    ^
+                    |
+                    v
+        +--------------------+       +--------------------+
+        | Notification Service|<---->|  Notifications and |
+        | - Sends notifications      |  Alerts            |
+        |   and alerts to users      | - Manages real-time|
+        |                            |   notifications and|
+        |                            |   alerting         |
+        +--------------------+       +--------------------+
+```
+
+### Detailed Steps for Each Data Flow
+
+1. **User Authentication and Role Management**
+    - **User Service** handles user authentication using **SpringSecurity**, **JWT**, and **Redis**.
+    - Users log in through the frontend (AngularJS), which communicates with the **User Service** to authenticate credentials and manage sessions.
+    - Once authenticated, the **User Service** assigns roles and permissions to users.
+
+2. **Community Asset Management**
+    - **Asset Service** manages the community assets through **SpringBoot**.
+    - The frontend (AngularJS) allows administrators to register and monitor assets.
+    - Data is stored and retrieved from the **MySQL** database, with maintenance schedules and asset valuations handled within the service.
+
+3. **Visitor Management**
+    - **Visitor Service** tracks visitor information and access using **SpringBoot**.
+    - Visitors register their information and check in/out via the frontend interface.
+    - Access control is monitored and logged, with visitor data stored in **MySQL**.
+
+4. **Report Generation and Management**
+    - **Report Service** facilitates the import and export of reports using **EasyPOI**.
+    - Customizable templates allow users to generate and analyze data reports.
+    - Reports are processed and managed through **SpringBoot**, with data storage handled by **MySQL**.
+
+5. **Notifications and Alerts**
+    - **Notification Service** sends real-time notifications and alerts to users.
+    - Integrated with **AWS CloudWatch** for monitoring, it ensures timely and relevant notifications.
+    - Users receive alerts through various channels, including emails and in-app notifications.
+
+### Module Pictures
+
+- **User Service** interacts with the authentication and authorization module to manage user credentials and roles.
+- **Asset Service** oversees community assets, facilitating asset management and maintenance scheduling.
+- **Visitor Service** ensures proper tracking of visitor information, allowing for secure access control.
+- **Report Service** handles the generation and management of reports, integrating with EasyPOI for import/export functionality.
+- **Notification Service** is responsible for sending alerts and notifications to users, enhancing real-time communication within the community.
+
+This detailed representation and explanation provide a clear understanding of how the Property Management Platform's microservice architecture operates, highlighting the interactions and data flows between different services.
+
+
 
 ## 5. REST API Design
 
