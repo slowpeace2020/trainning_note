@@ -247,6 +247,8 @@ The Property Management Platform is designed to improve work efficiency for comm
 
 ### Microservice Architecture
 
+![Microservice Architecture](./modula.png)
+
 - **User Service:** Manages user authentication, roles, and permissions.
 - **Asset Service:** Handles community asset management.
 - **Visitor Service:** Manages visitor information and tracking.
@@ -332,16 +334,11 @@ The Property Management Platform is designed to improve work efficiency for comm
     - Integrated with **AWS CloudWatch** for monitoring, it ensures timely and relevant notifications.
     - Users receive alerts through various channels, including emails and in-app notifications.
 
-### Module Pictures
-
 - **User Service** interacts with the authentication and authorization module to manage user credentials and roles.
 - **Asset Service** oversees community assets, facilitating asset management and maintenance scheduling.
 - **Visitor Service** ensures proper tracking of visitor information, allowing for secure access control.
 - **Report Service** handles the generation and management of reports, integrating with EasyPOI for import/export functionality.
 - **Notification Service** is responsible for sending alerts and notifications to users, enhancing real-time communication within the community.
-
-This detailed representation and explanation provide a clear understanding of how the Property Management Platform's microservice architecture operates, highlighting the interactions and data flows between different services.
-
 
 
 ## 5. REST API Design
