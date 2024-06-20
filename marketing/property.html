@@ -1,0 +1,2221 @@
+<h1 id="property-management-platform-design-document">Property
+Management Platform Design Document</h1>
+<p><strong>Project Name:</strong> Property Management Platform<br />
+<strong>Client:</strong> CBRE Group, Inc.<br />
+<strong>Location:</strong> Boston, MA<br />
+<strong>Duration:</strong> July 2022 – Present<br />
+<strong>Developed by:</strong> Andy, Senior Software Engineer</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol type="1">
+<li>Introduction
+<ul>
+<li>System Purpose and Overview</li>
+</ul></li>
+<li>Features and Functionalities</li>
+<li>Database Schema</li>
+<li>High-Level Design
+<ul>
+<li>Microservice Architecture</li>
+<li>Module Pictures</li>
+</ul></li>
+<li>REST API Design</li>
+<li>Data Flow Diagrams</li>
+<li>Message Queue</li>
+<li>Technical Challenges</li>
+<li>AWS Integration</li>
+</ol>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<h3 id="system-purpose-and-overview">System Purpose and Overview</h3>
+<p>The Property Management Platform is designed to improve work
+efficiency for community staff and enhance customer service quality. The
+platform offers comprehensive management services, including community
+asset management, visitor management, online repair reporting, and
+complaint management. The primary objective is to build a high-quality
+service platform that better serves community residents.</p>
+<h2 id="features-and-functionalities">2. Features and
+Functionalities</h2>
+<h4 id="community-asset-management">Community Asset Management</h4>
+<ul>
+<li><strong>Description:</strong> Manage and monitor community assets,
+including facilities and equipment.</li>
+<li><strong>Functionalities:</strong>
+<ul>
+<li>Asset registration and tracking using <strong>SpringBoot</strong> on
+the backend and <strong>AngularJS</strong> on the frontend.</li>
+<li>Maintenance scheduling and history managed through
+<strong>MySQL</strong> database integration.</li>
+<li>Asset depreciation and valuation calculations handled within the
+backend services.</li>
+</ul></li>
+</ul>
+<h4 id="community-management">Community Management</h4>
+<ul>
+<li><strong>Description:</strong> Oversee and manage community
+operations and interactions.</li>
+<li><strong>Functionalities:</strong>
+<ul>
+<li>Resident information management powered by
+<strong>SpringBoot</strong> and <strong>AngularJS</strong>.</li>
+<li>Community event planning and tracking, with data stored in
+<strong>MySQL</strong>.</li>
+<li>Internal communication channels for staff facilitated by the backend
+and frontend setup.</li>
+</ul></li>
+</ul>
+<h4 id="visitor-management">Visitor Management</h4>
+<ul>
+<li><strong>Description:</strong> Track and manage visitor information
+and access.</li>
+<li><strong>Functionalities:</strong>
+<ul>
+<li>Visitor registration and check-in/check-out using
+<strong>SpringBoot</strong> for backend processing and
+<strong>AngularJS</strong> for frontend interface.</li>
+<li>Access control and monitoring, with visitor data stored in
+<strong>MySQL</strong>.</li>
+<li>Visitor history and reporting capabilities integrated into the
+system.</li>
+</ul></li>
+</ul>
+<h4 id="online-repair-reporting">Online Repair Reporting</h4>
+<ul>
+<li><strong>Description:</strong> Allow residents to report repair
+issues and track their status.</li>
+<li><strong>Functionalities:</strong>
+<ul>
+<li>Issue reporting through a user-friendly interface built with
+<strong>AngularJS</strong>.</li>
+<li>Real-time status updates and notifications managed by
+<strong>SpringBoot</strong>.</li>
+<li>Repair history and analytics, with data stored and processed in
+<strong>MySQL</strong>.</li>
+</ul></li>
+</ul>
+<h4 id="complaint-management">Complaint Management</h4>
+<ul>
+<li><strong>Description:</strong> Enable residents to file complaints
+and monitor resolutions.</li>
+<li><strong>Functionalities:</strong>
+<ul>
+<li>Complaint submission and tracking facilitated by
+<strong>SpringBoot</strong> and <strong>AngularJS</strong>.</li>
+<li>Resolution status updates and notifications implemented in the
+backend.</li>
+<li>Historical data and trends analysis stored in
+<strong>MySQL</strong>.</li>
+</ul></li>
+</ul>
+<h4 id="role-and-user-management">Role and User Management</h4>
+<ul>
+<li><strong>Description:</strong> Manage user roles, permissions, and
+authentication.</li>
+<li><strong>Functionalities:</strong>
+<ul>
+<li>User registration and profile management using
+<strong>SpringBoot</strong> and <strong>AngularJS</strong>.</li>
+<li>Role-based access control (RBAC) implemented with
+<strong>SpringSecurity</strong>, <strong>JWT</strong>, and
+<strong>Redis</strong>.</li>
+<li>Secure login/logout mechanisms, including multi-factor
+authentication for enhanced security.</li>
+</ul></li>
+</ul>
+<h4 id="reporting">Reporting</h4>
+<ul>
+<li><strong>Description:</strong> Import and export reports, generate
+custom templates for data processing.</li>
+<li><strong>Functionalities:</strong>
+<ul>
+<li>EasyPOI integration for report import/export, managed by
+<strong>SpringBoot</strong>.</li>
+<li>Customizable report templates for Excel using
+<strong>AngularJS</strong> for frontend customization.</li>
+<li>Automated data processing and analytics stored in
+<strong>MySQL</strong>.</li>
+</ul></li>
+</ul>
+<h4 id="api-standardization">API Standardization</h4>
+<ul>
+<li><strong>Description:</strong> Standardize API responses to
+facilitate error handling and data consistency.</li>
+<li><strong>Functionalities:</strong>
+<ul>
+<li>Uniform API response structure designed in
+<strong>SpringBoot</strong>.</li>
+<li>Enhanced error handling mechanisms integrated into the backend.</li>
+<li>Improved data consistency and reliability achieved through
+standardized APIs.</li>
+</ul></li>
+</ul>
+<h4 id="logging-configuration">Logging Configuration</h4>
+<ul>
+<li><strong>Description:</strong> Utilize Logback for precise log levels
+and formats.</li>
+<li><strong>Functionalities:</strong>
+<ul>
+<li>Configurable log levels for different environments set up using
+<strong>Logback</strong>.</li>
+<li>Integration with monitoring tools like <strong>AWS
+CloudWatch</strong> for real-time tracking.</li>
+<li>Enhanced troubleshooting capabilities facilitated by detailed
+logging.</li>
+</ul></li>
+</ul>
+<h4 id="data-integrity-and-validation">Data Integrity and
+Validation</h4>
+<ul>
+<li><strong>Description:</strong> Ensure data integrity and enforce
+validation rules.</li>
+<li><strong>Functionalities:</strong>
+<ul>
+<li>Comprehensive data validation mechanisms built into
+<strong>SpringBoot</strong> services.</li>
+<li>Improved data accuracy and consistency maintained through backend
+validation.</li>
+<li>Regular audits and data quality checks stored and managed in
+<strong>MySQL</strong>.</li>
+</ul></li>
+</ul>
+<h2 id="database-schema">3. Database Schema</h2>
+<h3 id="tables">Tables</h3>
+<h4 id="community-asset-module">Community Asset Module</h4>
+<ul>
+<li><strong>Community Table: community</strong></li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 36%" />
+<col style="width: 20%" />
+<col style="width: 11%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field Name</th>
+<th>Data Type</th>
+<th>Nullable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>community_id</td>
+<td>bigint(20)</td>
+<td>NO</td>
+<td>Community ID</td>
+</tr>
+<tr class="even">
+<td>community_name</td>
+<td>varchar(128)</td>
+<td>YES</td>
+<td>Community Name</td>
+</tr>
+<tr class="odd">
+<td>community_code</td>
+<td>varchar(128)</td>
+<td>YES</td>
+<td>Community Code</td>
+</tr>
+<tr class="even">
+<td>community_province_code</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Province Code</td>
+</tr>
+<tr class="odd">
+<td>community_city_code</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>City Code</td>
+</tr>
+<tr class="even">
+<td>community_town_code</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Town Code</td>
+</tr>
+<tr class="odd">
+<td>community_detailed_address</td>
+<td>varchar(128)</td>
+<td>YES</td>
+<td>Detailed Address</td>
+</tr>
+<tr class="even">
+<td>community_longitude</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Longitude</td>
+</tr>
+<tr class="odd">
+<td>community_latitude</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Latitude</td>
+</tr>
+<tr class="even">
+<td>dept_id</td>
+<td>bigint(32)</td>
+<td>YES</td>
+<td>Property ID</td>
+</tr>
+<tr class="odd">
+<td>community_sort</td>
+<td>int(11)</td>
+<td>YES</td>
+<td>Sort Order</td>
+</tr>
+<tr class="even">
+<td>create_by</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Creator</td>
+</tr>
+<tr class="odd">
+<td>create_time</td>
+<td>datetime</td>
+<td>YES</td>
+<td>Creation Time</td>
+</tr>
+<tr class="even">
+<td>update_by</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Updater</td>
+</tr>
+<tr class="odd">
+<td>update_time</td>
+<td>datetime</td>
+<td>YES</td>
+<td>Update Time</td>
+</tr>
+<tr class="even">
+<td>remark</td>
+<td>varchar(1024)</td>
+<td>YES</td>
+<td>Remark</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Building Table: building</strong></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Field Name</th>
+<th>Data Type</th>
+<th>Nullable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>building_id</td>
+<td>bigint(20)</td>
+<td>YES</td>
+<td>Building ID</td>
+</tr>
+<tr class="even">
+<td>building_name</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Building Name</td>
+</tr>
+<tr class="odd">
+<td>building_code</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Building Code</td>
+</tr>
+<tr class="even">
+<td>building_acreage</td>
+<td>decimal(32,10)</td>
+<td>YES</td>
+<td>Building Area</td>
+</tr>
+<tr class="odd">
+<td>community_id</td>
+<td>bigint(20)</td>
+<td>YES</td>
+<td>Community ID</td>
+</tr>
+<tr class="even">
+<td>create_by</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Creator</td>
+</tr>
+<tr class="odd">
+<td>create_time</td>
+<td>datetime</td>
+<td>YES</td>
+<td>Creation Time</td>
+</tr>
+<tr class="even">
+<td>update_by</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Updater</td>
+</tr>
+<tr class="odd">
+<td>update_time</td>
+<td>datetime</td>
+<td>YES</td>
+<td>Update Time</td>
+</tr>
+<tr class="even">
+<td>remark</td>
+<td>varchar(1024)</td>
+<td>YES</td>
+<td>Remark</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Unit Table: unit</strong></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Field Name</th>
+<th>Data Type</th>
+<th>Nullable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>unit_id</td>
+<td>bigint(20)</td>
+<td>YES</td>
+<td>Unit ID</td>
+</tr>
+<tr class="even">
+<td>community_id</td>
+<td>bigint(20)</td>
+<td>YES</td>
+<td>Community ID</td>
+</tr>
+<tr class="odd">
+<td>building_id</td>
+<td>bigint(20)</td>
+<td>YES</td>
+<td>Building ID</td>
+</tr>
+<tr class="even">
+<td>unit_name</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Unit Name</td>
+</tr>
+<tr class="odd">
+<td>unit_code</td>
+<td>varchar(128)</td>
+<td>YES</td>
+<td>Unit Code</td>
+</tr>
+<tr class="even">
+<td>unit_level</td>
+<td>int(11)</td>
+<td>YES</td>
+<td>Number of Floors</td>
+</tr>
+<tr class="odd">
+<td>unit_acreage</td>
+<td>decimal(32,10)</td>
+<td>YES</td>
+<td>Building Area</td>
+</tr>
+<tr class="even">
+<td>unit_have_elevator</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Has Elevator</td>
+</tr>
+<tr class="odd">
+<td>create_by</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Creator</td>
+</tr>
+<tr class="even">
+<td>create_time</td>
+<td>datetime</td>
+<td>YES</td>
+<td>Creation Time</td>
+</tr>
+<tr class="odd">
+<td>update_by</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Updater</td>
+</tr>
+<tr class="even">
+<td>update_time</td>
+<td>datetime</td>
+<td>YES</td>
+<td>Update Time</td>
+</tr>
+<tr class="odd">
+<td>remark</td>
+<td>varchar(1024)</td>
+<td>YES</td>
+<td>Remark</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Room Table: room</strong></li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 36%" />
+<col style="width: 21%" />
+<col style="width: 11%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field Name</th>
+<th>Data Type</th>
+<th>Nullable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>room_id</td>
+<td>bigint(20)</td>
+<td>YES</td>
+<td>Room ID</td>
+</tr>
+<tr class="even">
+<td>community_id</td>
+<td>bigint(20)</td>
+<td>YES</td>
+<td>Community ID</td>
+</tr>
+<tr class="odd">
+<td>building_id</td>
+<td>bigint(20)</td>
+<td>YES</td>
+<td>Building ID</td>
+</tr>
+<tr class="even">
+<td>unit_id</td>
+<td>bigint(20)</td>
+<td>YES</td>
+<td>Unit ID</td>
+</tr>
+<tr class="odd">
+<td>room_level</td>
+<td>int(11)</td>
+<td>YES</td>
+<td>Floor Number</td>
+</tr>
+<tr class="even">
+<td>room_code</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Room Code</td>
+</tr>
+<tr class="odd">
+<td>room_name</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Room Name</td>
+</tr>
+<tr class="even">
+<td>room_acreage</td>
+<td>decimal(32,10)</td>
+<td>YES</td>
+<td>Building Area</td>
+</tr>
+<tr class="odd">
+<td>room_cost</td>
+<td>decimal(32,10)</td>
+<td>YES</td>
+<td>Cost Factor</td>
+</tr>
+<tr class="even">
+<td>room_status</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Room Status</td>
+</tr>
+<tr class="odd">
+<td>room_is_shop</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Is Shop</td>
+</tr>
+<tr class="even">
+<td>room_is_commercial_house</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Is Commercial House</td>
+</tr>
+<tr class="odd">
+<td>room_house_type</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>House Type</td>
+</tr>
+<tr class="even">
+<td>create_by</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Creator</td>
+</tr>
+<tr class="odd">
+<td>create_time</td>
+<td>datetime</td>
+<td>YES</td>
+<td>Creation Time</td>
+</tr>
+<tr class="even">
+<td>update_by</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Updater</td>
+</tr>
+<tr class="odd">
+<td>update_time</td>
+<td>datetime</td>
+<td>YES</td>
+<td>Update Time</td>
+</tr>
+<tr class="even">
+<td>remark</td>
+<td>varchar(1024)</td>
+<td>YES</td>
+<td>Remark</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Community Interaction Table:
+community_interaction</strong></li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 23%" />
+<col style="width: 13%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field Name</th>
+<th>Data Type</th>
+<th>Nullable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>interaction_id</td>
+<td>bigint(20)</td>
+<td>NO</td>
+<td>Interaction ID</td>
+</tr>
+<tr class="even">
+<td>community_id</td>
+<td>bigint(20)</td>
+<td>YES</td>
+<td>Community ID</td>
+</tr>
+<tr class="odd">
+<td>create_by</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Creator ID</td>
+</tr>
+<tr class="even">
+<td>update_by</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Updater ID</td>
+</tr>
+<tr class="odd">
+<td>create_time</td>
+<td>datetime</td>
+<td>YES</td>
+<td>Creation Time</td>
+</tr>
+<tr class="even">
+<td>update_time</td>
+<td>datetime</td>
+<td>YES</td>
+<td>Update Time</td>
+</tr>
+<tr class="odd">
+<td>content</td>
+<td>varchar(1024)</td>
+<td>YES</td>
+<td>Content</td>
+</tr>
+<tr class="even">
+<td>del_flag</td>
+<td>int(2)</td>
+<td>YES</td>
+<td>Deletion Status (0 default, 1 deleted)</td>
+</tr>
+<tr class="odd">
+<td>remark</td>
+<td>varchar(255)</td>
+<td>YES</td>
+<td>Remark</td>
+</tr>
+<tr class="even">
+<td>user_id</td>
+<td>bigint(20)</td>
+<td>YES</td>
+<td>User ID</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="community-management-module">Community Management Module</h4>
+<ul>
+<li><strong>Owner Table: zy_owner</strong></li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 19%" />
+<col style="width: 10%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field Name</th>
+<th>Data Type</th>
+<th>Nullable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>owner_id</td>
+<td>bigint(20)</td>
+<td>NO</td>
+<td>Owner ID</td>
+</tr>
+<tr class="even">
+<td>owner_nickname</td>
+<td>varchar(30)</td>
+<td>YES</td>
+<td>Nickname</td>
+</tr>
+<tr class="odd">
+<td>owner_real_name</td>
+<td>varchar(30)</td>
+<td>YES</td>
+<td>Real Name</td>
+</tr>
+<tr class="even">
+<td>owner_gender</td>
+<td>varchar(10)</td>
+<td>YES</td>
+<td>Gender (unknown/male/female)</td>
+</tr>
+<tr class="odd">
+<td>owner_age</td>
+<td>int(3)</td>
+<td>YES</td>
+<td>Age</td>
+</tr>
+<tr class="even">
+<td>owner_id_card</td>
+<td>varchar(20)</td>
+<td>YES</td>
+<td>ID Card Number</td>
+</tr>
+<tr class="odd">
+<td>owner_phone_number</td>
+<td>varchar(11)</td>
+<td>YES</td>
+<td>Phone Number</td>
+</tr>
+<tr class="even">
+<td>owner_open_id</td>
+<td>varchar(64)</td>
+<td>YES</td>
+<td>OpenID</td>
+</tr>
+<tr class="odd">
+<td>owner_wechat_id</td>
+<td>varchar(64)</td>
+<td>YES</td>
+<td>WeChat ID</td>
+</tr>
+<tr class="even">
+<td>owner_qq_number</td>
+<td>varchar(20)</td>
+<td>YES</td>
+<td>QQ Number</td>
+</tr>
+<tr class="odd">
+<td>owner_birthday</td>
+<td>date</td>
+<td>YES</td>
+<td>Birthday</td>
+</tr>
+<tr class="even">
+<td>owner_portrait</td>
+<td>varchar(256)</td>
+<td>YES</td>
+<td>Portrait</td>
+</tr>
+<tr class="odd">
+<td>owner_signature</td>
+<td>varchar(64)</td>
+<td>YES</td>
+<td>Signature</td>
+</tr>
+<tr class="even">
+<td>owner_status</td>
+<td>varchar(10)</td>
+<td>YES</td>
+<td>Status (enable/disable)</td>
+</tr>
+<tr class="odd">
+<td>owner_logon_mode</td>
+<td>varchar(10)</td>
+<td>YES</td>
+<td>Registration Mode (WeChat/app/web)</td>
+</tr>
+<tr class="even">
+<td>owner_type</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Owner Type</td>
+</tr>
+<tr class="odd">
+<td>owner_password</td>
+<td>varchar(128)</td>
+<td>YES</td>
+<td>Password</td>
+</tr>
+<tr class="even">
+<td>create_by</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Creator</td>
+</tr>
+<tr class="odd">
+<td>create_time</td>
+<td>datetime</td>
+<td>YES</td>
+<td>Creation Time</td>
+</tr>
+<tr class="even">
+<td>update_by</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td>Updater</td>
+</tr>
+<tr class="odd">
+<td>update_time</td>
+<td>datetime</td>
+<td>YES</td>
+<td>Update Time</td>
+</tr>
+<tr class="even">
+<td>remark</td>
+<td>varchar(1024)</td>
+<td>YES</td>
+<td>Remark</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>House Binding Table</strong></li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 19%" />
+<col style="width: 11%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field Name</th>
+<th>Data Type</th>
+<th>Nullable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>owner_room_id</td>
+<td>bigint(20)</td>
+<td>NO</td>
+<td>House Binding ID</td>
+</tr>
+<tr class="even">
+<td>community_id</td>
+<td>bigint(20)</td>
+<td>YES</td>
+<td>Community ID</td>
+</tr>
+<tr class="odd">
+<td>building_id</td>
+<td>bigint(20)</td>
+<td>YES</td>
+<td>Building ID</td>
+</tr>
+<tr class="even">
+<td>unit_id</td>
+<td>bigint(20)</td>
+<td>YES</td>
+<td>Unit ID</td>
+</tr>
+<tr class="odd">
+<td>room_id</td>
+<td>bigint(20)</td>
+<td>YES</td>
+<td>Room ID</td>
+</tr>
+<tr class="even">
+<td>owner_id</td>
+<td>bigint(20)</td>
+<td>YES</td>
+<td>Owner ID</td>
+</tr>
+<tr class="odd">
+<td>owner_type</td>
+<td>varchar(32)</td>
+<td>YES</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="high-level-design">4. High-Level Design</h2>
+<h3 id="microservice-architecture">Microservice Architecture</h3>
+<figure>
+<img src="./modula.png" alt="Microservice Architecture" />
+<figcaption aria-hidden="true">Microservice Architecture</figcaption>
+</figure>
+<ul>
+<li><strong>User Service:</strong> Manages user authentication, roles,
+and permissions.</li>
+<li><strong>Asset Service:</strong> Handles community asset
+management.</li>
+<li><strong>Visitor Service:</strong> Manages visitor information and
+tracking.</li>
+<li><strong>Report Service:</strong> Facilitates report generation and
+management.</li>
+<li><strong>Notification Service:</strong> Sends notifications and
+alerts to users.</li>
+</ul>
+<h3 id="module-pictures">Module Pictures</h3>
+<pre><code>        +--------------------+       +--------------------+
+        |    User Service    |&lt;-----&gt;| Authentication and |
+        | - Manages user     |       | Authorization      |
+        |   authentication,  |       | - Handles login,   |
+        |   roles, and       |       |   logout, and      |
+        |   permissions      |       |   permissions      |
+        +--------------------+       +--------------------+
+                    ^
+                    |
+                    v
+        +--------------------+       +--------------------+
+        |    Asset Service   |&lt;-----&gt;|  Community Asset   |
+        | - Manages and      |       |  Management        |
+        |   monitors         |       | - Handles asset    |
+        |   community assets |       |   registration,    |
+        |                    |       |   maintenance, and |
+        +--------------------+       |   valuation        |
+                    ^
+                    |
+                    v
+        +--------------------+       +--------------------+
+        |   Visitor Service  |&lt;-----&gt;|  Visitor Management|
+        | - Manages visitor  |       | - Handles visitor  |
+        |   information and  |       |   registration,    |
+        |   tracking         |       |   check-in/out, and|
+        |                    |       |   access control   |
+        +--------------------+       +--------------------+
+                    ^
+                    |
+                    v
+        +--------------------+       +--------------------+
+        |   Report Service   |&lt;-----&gt;|  Report Generation |
+        | - Facilitates      |       |  and Management    |
+        |   report generation|       | - Handles report   |
+        |   and management   |       |   import/export and|
+        |                    |       |   analytics        |
+        +--------------------+       +--------------------+
+                    ^
+                    |
+                    v
+        +--------------------+       +--------------------+
+        | Notification Service|&lt;----&gt;|  Notifications and |
+        | - Sends notifications      |  Alerts            |
+        |   and alerts to users      | - Manages real-time|
+        |                            |   notifications and|
+        |                            |   alerting         |
+        +--------------------+       +--------------------+</code></pre>
+<h3 id="detailed-steps-for-each-data-flow">Detailed Steps for Each Data
+Flow</h3>
+<ol type="1">
+<li><strong>User Authentication and Role Management</strong>
+<ul>
+<li><strong>User Service</strong> handles user authentication using
+<strong>SpringSecurity</strong>, <strong>JWT</strong>, and
+<strong>Redis</strong>.</li>
+<li>Users log in through the frontend (AngularJS), which communicates
+with the <strong>User Service</strong> to authenticate credentials and
+manage sessions.</li>
+<li>Once authenticated, the <strong>User Service</strong> assigns roles
+and permissions to users.</li>
+</ul></li>
+<li><strong>Community Asset Management</strong>
+<ul>
+<li><strong>Asset Service</strong> manages the community assets through
+<strong>SpringBoot</strong>.</li>
+<li>The frontend (AngularJS) allows administrators to register and
+monitor assets.</li>
+<li>Data is stored and retrieved from the <strong>MySQL</strong>
+database, with maintenance schedules and asset valuations handled within
+the service.</li>
+</ul></li>
+<li><strong>Visitor Management</strong>
+<ul>
+<li><strong>Visitor Service</strong> tracks visitor information and
+access using <strong>SpringBoot</strong>.</li>
+<li>Visitors register their information and check in/out via the
+frontend interface.</li>
+<li>Access control is monitored and logged, with visitor data stored in
+<strong>MySQL</strong>.</li>
+</ul></li>
+<li><strong>Report Generation and Management</strong>
+<ul>
+<li><strong>Report Service</strong> facilitates the import and export of
+reports using <strong>EasyPOI</strong>.</li>
+<li>Customizable templates allow users to generate and analyze data
+reports.</li>
+<li>Reports are processed and managed through
+<strong>SpringBoot</strong>, with data storage handled by
+<strong>MySQL</strong>.</li>
+</ul></li>
+<li><strong>Notifications and Alerts</strong>
+<ul>
+<li><strong>Notification Service</strong> sends real-time notifications
+and alerts to users.</li>
+<li>Integrated with <strong>AWS CloudWatch</strong> for monitoring, it
+ensures timely and relevant notifications.</li>
+<li>Users receive alerts through various channels, including emails and
+in-app notifications.</li>
+</ul></li>
+</ol>
+<ul>
+<li><strong>User Service</strong> interacts with the authentication and
+authorization module to manage user credentials and roles.</li>
+<li><strong>Asset Service</strong> oversees community assets,
+facilitating asset management and maintenance scheduling.</li>
+<li><strong>Visitor Service</strong> ensures proper tracking of visitor
+information, allowing for secure access control.</li>
+<li><strong>Report Service</strong> handles the generation and
+management of reports, integrating with EasyPOI for import/export
+functionality.</li>
+<li><strong>Notification Service</strong> is responsible for sending
+alerts and notifications to users, enhancing real-time communication
+within the community.</li>
+</ul>
+<h2 id="rest-api-design">5. REST API Design</h2>
+<h4 id="overview">Overview</h4>
+<p>The REST API provides a set of endpoints for interacting with the
+Property Management Platform. These endpoints support operations for
+managing users, assets, visitors, reports, and notifications.</p>
+<h4 id="endpoints">Endpoints</h4>
+<p><strong>User Service</strong> - <strong>POST /api/v1/users</strong> -
+Description: Create a new user - Request Body:
+<code>json      {        "username": "string",        "password": "string",        "email": "string",        "role": "string"      }</code>
+- Response: 201 Created</p>
+<ul>
+<li><strong>GET /api/v1/users/{id}</strong>
+<ul>
+<li><p>Description: Retrieve user details by ID</p></li>
+<li><p>Response: 200 OK</p></li>
+<li><p>Response Body:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;integer&quot;</span><span class="fu">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;username&quot;</span><span class="fu">:</span> <span class="st">&quot;string&quot;</span><span class="fu">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;string&quot;</span><span class="fu">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;role&quot;</span><span class="fu">:</span> <span class="st">&quot;string&quot;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div></li>
+</ul></li>
+</ul>
+<p><strong>Asset Service</strong> - <strong>POST /api/v1/assets</strong>
+- Description: Create a new asset - Request Body:
+<code>json      {        "name": "string",        "type": "string",        "value": "decimal"      }</code>
+- Response: 201 Created</p>
+<ul>
+<li><strong>GET /api/v1/assets/{id}</strong>
+<ul>
+<li><p>Description: Retrieve asset details by ID</p></li>
+<li><p>Response: 200 OK</p></li>
+<li><p>Response Body:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;integer&quot;</span><span class="fu">,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;string&quot;</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;string&quot;</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;value&quot;</span><span class="fu">:</span> <span class="st">&quot;decimal&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div></li>
+</ul></li>
+</ul>
+<p><strong>Visitor Service</strong> - <strong>POST
+/api/v1/visitors</strong> - Description: Register a new visitor -
+Request Body:
+<code>json      {        "name": "string",        "visit_date": "datetime",        "purpose": "string"      }</code>
+- Response: 201 Created</p>
+<ul>
+<li><strong>GET /api/v1/visitors/{id}</strong>
+<ul>
+<li><p>Description: Retrieve visitor details by ID</p></li>
+<li><p>Response: 200 OK</p></li>
+<li><p>Response Body:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;integer&quot;</span><span class="fu">,</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;string&quot;</span><span class="fu">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;visit_date&quot;</span><span class="fu">:</span> <span class="st">&quot;datetime&quot;</span><span class="fu">,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;purpose&quot;</span><span class="fu">:</span> <span class="st">&quot;string&quot;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div></li>
+</ul></li>
+</ul>
+<p><strong>Report Service</strong> - <strong>POST
+/api/v1/reports</strong> - Description: Generate a new report - Request
+Body:
+<code>json      {        "type": "string",        "date_range": {          "start": "datetime",          "end": "datetime"        }      }</code>
+- Response: 201 Created</p>
+<ul>
+<li><strong>GET /api/v1/reports/{id}</strong>
+<ul>
+<li><p>Description: Retrieve report details by ID</p></li>
+<li><p>Response: 200 OK</p></li>
+<li><p>Response Body:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;integer&quot;</span><span class="fu">,</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;string&quot;</span><span class="fu">,</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;date_range&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;start&quot;</span><span class="fu">:</span> <span class="st">&quot;datetime&quot;</span><span class="fu">,</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;end&quot;</span><span class="fu">:</span> <span class="st">&quot;datetime&quot;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;status&quot;</span><span class="fu">:</span> <span class="st">&quot;string&quot;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div></li>
+</ul></li>
+</ul>
+<p><strong>Notification Service</strong> - <strong>POST
+/api/v1/notifications</strong> - Description: Send a new notification -
+Request Body:
+<code>json      {        "recipient_id": "integer",        "message": "string",        "type": "string"      }</code>
+- Response: 201 Created</p>
+<ul>
+<li><strong>GET /api/v1/notifications/{id}</strong>
+<ul>
+<li><p>Description: Retrieve notification details by ID</p></li>
+<li><p>Response: 200 OK</p></li>
+<li><p>Response Body:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;integer&quot;</span><span class="fu">,</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;recipient_id&quot;</span><span class="fu">:</span> <span class="st">&quot;integer&quot;</span><span class="fu">,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;string&quot;</span><span class="fu">,</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;string&quot;</span><span class="fu">,</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;sent_at&quot;</span><span class="fu">:</span> <span class="st">&quot;datetime&quot;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div></li>
+</ul></li>
+</ul>
+<hr />
+<h3 id="data-flow-diagrams">6. Data Flow Diagrams</h3>
+<h4 id="level-0-dfd-context-diagram">Level 0 DFD: Context Diagram</h4>
+<pre><code> +--------------------+       +----------------------+       +--------------------+
+ |                    |       |                      |       |                    |
+ |     Residents      +------&gt;+ Property Management  +------&gt;+    Admins/Staff    |
+ |                    |       |      Platform        |       |                    |
+ +---------+----------+       +-----------+----------+       +---------+----------+
+           |                              |                            |
+           |                              |                            |
+           |                              |                            |
+           |                              |                            |
+           v                              v                            v
+ +---------+----------+       +-----------+----------+       +---------+----------+
+ |                    |       |                      |       |                    |
+ |  External Systems  +------&gt;+     Databases        +&lt;------+   Security Staff   |
+ |                    |       |                      |       |                    |
+ +--------------------+       +----------------------+       +--------------------+</code></pre>
+<h4 id="level-1-dfd-detailed-processes">Level 1 DFD: Detailed
+Processes</h4>
+<h5 id="user-management">User Management</h5>
+<p><strong>Detailed Steps:</strong></p>
+<ol type="1">
+<li><strong>User Registers:</strong>
+<ul>
+<li>Residents submit registration forms with personal details.</li>
+<li>The registration form data is validated.</li>
+</ul></li>
+<li><strong>Validate Data:</strong>
+<ul>
+<li>Check for completeness and correctness of user data.</li>
+<li>Ensure no duplicate entries exist.</li>
+</ul></li>
+<li><strong>Store User Info:</strong>
+<ul>
+<li>Validated data is stored in the User Database.</li>
+</ul></li>
+<li><strong>Send Confirmation Email:</strong>
+<ul>
+<li>A confirmation email is sent to the user’s registered email
+address.</li>
+</ul></li>
+</ol>
+<pre><code> +------------------+    +------------------+    +------------------+    +------------------+
+ |                  |    |                  |    |                  |    |                  |
+ |  User Registers  +--&gt; + Validate Data    +--&gt; +  Store User Info +--&gt; + Send Confirmation|
+ |                  |    |                  |    |  in User DB      |    |    Email         |
+ +--------+---------+    +--------+---------+    +--------+---------+    +--------+---------+
+          ^                          |                          |                   |
+          |                          v                          v                   v
+ +--------+---------+    +-----------+----------+    +--------+---------+    +--------+---------+
+ |                  |    |                      |    |                  |    |                  |
+ |    User Submits  +--&gt; +  Process Registration +--&gt; +    User Info     +--&gt; +    Notification   |
+ | Registration Form|    |                      |    |                  |    |                  |
+ +------------------+    +----------------------+    +------------------+    +------------------+</code></pre>
+<h5 id="asset-management">Asset Management</h5>
+<p><strong>Detailed Steps:</strong></p>
+<ol type="1">
+<li><strong>Add Asset Info:</strong>
+<ul>
+<li>Community staff add details about new community assets.</li>
+<li>The asset data is validated.</li>
+</ul></li>
+<li><strong>Validate Asset Data:</strong>
+<ul>
+<li>Check for completeness and correctness of asset data.</li>
+</ul></li>
+<li><strong>Store Asset Info:</strong>
+<ul>
+<li>Validated data is stored in the Asset Database.</li>
+</ul></li>
+<li><strong>Update Asset Log:</strong>
+<ul>
+<li>Any changes or updates to asset information are logged.</li>
+</ul></li>
+</ol>
+<pre><code> +------------------+    +------------------+    +------------------+    +------------------+
+ |                  |    |                  |    |                  |    |                  |
+ |  Add Asset Info  +--&gt; + Validate Asset   +--&gt; +  Store Asset Info+--&gt; + Update Asset Log |
+ |                  |    |     Data         |    |  in Asset DB     |    |                  |
+ +--------+---------+    +--------+---------+    +--------+---------+    +--------+---------+
+          ^                          |                          |                   |
+          |                          v                          v                   v
+ +--------+---------+    +-----------+----------+    +--------+---------+    +--------+---------+
+ |                  |    |                      |    |                  |    |                  |
+ |  Community Staff +--&gt; +  Process Asset Data  +--&gt; +  Asset Database  +--&gt; +    Notifications  |
+ |                  |    |                      |    |                  |    |                  |
+ +------------------+    +----------------------+    +------------------+    +------------------+</code></pre>
+<h5 id="visitor-management-1">Visitor Management</h5>
+<p><strong>Detailed Steps:</strong></p>
+<ol type="1">
+<li><strong>Register Visitor:</strong>
+<ul>
+<li>Visitors provide their details at the entrance.</li>
+<li>Visitor data is validated.</li>
+</ul></li>
+<li><strong>Validate Visitor Data:</strong>
+<ul>
+<li>Check for completeness and correctness of visitor data.</li>
+</ul></li>
+<li><strong>Store Visitor Info:</strong>
+<ul>
+<li>Validated data is stored in the Visitor Database.</li>
+</ul></li>
+<li><strong>Update Visitor Log:</strong>
+<ul>
+<li>Entry and exit times are logged for each visitor.</li>
+</ul></li>
+</ol>
+<pre><code> +------------------+    +------------------+    +------------------+    +------------------+
+ |                  |    |                  |    |                  |    |                  |
+ | Register Visitor +--&gt; + Validate Visitor +--&gt; + Store Visitor    +--&gt; +  Update Visitor  |
+ |                  |    |     Data         |    |  Info in DB      |    |    Log           |
+ +--------+---------+    +--------+---------+    +--------+---------+    +--------+---------+
+          ^                          |                          |                   |
+          |                          v                          v                   v
+ +--------+---------+    +-----------+----------+    +--------+---------+    +--------+---------+
+ |                  |    |                      |    |                  |    |                  |
+ |    Visitor       +--&gt; +  Process Visitor Data+--&gt; +  Visitor Database+--&gt; +    Notifications  |
+ |                  |    |                      |    |                  |    |                  |
+ +------------------+    +----------------------+    +------------------+    +------------------+</code></pre>
+<h5 id="online-repair-reporting-1">Online Repair Reporting</h5>
+<p><strong>Detailed Steps:</strong></p>
+<ol type="1">
+<li><strong>Submit Repair Request:</strong>
+<ul>
+<li>Residents submit repair requests with issue details.</li>
+<li>The request data is validated.</li>
+</ul></li>
+<li><strong>Validate Repair Request:</strong>
+<ul>
+<li>Check for completeness and correctness of repair request data.</li>
+</ul></li>
+<li><strong>Store Repair Info:</strong>
+<ul>
+<li>Validated data is stored in the Repair Database.</li>
+</ul></li>
+<li><strong>Update Repair Status:</strong>
+<ul>
+<li>Maintenance staff update the status of repair requests.</li>
+</ul></li>
+<li><strong>Notify Resident:</strong>
+<ul>
+<li>Residents are notified of the status updates of their repair
+requests.</li>
+</ul></li>
+</ol>
+<pre><code> +------------------+    +------------------+    +------------------+    +------------------+
+ |                  |    |                  |    |                  |    |                  |
+ |  Submit Repair   +--&gt; + Validate Repair  +--&gt; + Store Repair     +--&gt; + Notify Resident  |
+ |      Request     |    |     Request      |    |  Info in DB      |    |                  |
+ +--------+---------+    +--------+---------+    +--------+---------+    +--------+---------+
+          ^                          |                          |                   |
+          |                          v                          v                   v
+ +--------+---------+    +-----------+----------+    +--------+---------+    +--------+---------+
+ |                  |    |                      |    |                  |    |                  |
+ |  Resident        +--&gt; +  Process Repair Data +--&gt; +  Repair Database +--&gt; +   Maintenance    |
+ |                  |    |                      |    |                  |    |      Staff       |
+ +------------------+    +----------------------+    +------------------+    +------------------+</code></pre>
+<h5 id="complaint-management-1">Complaint Management</h5>
+<p><strong>Detailed Steps:</strong></p>
+<ol type="1">
+<li><strong>Submit Complaint:</strong>
+<ul>
+<li>Residents file complaints with details of the issues.</li>
+<li>Complaint data is validated.</li>
+</ul></li>
+<li><strong>Validate Complaint Data:</strong>
+<ul>
+<li>Check for completeness and correctness of complaint data.</li>
+</ul></li>
+<li><strong>Store Complaint Info:</strong>
+<ul>
+<li>Validated data is stored in the Complaint Database.</li>
+</ul></li>
+<li><strong>Review Complaint:</strong>
+<ul>
+<li>Customer service reviews and processes the complaint.</li>
+</ul></li>
+<li><strong>Resolve Complaint:</strong>
+<ul>
+<li>Actions are taken to resolve the complaint.</li>
+<li>The resolution is logged and the resident is notified.</li>
+</ul></li>
+</ol>
+<pre><code> +------------------+    +------------------+    +------------------+    +------------------+
+ |                  |    |                  |    |                  |    |                  |
+ |  Submit Complaint+--&gt; + Validate Complaint+--&gt; + Store Complaint +--&gt; + Notify Resident  |
+ |                  |    |     Data          |    |  Info in DB     |    |                  |
+ +--------+---------+    +--------+---------+    +--------+---------+    +--------+---------+
+          ^                          |                          |                   |
+          |                          v                          v                   v
+ +--------+---------+    +-----------+----------+    +--------+---------+    +--------+---------+
+ |                  |    |                      |    |                  |    |                  |
+ |  Resident        +--&gt; +  Process Complaint  +--&gt; +  Complaint DB    +--&gt; + Customer Service  |
+ |                  |    |                      |    |                  |    |                  |
+ +------------------+    +----------------------+    +------------------+    +------------------+</code></pre>
+<h5 id="reporting-1">Reporting</h5>
+<p><strong>Detailed Steps:</strong></p>
+<ol type="1">
+<li><strong>Generate Report:</strong>
+<ul>
+<li>Admins initiate the report generation process.</li>
+<li>Report generation request data is validated.</li>
+</ul></li>
+<li><strong>Validate Request Data:</strong>
+<ul>
+<li>Check for completeness and correctness of report request data.</li>
+</ul></li>
+<li><strong>Store Report Info:</strong>
+<ul>
+<li>Generated report data is stored in the Report Database.</li>
+</ul></li>
+<li><strong>Notify Admin:</strong>
+<ul>
+<li>Admins are notified when reports are ready for viewing or
+export.</li>
+</ul></li>
+</ol>
+<pre><code> +------------------+    +------------------+    +------------------+    +------------------+
+ |                  |    |                  |    |                  |    |                  |
+ | Generate Report  +--&gt; + Validate Request +--&gt; + Store Report     +--&gt; + Notify Admin     |
+ |                  |    |     Data         |    |  Info in DB      |    |                  |
+ +--------+---------+    +--------+---------+    +--------+---------+    +--------+---------+
+          ^                          |                          |                   |
+          |                         
+
+ v                          v                   v
+ +--------+---------+    +-----------+----------+    +--------+---------+    +--------+---------+
+ |                  |    |                      |    |                  |    |                  |
+ |    Admin         +--&gt; +  Process Report Data +--&gt; +  Report Database +--&gt; + Generate Reports  |
+ |                  |    |                      |    |                  |    |                  |
+ +------------------+    +----------------------+    +------------------+    +------------------+</code></pre>
+<h5 id="notification-service">Notification Service</h5>
+<p><strong>Detailed Steps:</strong></p>
+<ol type="1">
+<li><strong>Create Notification:</strong>
+<ul>
+<li>Admins or system processes create notification messages.</li>
+<li>Notification data is validated.</li>
+</ul></li>
+<li><strong>Validate Data:</strong>
+<ul>
+<li>Check for completeness and correctness of notification data.</li>
+</ul></li>
+<li><strong>Store Notification Info:</strong>
+<ul>
+<li>Validated notification data is stored in the Notification
+Database.</li>
+</ul></li>
+<li><strong>Send Notification:</strong>
+<ul>
+<li>Notifications are sent to the intended recipients (residents, staff,
+etc.).</li>
+</ul></li>
+</ol>
+<pre><code> +------------------+    +------------------+    +------------------+    +------------------+
+ |                  |    |                  |    |                  |    |                  |
+ | Create Notification+--&gt; + Validate Data   +--&gt; + Store Notification+--&gt; + Send Notification|
+ |                  |    |                  |    |  Info in DB       |    |                  |
+ +--------+---------+    +--------+---------+    +--------+---------+    +--------+---------+
+          ^                          |                          |                   |
+          |                          v                          v                   v
+ +--------+---------+    +-----------+----------+    +--------+---------+    +--------+---------+
+ |                  |    |                      |    |                  |    |                  |
+ |  User/Admin      +--&gt; +  Process Notification+--&gt; + Notification DB  +--&gt; +     Users        |
+ |                  |    |                      |    |                  |    |                  |
+ +------------------+    +----------------------+    +------------------+    +------------------+</code></pre>
+<h3 id="message-queue">7. Message Queue</h3>
+<p>The message queue system is crucial for handling asynchronous
+communication between various microservices within the Property
+Management Platform. It ensures reliable message delivery, decouples
+microservices, and enhances system scalability and resilience.</p>
+<h4 id="overview-1">Overview</h4>
+<p><strong>Purpose:</strong> - To facilitate asynchronous communication
+between different services. - To decouple service dependencies. - To
+handle high throughput and ensure reliable message delivery.</p>
+<p><strong>Components:</strong> - <strong>Message Broker:</strong>
+Manages the message queues. - <strong>Producers:</strong> Services that
+send messages. - <strong>Consumers:</strong> Services that receive and
+process messages.</p>
+<p><strong>Technology:</strong> RabbitMQ (chosen for its robustness and
+extensive support in the industry)</p>
+<h4 id="key-message-queues">Key Message Queues</h4>
+<ol type="1">
+<li><strong>User Registration Queue:</strong>
+<ul>
+<li><strong>Producer:</strong> User Service</li>
+<li><strong>Consumer:</strong> Email Notification Service</li>
+<li><strong>Purpose:</strong> To send a confirmation email after a user
+registers.</li>
+</ul></li>
+<li><strong>Asset Management Queue:</strong>
+<ul>
+<li><strong>Producer:</strong> Asset Service</li>
+<li><strong>Consumer:</strong> Reporting Service</li>
+<li><strong>Purpose:</strong> To update reports when new assets are
+added or updated.</li>
+</ul></li>
+<li><strong>Visitor Management Queue:</strong>
+<ul>
+<li><strong>Producer:</strong> Visitor Service</li>
+<li><strong>Consumer:</strong> Security Notification Service</li>
+<li><strong>Purpose:</strong> To notify security staff about visitor
+arrivals.</li>
+</ul></li>
+<li><strong>Repair Request Queue:</strong>
+<ul>
+<li><strong>Producer:</strong> Repair Service</li>
+<li><strong>Consumer:</strong> Maintenance Staff Notification
+Service</li>
+<li><strong>Purpose:</strong> To inform maintenance staff about new
+repair requests.</li>
+</ul></li>
+<li><strong>Complaint Management Queue:</strong>
+<ul>
+<li><strong>Producer:</strong> Complaint Service</li>
+<li><strong>Consumer:</strong> Customer Service Notification
+Service</li>
+<li><strong>Purpose:</strong> To notify customer service about new
+complaints filed by residents.</li>
+</ul></li>
+<li><strong>Reporting Queue:</strong>
+<ul>
+<li><strong>Producer:</strong> Various Services (User, Asset, Visitor,
+etc.)</li>
+<li><strong>Consumer:</strong> Reporting Service</li>
+<li><strong>Purpose:</strong> To aggregate data for generating
+reports.</li>
+</ul></li>
+<li><strong>Notification Queue:</strong>
+<ul>
+<li><strong>Producer:</strong> Various Services (User, Asset, Repair,
+Complaint, etc.)</li>
+<li><strong>Consumer:</strong> Notification Service</li>
+<li><strong>Purpose:</strong> To send notifications to users, admins,
+and staff about various events and updates.</li>
+</ul></li>
+</ol>
+<h4 id="detailed-steps-for-each-queue">Detailed Steps for Each
+Queue</h4>
+<h5 id="user-registration-queue">User Registration Queue</h5>
+<p><strong>Detailed Steps:</strong></p>
+<ol type="1">
+<li><strong>User Registers:</strong>
+<ul>
+<li>User submits registration details.</li>
+</ul></li>
+<li><strong>User Service Publishes Message:</strong>
+<ul>
+<li>User Service validates data and publishes a message to the User
+Registration Queue.</li>
+</ul></li>
+<li><strong>Email Notification Service Consumes Message:</strong>
+<ul>
+<li>Email Notification Service retrieves the message from the
+queue.</li>
+</ul></li>
+<li><strong>Send Confirmation Email:</strong>
+<ul>
+<li>Email Notification Service sends a confirmation email to the
+user.</li>
+</ul></li>
+</ol>
+<pre><code>User Registers --&gt; User Service Publishes Message --&gt; Message Broker (User Registration Queue) --&gt; Email Notification Service Consumes Message --&gt; Send Confirmation Email</code></pre>
+<h5 id="asset-management-queue">Asset Management Queue</h5>
+<p><strong>Detailed Steps:</strong></p>
+<ol type="1">
+<li><strong>Add/Update Asset Info:</strong>
+<ul>
+<li>Community staff add or update asset information.</li>
+</ul></li>
+<li><strong>Asset Service Publishes Message:</strong>
+<ul>
+<li>Asset Service validates data and publishes a message to the Asset
+Management Queue.</li>
+</ul></li>
+<li><strong>Reporting Service Consumes Message:</strong>
+<ul>
+<li>Reporting Service retrieves the message from the queue.</li>
+</ul></li>
+<li><strong>Update Reports:</strong>
+<ul>
+<li>Reporting Service updates asset-related reports.</li>
+</ul></li>
+</ol>
+<pre><code>Add/Update Asset Info --&gt; Asset Service Publishes Message --&gt; Message Broker (Asset Management Queue) --&gt; Reporting Service Consumes Message --&gt; Update Reports</code></pre>
+<h5 id="visitor-management-queue">Visitor Management Queue</h5>
+<p><strong>Detailed Steps:</strong></p>
+<ol type="1">
+<li><strong>Register Visitor:</strong>
+<ul>
+<li>Visitor provides details at the entrance.</li>
+</ul></li>
+<li><strong>Visitor Service Publishes Message:</strong>
+<ul>
+<li>Visitor Service validates data and publishes a message to the
+Visitor Management Queue.</li>
+</ul></li>
+<li><strong>Security Notification Service Consumes Message:</strong>
+<ul>
+<li>Security Notification Service retrieves the message from the
+queue.</li>
+</ul></li>
+<li><strong>Notify Security Staff:</strong>
+<ul>
+<li>Security Notification Service sends notifications to security staff
+about visitor arrivals.</li>
+</ul></li>
+</ol>
+<pre><code>Register Visitor --&gt; Visitor Service Publishes Message --&gt; Message Broker (Visitor Management Queue) --&gt; Security Notification Service Consumes Message --&gt; Notify Security Staff</code></pre>
+<h5 id="repair-request-queue">Repair Request Queue</h5>
+<p><strong>Detailed Steps:</strong></p>
+<ol type="1">
+<li><strong>Submit Repair Request:</strong>
+<ul>
+<li>Resident submits a repair request.</li>
+</ul></li>
+<li><strong>Repair Service Publishes Message:</strong>
+<ul>
+<li>Repair Service validates data and publishes a message to the Repair
+Request Queue.</li>
+</ul></li>
+<li><strong>Maintenance Staff Notification Service Consumes
+Message:</strong>
+<ul>
+<li>Maintenance Staff Notification Service retrieves the message from
+the queue.</li>
+</ul></li>
+<li><strong>Notify Maintenance Staff:</strong>
+<ul>
+<li>Maintenance Staff Notification Service notifies maintenance staff
+about the repair request.</li>
+</ul></li>
+</ol>
+<pre><code>Submit Repair Request --&gt; Repair Service Publishes Message --&gt; Message Broker (Repair Request Queue) --&gt; Maintenance Staff Notification Service Consumes Message --&gt; Notify Maintenance Staff</code></pre>
+<h5 id="complaint-management-queue">Complaint Management Queue</h5>
+<p><strong>Detailed Steps:</strong></p>
+<ol type="1">
+<li><strong>Submit Complaint:</strong>
+<ul>
+<li>Resident files a complaint.</li>
+</ul></li>
+<li><strong>Complaint Service Publishes Message:</strong>
+<ul>
+<li>Complaint Service validates data and publishes a message to the
+Complaint Management Queue.</li>
+</ul></li>
+<li><strong>Customer Service Notification Service Consumes
+Message:</strong>
+<ul>
+<li>Customer Service Notification Service retrieves the message from the
+queue.</li>
+</ul></li>
+<li><strong>Notify Customer Service:</strong>
+<ul>
+<li>Customer Service Notification Service notifies customer service
+staff about the new complaint.</li>
+</ul></li>
+</ol>
+<pre><code>Submit Complaint --&gt; Complaint Service Publishes Message --&gt; Message Broker (Complaint Management Queue) --&gt; Customer Service Notification Service Consumes Message --&gt; Notify Customer Service</code></pre>
+<h5 id="reporting-queue">Reporting Queue</h5>
+<p><strong>Detailed Steps:</strong></p>
+<ol type="1">
+<li><strong>Data Changes:</strong>
+<ul>
+<li>Various services trigger data changes (User, Asset, Visitor,
+etc.).</li>
+</ul></li>
+<li><strong>Service Publishes Message:</strong>
+<ul>
+<li>Relevant service publishes a message to the Reporting Queue.</li>
+</ul></li>
+<li><strong>Reporting Service Consumes Message:</strong>
+<ul>
+<li>Reporting Service retrieves the message from the queue.</li>
+</ul></li>
+<li><strong>Update Reports:</strong>
+<ul>
+<li>Reporting Service updates reports based on the new data.</li>
+</ul></li>
+</ol>
+<pre><code>Data Changes --&gt; Service Publishes Message --&gt; Message Broker (Reporting Queue) --&gt; Reporting Service Consumes Message --&gt; Update Reports</code></pre>
+<h5 id="notification-queue">Notification Queue</h5>
+<p><strong>Detailed Steps:</strong></p>
+<ol type="1">
+<li><strong>Event Triggers:</strong>
+<ul>
+<li>Various events (User registration, asset update, repair request,
+etc.) occur.</li>
+</ul></li>
+<li><strong>Service Publishes Message:</strong>
+<ul>
+<li>Relevant service publishes a message to the Notification Queue.</li>
+</ul></li>
+<li><strong>Notification Service Consumes Message:</strong>
+<ul>
+<li>Notification Service retrieves the message from the queue.</li>
+</ul></li>
+<li><strong>Send Notification:</strong>
+<ul>
+<li>Notification Service sends notifications to the intended
+recipients.</li>
+</ul></li>
+</ol>
+<pre><code>Event Triggers --&gt; Service Publishes Message --&gt; Message Broker (Notification Queue) --&gt; Notification Service Consumes Message --&gt; Send Notification</code></pre>
+<h3 id="benefits-of-using-message-queues">Benefits of Using Message
+Queues</h3>
+<ol type="1">
+<li><strong>Decoupling:</strong> Services can operate independently
+without needing to wait for each other’s processes.</li>
+<li><strong>Scalability:</strong> The system can handle increased load
+by scaling the message queue infrastructure.</li>
+<li><strong>Reliability:</strong> Ensures messages are delivered even if
+some services are temporarily down.</li>
+<li><strong>Flexibility:</strong> New services can be added to consume
+messages from existing queues without impacting the producers.</li>
+<li><strong>Resilience:</strong> Provides fault tolerance, as messages
+are persisted in the queue until successfully processed.</li>
+</ol>
+<h2 id="technical-challenges">8. Technical Challenges</h2>
+<p>Developing the Property Management Platform for CBRE Group,
+Inc. involves several technical challenges that need to be addressed to
+ensure a robust, scalable, and efficient system. Here are the primary
+challenges and the strategies to overcome them:</p>
+<h4 id="scalability">1. Scalability</h4>
+<p><strong>Challenge:</strong> - The platform needs to handle a growing
+number of users, properties, and transactions efficiently without
+compromising performance.</p>
+<p><strong>Solution:</strong> - Implement a microservices architecture
+to break down the system into smaller, independent services. - Use load
+balancers and auto-scaling groups to manage and distribute traffic. -
+Employ a distributed database system to handle large volumes of
+data.</p>
+<h4 id="data-consistency">2. Data Consistency</h4>
+<p><strong>Challenge:</strong> - Ensuring data consistency across
+different services and databases, especially in a distributed
+system.</p>
+<p><strong>Solution:</strong> - Use distributed transactions and
+eventual consistency models where appropriate. - Implement strong data
+validation and conflict resolution mechanisms. - Employ tools like Kafka
+or RabbitMQ for reliable message queuing and processing.</p>
+<h4 id="security">3. Security</h4>
+<p><strong>Challenge:</strong> - Protecting sensitive data and ensuring
+secure access control across the platform.</p>
+<p><strong>Solution:</strong> - Implement role-based access control
+(RBAC) to manage permissions. - Use encryption for data at rest and in
+transit. - Regularly update and patch the system to mitigate
+vulnerabilities.</p>
+<h4 id="real-time-data-processing">4. Real-Time Data Processing</h4>
+<p><strong>Challenge:</strong> - Providing real-time updates and
+notifications to users.</p>
+<p><strong>Solution:</strong> - Use WebSocket or Server-Sent Events
+(SSE) for real-time communication. - Implement efficient caching
+mechanisms to reduce latency. - Utilize message queues (e.g., RabbitMQ)
+for real-time event handling and processing.</p>
+<h4 id="integration-with-third-party-services">5. Integration with
+Third-Party Services</h4>
+<p><strong>Challenge:</strong> - Integrating the platform with various
+third-party services (e.g., payment gateways, email services, SMS
+services).</p>
+<p><strong>Solution:</strong> - Use standard APIs and SDKs provided by
+third-party services. - Implement an API gateway to manage and route
+requests to third-party services. - Ensure robust error handling and
+retry mechanisms for third-party API calls.</p>
+<h4 id="high-availability-and-disaster-recovery">6. High Availability
+and Disaster Recovery</h4>
+<p><strong>Challenge:</strong> - Ensuring the platform remains available
+and operational during failures or disasters.</p>
+<p><strong>Solution:</strong> - Deploy the system across multiple
+availability zones and regions. - Implement database replication and
+automated backups. - Use monitoring and alerting tools to detect and
+respond to failures quickly.</p>
+<h4 id="performance-optimization">7. Performance Optimization</h4>
+<p><strong>Challenge:</strong> - Maintaining optimal performance under
+high load conditions.</p>
+<p><strong>Solution:</strong> - Conduct regular performance testing and
+profiling. - Optimize database queries and indexing. - Use content
+delivery networks (CDNs) and edge caching for faster content
+delivery.</p>
+<h4 id="user-experience">8. User Experience</h4>
+<p><strong>Challenge:</strong> - Providing a seamless and intuitive user
+experience.</p>
+<p><strong>Solution:</strong> - Conduct user testing and gather feedback
+to improve the user interface (UI) and user experience (UX). - Implement
+responsive design to support various devices and screen sizes. - Ensure
+fast load times and smooth navigation.</p>
+<h4 id="regulatory-compliance">9. Regulatory Compliance</h4>
+<p><strong>Challenge:</strong> - Ensuring compliance with various legal
+and regulatory requirements (e.g., GDPR, HIPAA).</p>
+<p><strong>Solution:</strong> - Implement data protection and privacy
+policies. - Regularly review and update compliance procedures. - Work
+with legal experts to ensure the platform adheres to relevant
+regulations.</p>
+<h4 id="legacy-system-integration">10. Legacy System Integration</h4>
+<p><strong>Challenge:</strong> - Integrating with existing legacy
+systems that CBRE Group, Inc. might be using.</p>
+<p><strong>Solution:</strong> - Use middleware or adapters to interface
+with legacy systems. - Plan a phased migration strategy to gradually
+move away from legacy systems. - Ensure backward compatibility during
+the transition period.</p>
+<h3 id="strategies-for-overcoming-challenges">Strategies for Overcoming
+Challenges</h3>
+<ol type="1">
+<li><strong>Adopt Agile Methodologies:</strong>
+<ul>
+<li>Use agile development practices to iterate quickly and adapt to
+changing requirements.</li>
+<li>Conduct regular sprints and reviews to ensure continuous
+improvement.</li>
+</ul></li>
+<li><strong>Continuous Integration and Continuous Deployment
+(CI/CD):</strong>
+<ul>
+<li>Implement CI/CD pipelines for automated testing and deployment.</li>
+<li>Use tools like Jenkins, GitLab CI, or Travis CI for managing the
+CI/CD processes.</li>
+</ul></li>
+<li><strong>Comprehensive Monitoring and Logging:</strong>
+<ul>
+<li>Deploy monitoring tools like Prometheus, Grafana, and ELK stack for
+real-time monitoring and logging.</li>
+<li>Set up alerts and dashboards to proactively manage system health and
+performance.</li>
+</ul></li>
+<li><strong>Collaborative Development:</strong>
+<ul>
+<li>Foster collaboration between development, operations, and security
+teams (DevOps and DevSecOps).</li>
+<li>Use tools like Jira, Confluence, and Slack for effective
+communication and project management.</li>
+</ul></li>
+</ol>
+<p>By addressing these technical challenges with robust solutions and
+strategies, the Property Management Platform can achieve high
+performance, reliability, and user satisfaction, ensuring it meets the
+needs of CBRE Group, Inc. and its users effectively.</p>
+<h2 id="aws-integration">9. AWS Integration</h2>
+<p>Integrating AWS (Amazon Web Services) into the Property Management
+Platform provides a scalable, reliable, and cost-effective
+infrastructure. AWS offers various services that can be leveraged to
+meet the requirements of the platform, ensuring high availability,
+security, and performance.</p>
+<h4 id="key-aws-services-utilized">Key AWS Services Utilized</h4>
+<ol type="1">
+<li><strong>Amazon EC2 (Elastic Compute Cloud)</strong>
+<ul>
+<li><strong>Purpose:</strong> To provide scalable virtual servers for
+running the application.</li>
+<li><strong>Integration:</strong>
+<ul>
+<li>Use Auto Scaling groups to automatically adjust the number of EC2
+instances based on demand.</li>
+<li>Implement Elastic Load Balancing (ELB) to distribute incoming
+traffic across multiple instances for fault tolerance.</li>
+</ul></li>
+</ul></li>
+<li><strong>Amazon RDS (Relational Database Service)</strong>
+<ul>
+<li><strong>Purpose:</strong> To manage relational databases in the
+cloud.</li>
+<li><strong>Integration:</strong>
+<ul>
+<li>Deploy databases like MySQL, PostgreSQL, or SQL Server.</li>
+<li>Enable Multi-AZ (Availability Zone) deployments for high
+availability and automated backups for disaster recovery.</li>
+</ul></li>
+</ul></li>
+<li><strong>Amazon S3 (Simple Storage Service)</strong>
+<ul>
+<li><strong>Purpose:</strong> To store and retrieve any amount of data
+at any time.</li>
+<li><strong>Integration:</strong>
+<ul>
+<li>Use S3 buckets to store user-uploaded files, reports, and
+backups.</li>
+<li>Implement lifecycle policies to manage storage costs by
+transitioning objects to different storage classes.</li>
+</ul></li>
+</ul></li>
+<li><strong>Amazon SNS (Simple Notification Service)</strong>
+<ul>
+<li><strong>Purpose:</strong> To send notifications and alerts.</li>
+<li><strong>Integration:</strong>
+<ul>
+<li>Use SNS to send email, SMS, or push notifications to users and
+admins for various events (e.g., new visitor arrivals, maintenance
+updates).</li>
+</ul></li>
+</ul></li>
+<li><strong>Amazon SQS (Simple Queue Service)</strong>
+<ul>
+<li><strong>Purpose:</strong> To decouple and scale microservices,
+distributed systems, and serverless applications.</li>
+<li><strong>Integration:</strong>
+<ul>
+<li>Use SQS for message queuing between services to ensure reliable
+communication and processing.</li>
+<li>Implement SQS for handling asynchronous tasks like sending
+notifications, processing reports, etc.</li>
+</ul></li>
+</ul></li>
+<li><strong>AWS Lambda</strong>
+<ul>
+<li><strong>Purpose:</strong> To run code without provisioning or
+managing servers.</li>
+<li><strong>Integration:</strong>
+<ul>
+<li>Use Lambda functions for event-driven processing (e.g., triggering a
+function on file upload to S3, database changes).</li>
+<li>Implement Lambda for lightweight background processing tasks.</li>
+</ul></li>
+</ul></li>
+<li><strong>Amazon CloudFront</strong>
+<ul>
+<li><strong>Purpose:</strong> To deliver content with low latency and
+high transfer speeds.</li>
+<li><strong>Integration:</strong>
+<ul>
+<li>Use CloudFront as a content delivery network (CDN) to cache and
+deliver static content like images, CSS, and JavaScript files.</li>
+<li>Implement SSL/TLS for secure data transfer.</li>
+</ul></li>
+</ul></li>
+<li><strong>Amazon API Gateway</strong>
+<ul>
+<li><strong>Purpose:</strong> To create, publish, maintain, monitor, and
+secure APIs.</li>
+<li><strong>Integration:</strong>
+<ul>
+<li>Use API Gateway to expose RESTful APIs for various services.</li>
+<li>Implement authentication and authorization mechanisms using AWS
+Cognito.</li>
+</ul></li>
+</ul></li>
+<li><strong>Amazon CloudWatch</strong>
+<ul>
+<li><strong>Purpose:</strong> To monitor and manage operational
+health.</li>
+<li><strong>Integration:</strong>
+<ul>
+<li>Use CloudWatch for logging, monitoring, and alerting.</li>
+<li>Set up CloudWatch Alarms to notify administrators of potential
+issues (e.g., high CPU usage, memory leaks).</li>
+</ul></li>
+</ul></li>
+<li><strong>AWS IAM (Identity and Access Management)</strong>
+<ul>
+<li><strong>Purpose:</strong> To manage access to AWS services and
+resources securely.</li>
+<li><strong>Integration:</strong>
+<ul>
+<li>Define IAM roles and policies to control access to AWS
+resources.</li>
+<li>Implement multi-factor authentication (MFA) for enhanced
+security.</li>
+</ul></li>
+</ul></li>
+<li><strong>AWS Elastic Beanstalk</strong>
+<ul>
+<li><strong>Purpose:</strong> To deploy and manage applications in the
+AWS Cloud.</li>
+<li><strong>Integration:</strong>
+<ul>
+<li>Use Elastic Beanstalk for simplified deployment and scaling of web
+applications and services.</li>
+<li>Manage the underlying infrastructure and focus on application
+code.</li>
+</ul></li>
+</ul></li>
+</ol>
+<h4 id="integration-architecture">Integration Architecture</h4>
+<h5 id="user-authentication-and-management">User Authentication and
+Management</h5>
+<p><strong>Components:</strong> - AWS Cognito - API Gateway - Lambda</p>
+<p><strong>Flow:</strong> 1. User authentication requests are directed
+to AWS Cognito via API Gateway. 2. Cognito handles user authentication
+and returns tokens. 3. API Gateway routes authenticated requests to
+appropriate Lambda functions or microservices.</p>
+<h5 id="data-storage-and-retrieval">Data Storage and Retrieval</h5>
+<p><strong>Components:</strong> - RDS - S3 - Lambda</p>
+<p><strong>Flow:</strong> 1. Application data is stored in RDS with read
+replicas for high availability. 2. User-generated content and backups
+are stored in S3. 3. Lambda functions trigger on specific events (e.g.,
+new data in S3) to process or move data.</p>
+<h5 id="notification-service-1">Notification Service</h5>
+<p><strong>Components:</strong> - SNS - SQS - Lambda</p>
+<p><strong>Flow:</strong> 1. Events from various services publish
+messages to SNS topics. 2. SNS topics fan out messages to SQS queues
+subscribed to them. 3. Lambda functions or other services consume
+messages from SQS and process notifications.</p>
+<h5 id="monitoring-and-logging">Monitoring and Logging</h5>
+<p><strong>Components:</strong> - CloudWatch - Lambda</p>
+<p><strong>Flow:</strong> 1. Application and infrastructure logs are
+sent to CloudWatch. 2. CloudWatch Alarms trigger Lambda functions or
+notifications when predefined thresholds are met.</p>
+<h4 id="security-and-compliance">Security and Compliance</h4>
+<p><strong>Strategies:</strong> - Implement IAM roles and policies to
+restrict access. - Use VPC (Virtual Private Cloud) to isolate network
+resources. - Encrypt data at rest (using AWS KMS) and in transit (using
+SSL/TLS). - Regularly review and update security groups and firewall
+settings. - Conduct regular security audits and compliance checks.</p>
+<h3 id="benefits-of-aws-integration">Benefits of AWS Integration</h3>
+<ol type="1">
+<li><strong>Scalability:</strong> Easily scale infrastructure up or down
+based on demand.</li>
+<li><strong>Reliability:</strong> Leverage AWS’s global infrastructure
+for high availability and disaster recovery.</li>
+<li><strong>Cost-Effectiveness:</strong> Use pay-as-you-go pricing
+models to optimize costs.</li>
+<li><strong>Security:</strong> Benefit from AWS’s robust security
+features and compliance certifications.</li>
+<li><strong>Performance:</strong> Ensure low latency and high
+performance with services like CloudFront and RDS read replicas.</li>
+<li><strong>Flexibility:</strong> Quickly deploy and manage resources
+using Elastic Beanstalk, Lambda, and other services.</li>
+</ol>
+<p>By integrating these AWS services, the Property Management Platform
+can achieve its goals of scalability, reliability, security, and
+performance, ensuring a robust solution for CBRE Group, Inc.</p>
+<h3 id="deployment-strategy">Deployment Strategy</h3>
+<p>Deploying the Property Management Platform efficiently and reliably
+involves a well-planned strategy that ensures minimal downtime, seamless
+updates, and robust rollback mechanisms. The deployment strategy
+leverages AWS services to automate and streamline the deployment
+process.</p>
+<h4 id="key-components-of-the-deployment-strategy">Key Components of the
+Deployment Strategy</h4>
+<ol type="1">
+<li><strong>CI/CD Pipeline</strong>
+<ul>
+<li><strong>Tools:</strong> AWS CodePipeline, AWS CodeBuild, AWS
+CodeDeploy, GitHub</li>
+<li><strong>Flow:</strong>
+<ol type="1">
+<li>Developers commit code to a GitHub repository.</li>
+<li>CodePipeline detects the change and triggers the build process in
+CodeBuild.</li>
+<li>CodeBuild compiles the code, runs tests, and creates deployment
+artifacts.</li>
+<li>CodeDeploy deploys the artifacts to the target environments (e.g.,
+development, staging, production).</li>
+</ol></li>
+</ul></li>
+<li><strong>Infrastructure as Code (IaC)</strong>
+<ul>
+<li><strong>Tools:</strong> AWS CloudFormation, AWS CDK (Cloud
+Development Kit), Terraform</li>
+<li><strong>Flow:</strong>
+<ol type="1">
+<li>Define infrastructure resources (e.g., EC2 instances, RDS databases,
+S3 buckets) in code using CloudFormation templates or Terraform
+scripts.</li>
+<li>Version control the infrastructure code in a Git repository.</li>
+<li>Use CloudFormation or Terraform to provision and manage
+infrastructure resources consistently across environments.</li>
+</ol></li>
+</ul></li>
+<li><strong>Blue/Green Deployment</strong>
+<ul>
+<li><strong>Purpose:</strong> To minimize downtime and reduce risks
+during deployment.</li>
+<li><strong>Flow:</strong>
+<ol type="1">
+<li>Deploy the new version of the application to a separate environment
+(green).</li>
+<li>Run tests and validate the new version in the green
+environment.</li>
+<li>Gradually shift traffic from the old version (blue) to the new
+version (green) using AWS Elastic Load Balancing.</li>
+<li>Monitor the new version for any issues.</li>
+<li>Fully switch to the new version and decommission the old environment
+if everything is stable.</li>
+</ol></li>
+</ul></li>
+<li><strong>Canary Deployment</strong>
+<ul>
+<li><strong>Purpose:</strong> To test new releases with a subset of
+users before a full rollout.</li>
+<li><strong>Flow:</strong>
+<ol type="1">
+<li>Deploy the new version to a small subset of instances or users
+(canary).</li>
+<li>Monitor the performance and gather feedback from the canary
+deployment.</li>
+<li>Gradually increase the number of users or instances running the new
+version if no issues are detected.</li>
+<li>Fully deploy the new version to all users once confidence is
+established.</li>
+</ol></li>
+</ul></li>
+<li><strong>Rolling Updates</strong>
+<ul>
+<li><strong>Purpose:</strong> To update the application incrementally
+with no downtime.</li>
+<li><strong>Flow:</strong>
+<ol type="1">
+<li>Deploy the new version to a few instances at a time.</li>
+<li>Ensure each instance is healthy before proceeding to the next set of
+instances.</li>
+<li>Continue the process until all instances are running the new
+version.</li>
+<li>Roll back to the previous version if any issues</li>
+</ol></li>
+</ul></li>
+</ol>
+<h2 id="additional-project-insights">10. Additional Project
+Insights</h2>
+<h3 id="multithreading-usage">Multithreading Usage</h3>
+<p>In the Property Management Platform, we used multithreading to handle
+concurrent processing of visitor check-ins and asset status updates.
+This ensured that our system could efficiently manage multiple
+operations simultaneously without performance degradation.</p>
+<h3 id="builder-design-pattern">Builder Design Pattern</h3>
+<p>The Builder design pattern was employed in the Report Service to
+construct complex report objects. This pattern helped in managing the
+creation process, especially when reports required multiple optional
+parameters and complex configurations.</p>
+<h3 id="team-composition">Team Composition</h3>
+<p>As the team leader, I oversaw a team of six members: -
+<strong>Backend Developers (2):</strong> Focused on developing and
+maintaining the microservices. - <strong>Frontend Developer
+(1):</strong> Developed the user interface and ensured seamless user
+experience. - <strong>QA Engineer (1):</strong> Responsible for testing
+the platform and ensuring high-quality releases. - <strong>DevOps
+Engineer (1):</strong> Managed our CI/CD pipeline, AWS infrastructure,
+and ensured system reliability. - <strong>Product Manager (1):</strong>
+Coordinated requirements and worked with stakeholders to define
+features.</p>
+<h3 id="jenkins-pipeline-design">Jenkins Pipeline Design</h3>
+<p>Our Jenkins pipeline for AWS included the following stages: 1.
+<strong>Code Checkout:</strong> Retrieve the latest code from the
+repository. 2. <strong>Build:</strong> Compile the code and run unit
+tests. 3. <strong>Docker Build:</strong> Build Docker images for each
+microservice. 4. <strong>Security Scan:</strong> Perform security checks
+on the Docker images. 5. <strong>Deploy to Staging:</strong> Deploy the
+Docker images to the staging environment on AWS ECS. 6.
+<strong>Integration Tests:</strong> Run integration tests in the staging
+environment. 7. <strong>Deploy to Production:</strong> Upon successful
+tests, deploy the Docker images to the production environment on AWS
+ECS. 8. <strong>Notification:</strong> Send deployment notifications to
+the team via Slack.</p>
+<h3 id="monitoring-strategy">Monitoring Strategy</h3>
+<p>Our monitoring setup included: - <strong>AWS CloudWatch:</strong>
+Used for monitoring the health and performance of our AWS resources. -
+<strong>Prometheus and Grafana:</strong> Implemented for detailed
+application metrics and dashboard visualizations. - <strong>ELK
+Stack:</strong> Utilized for log aggregation, searching, and
+analysis.</p>
+<h3 id="usage-metrics">Usage Metrics</h3>
+<ul>
+<li><strong>Daily Users:</strong> Approximately 2,000 active users
+daily.</li>
+<li><strong>Transactions Per Second (TPS):</strong> Average TPS of 50
+during peak hours.</li>
+<li><strong>Queries Per Second (QPS):</strong> Average QPS of 100 for
+our database.</li>
+</ul>
+<h3 id="frontend-story">Frontend Story</h3>
+<h3 id="frontend-development-story">Frontend Development Story</h3>
+<h4 id="technologies-used">Technologies Used</h4>
+<ul>
+<li><strong>Framework:</strong> React.js</li>
+<li><strong>State Management:</strong> Redux</li>
+<li><strong>Styling:</strong> SCSS</li>
+<li><strong>API Requests:</strong> Axios</li>
+<li><strong>Code Quality:</strong> ESLint, Prettier</li>
+<li><strong>Testing:</strong> Jest, React Testing Library</li>
+</ul>
+<h4 id="development-process">Development Process</h4>
+<ol type="1">
+<li><strong>Planning and Design</strong>
+<ul>
+<li>Collaborated with UI/UX designers to create wireframes and
+mockups.</li>
+<li>Defined the application’s components and their interactions.</li>
+</ul></li>
+<li><strong>Setting Up the Project</strong>
+<ul>
+<li>Initialized a new React project using Create React App.</li>
+<li>Configured Redux for state management.</li>
+</ul></li>
+<li><strong>Implementing Components</strong>
+<ul>
+<li>Developed reusable components for the application’s UI
+elements.</li>
+<li>Integrated Redux for managing state across the application.</li>
+</ul></li>
+<li><strong>API Integration</strong>
+<ul>
+<li>Used Axios to make API requests to the backend services.</li>
+<li>Implemented logic to handle API responses and update the UI
+accordingly.</li>
+</ul></li>
+<li><strong>Styling</strong>
+<ul>
+<li>Used SCSS for styling to maintain a modular and scalable
+design.</li>
+<li>Ensured consistency in UI elements across the application.</li>
+</ul></li>
+<li><strong>Testing</strong>
+<ul>
+<li>Wrote unit tests using Jest and React Testing Library for components
+and Redux actions/reducers.</li>
+<li>Conducted integration tests to ensure the components work together
+as expected.</li>
+</ul></li>
+<li><strong>Deployment</strong>
+<ul>
+<li>Configured deployment settings for different environments
+(development, staging, production).</li>
+<li>Used AWS Amplify or similar services for continuous deployment.</li>
+</ul></li>
+<li><strong>Performance Optimization</strong>
+<ul>
+<li>Implemented lazy loading for components and images to improve
+initial loading times.</li>
+<li>Minimized bundle size by code splitting and tree shaking.</li>
+</ul></li>
+<li><strong>Accessibility</strong>
+<ul>
+<li>Ensured the application is accessible to users with disabilities by
+following WCAG guidelines.</li>
+<li>Used ARIA attributes and semantic HTML elements appropriately.</li>
+</ul></li>
+<li><strong>Code Reviews and Refactoring</strong>
+<ul>
+<li>Conducted regular code reviews to maintain code quality and
+consistency.</li>
+<li>Refactored code to improve performance, readability, and
+maintainability.</li>
+</ul></li>
+<li><strong>Collaboration</strong>
+<ul>
+<li>Used version control (Git) and collaborated with backend developers,
+QA engineers, and designers using tools like GitHub and Slack.</li>
+<li>Communicated regularly to ensure alignment with project requirements
+and timelines.</li>
+</ul></li>
+</ol>
+<h3 id="future-improvements">Future Improvements</h3>
+<ul>
+<li><strong>Enhanced User Experience:</strong> Implement more
+interactive features and animations to improve user engagement.</li>
+<li><strong>Optimized Performance:</strong> Further optimize performance
+by analyzing and addressing bottlenecks.</li>
+<li><strong>Internationalization:</strong> Add support for multiple
+languages to make the application accessible to a broader audience.</li>
+<li><strong>Progressive Web App (PWA):</strong> Convert the application
+into a PWA for offline access and improved performance on mobile
+devices.</li>
+<li><strong>Continuous Improvement:</strong> Continuously gather user
+feedback and iterate on the application to meet evolving user
+needs.</li>
+</ul>

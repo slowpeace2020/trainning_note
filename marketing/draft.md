@@ -1,183 +1,64 @@
-### 7. Message Queue
+### A Typical Day in Our Agile Team
 
-The message queue system is crucial for handling asynchronous communication between various microservices within the Property Management Platform. It ensures reliable message delivery, decouples microservices, and enhances system scalability and resilience.
+1. **Morning Stand-up**:
+   - We start the day with a 15-minute stand-up meeting. Each team member provides a brief update on their progress, plans for the day, and any obstacles they are facing.
 
-#### Overview
+2. **Focus on Tasks**:
+   - After the stand-up, everyone focuses on their assigned tasks. We work in a collaborative environment, often pairing up for complex problems or code reviews. Our tasks are clearly defined in Jira, and we ensure we are working towards the sprint goals.
 
-**Purpose:**
-- To facilitate asynchronous communication between different services.
-- To decouple service dependencies.
-- To handle high throughput and ensure reliable message delivery.
+3. **Collaboration and Communication**:
+   - Throughout the day, we maintain open communication through tools like Slack and hold impromptu discussions or huddles to solve any immediate issues. Collaboration is key, especially when integrating different components or troubleshooting bugs.
 
-**Components:**
-- **Message Broker:** Manages the message queues.
-- **Producers:** Services that send messages.
-- **Consumers:** Services that receive and process messages.
+4. **Code Reviews**:
+   - Code reviews are an integral part of our process. We use Git for version control, and every change goes through a peer review to ensure code quality and consistency. This practice helps us catch issues early and learn from each other.
 
-**Technology:** RabbitMQ (chosen for its robustness and extensive support in the industry)
+5. **Continuous Integration and Testing**:
+   - We have a continuous integration (CI) pipeline set up with Jenkins. Whenever code is committed, automated tests run to ensure nothing is broken. This practice helps us maintain high-quality code and get quick feedback on new changes.
 
-#### Key Message Queues
+6. **End-of-Day Sync**:
+   - Towards the end of the day, team members often sync up informally to review progress and plan for the next day. This helps ensure we stay on track and address any pending issues.
 
-1. **User Registration Queue:**
-    - **Producer:** User Service
-    - **Consumer:** Email Notification Service
-    - **Purpose:** To send a confirmation email after a user registers.
+7. **Documentation and Updates**:
+   - Throughout the day, we update our documentation, Jira tickets, and any other relevant project artifacts. Keeping everything up-to-date ensures that everyone has access to the latest information and can easily onboard new team members if needed.
 
-2. **Asset Management Queue:**
-    - **Producer:** Asset Service
-    - **Consumer:** Reporting Service
-    - **Purpose:** To update reports when new assets are added or updated.
+By following Agile methodologies and maintaining a structured yet flexible approach to our daily activities, we ensure continuous delivery of valuable features, quick adaptation to changes, and a collaborative team environment.
 
-3. **Visitor Management Queue:**
-    - **Producer:** Visitor Service
-    - **Consumer:** Security Notification Service
-    - **Purpose:** To notify security staff about visitor arrivals.
+### Our Team Size and Roles
 
-4. **Repair Request Queue:**
-    - **Producer:** Repair Service
-    - **Consumer:** Maintenance Staff Notification Service
-    - **Purpose:** To inform maintenance staff about new repair requests.
+1. **Team Size**: Typically, our Agile team consists of 7-9 members, ensuring a manageable and collaborative environment.
 
-5. **Complaint Management Queue:**
-    - **Producer:** Complaint Service
-    - **Consumer:** Customer Service Notification Service
-    - **Purpose:** To notify customer service about new complaints filed by residents.
+2. **Roles**:
+   - **Business Analyst (BA)**: 1-2
+   - **Database Administrator (DBA)**: 1
+   - **Quality Assurance (QA) Engineer**: 2-3
+   - **Team Lead (TL)**: 1
+   - **Developers**: 3-5 (This includes both front-end and back-end developers)
 
-6. **Reporting Queue:**
-    - **Producer:** Various Services (User, Asset, Visitor, etc.)
-    - **Consumer:** Reporting Service
-    - **Purpose:** To aggregate data for generating reports.
+### Breakdown of Roles and Responsibilities
 
-7. **Notification Queue:**
-    - **Producer:** Various Services (User, Asset, Repair, Complaint, etc.)
-    - **Consumer:** Notification Service
-    - **Purpose:** To send notifications to users, admins, and staff about various events and updates.
+1. **Business Analyst (BA)**:
+   - Gathers requirements from stakeholders.
+   - Translates business needs into user stories.
+   - Ensures alignment of the development with business objectives.
 
-#### Detailed Steps for Each Queue
+2. **Database Administrator (DBA)**:
+   - Manages the database schema and performance.
+   - Ensures data integrity and security.
+   - Supports developers with database-related queries.
 
-##### User Registration Queue
+3. **Quality Assurance (QA) Engineer**:
+   - Writes and executes test cases.
+   - Ensures the quality and functionality of the software.
+   - Performs manual and automated testing.
 
-**Detailed Steps:**
+4. **Team Lead (TL)**:
+   - Guides the team through Agile practices.
+   - Facilitates stand-ups, sprint planning, and retrospectives.
+   - Acts as a liaison between the team and stakeholders.
 
-1. **User Registers:**
-    - User submits registration details.
-2. **User Service Publishes Message:**
-    - User Service validates data and publishes a message to the User Registration Queue.
-3. **Email Notification Service Consumes Message:**
-    - Email Notification Service retrieves the message from the queue.
-4. **Send Confirmation Email:**
-    - Email Notification Service sends a confirmation email to the user.
+5. **Developers**:
+   - Implements features and fixes bugs.
+   - Conducts code reviews.
+   - Collaborates with QA and BA for successful delivery of features.
 
-```
-User Registers --> User Service Publishes Message --> Message Broker (User Registration Queue) --> Email Notification Service Consumes Message --> Send Confirmation Email
-```
-
-##### Asset Management Queue
-
-**Detailed Steps:**
-
-1. **Add/Update Asset Info:**
-    - Community staff add or update asset information.
-2. **Asset Service Publishes Message:**
-    - Asset Service validates data and publishes a message to the Asset Management Queue.
-3. **Reporting Service Consumes Message:**
-    - Reporting Service retrieves the message from the queue.
-4. **Update Reports:**
-    - Reporting Service updates asset-related reports.
-
-```
-Add/Update Asset Info --> Asset Service Publishes Message --> Message Broker (Asset Management Queue) --> Reporting Service Consumes Message --> Update Reports
-```
-
-##### Visitor Management Queue
-
-**Detailed Steps:**
-
-1. **Register Visitor:**
-    - Visitor provides details at the entrance.
-2. **Visitor Service Publishes Message:**
-    - Visitor Service validates data and publishes a message to the Visitor Management Queue.
-3. **Security Notification Service Consumes Message:**
-    - Security Notification Service retrieves the message from the queue.
-4. **Notify Security Staff:**
-    - Security Notification Service sends notifications to security staff about visitor arrivals.
-
-```
-Register Visitor --> Visitor Service Publishes Message --> Message Broker (Visitor Management Queue) --> Security Notification Service Consumes Message --> Notify Security Staff
-```
-
-##### Repair Request Queue
-
-**Detailed Steps:**
-
-1. **Submit Repair Request:**
-    - Resident submits a repair request.
-2. **Repair Service Publishes Message:**
-    - Repair Service validates data and publishes a message to the Repair Request Queue.
-3. **Maintenance Staff Notification Service Consumes Message:**
-    - Maintenance Staff Notification Service retrieves the message from the queue.
-4. **Notify Maintenance Staff:**
-    - Maintenance Staff Notification Service notifies maintenance staff about the repair request.
-
-```
-Submit Repair Request --> Repair Service Publishes Message --> Message Broker (Repair Request Queue) --> Maintenance Staff Notification Service Consumes Message --> Notify Maintenance Staff
-```
-
-##### Complaint Management Queue
-
-**Detailed Steps:**
-
-1. **Submit Complaint:**
-    - Resident files a complaint.
-2. **Complaint Service Publishes Message:**
-    - Complaint Service validates data and publishes a message to the Complaint Management Queue.
-3. **Customer Service Notification Service Consumes Message:**
-    - Customer Service Notification Service retrieves the message from the queue.
-4. **Notify Customer Service:**
-    - Customer Service Notification Service notifies customer service staff about the new complaint.
-
-```
-Submit Complaint --> Complaint Service Publishes Message --> Message Broker (Complaint Management Queue) --> Customer Service Notification Service Consumes Message --> Notify Customer Service
-```
-
-##### Reporting Queue
-
-**Detailed Steps:**
-
-1. **Data Changes:**
-    - Various services trigger data changes (User, Asset, Visitor, etc.).
-2. **Service Publishes Message:**
-    - Relevant service publishes a message to the Reporting Queue.
-3. **Reporting Service Consumes Message:**
-    - Reporting Service retrieves the message from the queue.
-4. **Update Reports:**
-    - Reporting Service updates reports based on the new data.
-
-```
-Data Changes --> Service Publishes Message --> Message Broker (Reporting Queue) --> Reporting Service Consumes Message --> Update Reports
-```
-
-##### Notification Queue
-
-**Detailed Steps:**
-
-1. **Event Triggers:**
-    - Various events (User registration, asset update, repair request, etc.) occur.
-2. **Service Publishes Message:**
-    - Relevant service publishes a message to the Notification Queue.
-3. **Notification Service Consumes Message:**
-    - Notification Service retrieves the message from the queue.
-4. **Send Notification:**
-    - Notification Service sends notifications to the intended recipients.
-
-```
-Event Triggers --> Service Publishes Message --> Message Broker (Notification Queue) --> Notification Service Consumes Message --> Send Notification
-```
-
-### Benefits of Using Message Queues
-
-1. **Decoupling:** Services can operate independently without needing to wait for each other’s processes.
-2. **Scalability:** The system can handle increased load by scaling the message queue infrastructure.
-3. **Reliability:** Ensures messages are delivered even if some services are temporarily down.
-4. **Flexibility:** New services can be added to consume messages from existing queues without impacting the producers.
-5. **Resilience:** Provides fault tolerance, as messages are persisted in the queue until successfully processed.
+This structure ensures a balanced distribution of responsibilities, enabling the team to work efficiently and deliver high-quality software within Agile frameworks.
