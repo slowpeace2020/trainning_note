@@ -1,11 +1,31 @@
 ## 1. Introduce your self and the previous project in 2 to 3 minutes.
-Hello, my name is XX, and I have over eight years of experience as a Java Full Stack Developer. Throughout my career, I've gained extensive experience in software analysis, design, development, implementation, and testing of object-oriented applications and web-based enterprise applications using Java and J2EE technologies.
 
-One of my recent projects was at CBRE Group, Inc., where I developed a comprehensive Internet+ professional community property management system. This platform aimed to improve work efficiency for community staff and enhance customer service quality. It included modules for community asset management, visitor management, online repair reporting, and complaint management. I utilized Spring Boot and AngularJS for seamless integration and efficient data management, implementing secure access control with Spring Security and JWT. The project also involved using RESTful web services for real-time data updates, EasyPOI for report import/export, and various AWS services for deployment and integration. Through standardized API responses and enhanced logging with Logback and ELK, I improved system reliability by 25% and troubleshooting efficiency by 35%.
+**Greetings and Name:**
 
-Additionally, at Massachusetts General Hospital, I worked on the QuickMed online medical registration system, which provides patients with a seamless platform to check and book appointments online. I leveraged SpringBoot and Spring Cloud for the backend infrastructure, and React for the frontend, ensuring a robust and user-friendly experience. By implementing caching with Spring Data Redis and inter-service communication with OpenFeign, we significantly enhanced the system's performance and scalability.
+Hello everyone! My name is Andy Gong.
 
-These experiences have allowed me to develop strong technical skills in various programming languages, frameworks, and tools, and I have consistently contributed to the success and efficiency of the projects I've been involved in.
+**Conclusion of Career:**
+
+I am a Senior Software Engineer with over eight years of experience specializing in full-stack development, primarily focusing on back-end technologies. I have a strong foundation in Java and J2EE, and have worked extensively with frameworks such as Spring, Spring MVC, Spring Boot, and Spring Cloud. My technical stack also includes advanced proficiency in database management with MySQL, PostgreSQL, and MongoDB, and I am well-versed in cloud environments like AWS and GCP.
+
+**Details on Techniques Used in Projects:**
+
+Throughout my career, I have led and contributed to several key projects. For example, at CBRE Group, Inc., I developed a property management platform that enhanced work efficiency and customer service quality through modules like asset management and visitor management. Here, I utilized Spring Boot for backend services, AngularJS for frontend integration, and AWS for deployment and maintenance, which significantly improved system reliability and efficiency.
+
+At Massachusetts General Hospital, I spearheaded the development of the QuickMed online medical registration system, which improved patient experience by facilitating online appointment bookings. This project employed technologies such as SpringBoot, Hibernate, and React, and it utilized Redis and RocketMQ to manage data effectively.
+
+**Reason for Seeking a New Position (Optional):**
+
+My decision to explore new opportunities is driven by the successful completion of my recent project at CBRE, and a desire to apply my skills in a new environment, facing fresh challenges and making a significant impact.
+
+**Your Expectations:**
+
+I am looking for a role where I can contribute to challenging projects that utilize my skills in backend development and cloud technologies, and where I can continue to grow professionally, especially in areas like microservices architecture and distributed systems.
+
+**Ending Sentence:**
+
+Thank you for considering my application. I am eager to bring my technical skills and passion for software development to your team.
+
 
 ## 2. Describe a specific function/feature you did in last project. As detailed as possible.
 
