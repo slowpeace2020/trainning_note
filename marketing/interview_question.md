@@ -2,7 +2,7 @@
 
 **Greetings and Name:**
 
-Hello everyone! My name is Andy Gong.
+Hello everyone! My name is XX.
 
 **Conclusion of Career:**
 
