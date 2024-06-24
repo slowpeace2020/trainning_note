@@ -29,56 +29,180 @@ Thank you for considering my application. I am eager to bring my technical skill
 
 ## 2. Describe a specific function/feature you did in last project. As detailed as possible.
 
-In my most recent project at CBRE Group, Inc., I developed a comprehensive property management platform. One of the key features I implemented was the "Online Repair Reporting" module. Here’s a detailed breakdown of how I developed this feature:
 
-### Requirement Gathering
-I started by conducting interviews and workshops with stakeholders, including community staff and residents, to understand their needs. The main requirement was a user-friendly interface for residents to report repair issues and for staff to manage and track these reports.
+Sure, here's a detailed 3-4 minute introduction to the property management platform project you worked on at CBRE Group, Inc.
 
-### Design and Architecture
-Based on the requirements, I designed the module using a microservices architecture to ensure scalability and maintainability. The backend was built using Spring Boot, and the frontend was developed with AngularJS.
+---
 
-### Database Design
-I created a PostgreSQL database schema for the repair reporting module. The schema included tables for storing repair requests, user information, repair status, and logs. Key tables included:
-- **repair_requests**: Stores details of each repair request (ID, user ID, description, status, timestamps).
-- **users**: Stores user details (user ID, name, contact info).
-- **repair_status**: Stores status updates for each repair request (request ID, status, timestamps).
+**Project 1 Introduction:**
 
-### Backend Development
-1. **API Development**: I developed RESTful APIs using Spring Boot to handle CRUD operations for repair requests. The endpoints included:
-    - `POST /api/repairs`: Create a new repair request.
-    - `GET /api/repairs/{id}`: Retrieve details of a specific repair request.
-    - `PUT /api/repairs/{id}`: Update the status or details of a repair request.
-    - `DELETE /api/repairs/{id}`: Delete a repair request.
+I worked as a Senior Software Engineer at CBRE Group, Inc., where I was a key contributor to the development of a comprehensive property management platform. This platform was designed as an Internet+ professional community property management system aimed at improving work efficiency for community staff and enhancing customer service quality. The platform encompasses various functional modules like community asset management, community management, visitor management, online repair reporting, and complaint management. Our goal was to create a high-quality service platform that better serves community residents.
 
-2. **Service Layer**: Implemented the service layer using Spring services to handle business logic. For example, when a new repair request was created, the service would validate the input, save the request to the database, and send a notification to the maintenance staff.
+**Your Main Responsibilities:**
 
-3. **Data Access Layer**: Used Spring Data JPA and Hibernate for database interactions. This allowed for easy CRUD operations and complex queries with minimal boilerplate code.
+**a. Tech Stacks Used:**
 
-4. **Security**: Implemented authentication and authorization using Spring Security and JWT. Only authenticated users could submit repair requests, and only authorized staff could update the status.
+- **Frontend:** AngularJS, HTML, CSS
+- **Backend:** Spring Boot, Spring Security, JWT, Redis
+- **Database:** PostgreSQL
+- **Message Queues:** Kafka for handling real-time data updates and notifications
+- **AWS Services:** EC2, S3, Lambda, RDS, CloudWatch for deployment and integration
+- **Security:** Implemented secure login and logout mechanisms, integrating multi-factor authentication for enhanced security.
+- **Testing:** Conducted unit testing with JUnit and Mockito
+- **DevOps:** Managed CI/CD pipelines with Jenkins and Docker, including creating Docker images and utilizing Kubernetes for container orchestration.
 
-### Frontend Development
-1. **User Interface**: Developed a responsive UI using AngularJS. The interface included forms for submitting repair requests, a dashboard for staff to view and update requests, and status tracking for users.
+**b. General Overview of the Project Formation:**
 
-2. **State Management**: Used Angular services to manage the state and handle API calls. This ensured a smooth user experience with real-time updates and error handling.
+The project was structured around microservices architecture, enabling independent development, scaling, and maintenance of each module. This architecture facilitated seamless integration across different functional areas of the platform.
 
-3. **Validation and Feedback**: Implemented form validation to ensure users provided necessary information. Also, provided real-time feedback and status updates to users.
+**c. Features and Functionalities Created by You:**
 
-### Logging and Monitoring
-1. **Logging**: Used Logback for logging application events and errors. Configured different log levels to capture essential information without cluttering the logs.
+I developed the core modules of community, building, unit, and house management, where I implemented comprehensive CRUD operations using Spring Data JPA and Hibernate. Additionally, I enhanced system reliability by standardizing API responses, which facilitated error handling and data consistency, improving system reliability by 25%. My work also included setting up precise log levels and formats using Logback and integrating logging with monitoring tools like ELK and AWS CloudWatch for real-time tracking.
 
-2. **Monitoring**: Integrated the system with ELK (Elasticsearch, Logstash, Kibana) and AWS CloudWatch for real-time monitoring and alerting. This helped in proactively identifying and resolving issues.
+**d. Advanced Functionalities and Attractive Elements:**
 
-### Testing
-1. **Unit Testing**: Wrote unit tests using JUnit and Mockito to test the service and data access layers.
-2. **Integration Testing**: Conducted integration tests to ensure the APIs worked correctly with the database.
-3. **User Acceptance Testing**: Conducted UAT sessions with stakeholders to validate that the feature met their needs and expectations.
+- **Real-time Data Updates and Notifications:** Utilizing RESTful web services, I implemented real-time data updates across the platform, enhancing the responsiveness of the system. This feature is particularly critical in the visitor management and online repair reporting modules, where timely updates are essential for efficient operations.
 
-### Deployment
-1. **CI/CD Pipeline**: Configured Jenkins for continuous integration and deployment. Automated the build, testing, and deployment processes to ensure smooth and error-free releases.
-2. **Docker and Kubernetes**: Containerized the application using Docker and deployed it on a Kubernetes cluster for scalability and reliability.
+- **Enhanced Security Measures:** I developed robust security protocols using Spring Security and JWT, along with Redis for maintaining session states securely. This included setting up HTTPS and OAuth2 for secure communications between the client and the server, significantly enhancing the overall security posture of the platform.
 
-### Results
-The Online Repair Reporting module significantly improved the efficiency of handling repair requests. Residents could easily report issues, and staff could manage and track requests in real-time. The standardized API responses and improved logging also enhanced system reliability and troubleshooting efficiency by 35%.
+- **Scalable Cloud Infrastructure:** By leveraging various AWS services such as EC2 for computing, S3 for storage, and RDS for managed database services, I ensured that the infrastructure could scale dynamically based on demand. This scalability was crucial for accommodating the varying loads of property management activities.
+
+- **Efficient Data Management Capabilities:** Through the development of sophisticated CRUD operations within the community, building, unit, and house modules, I significantly enhanced the platform's data management capabilities. These operations were implemented using Spring Data JPA and Hibernate, which allowed for efficient and flexible data handling.
+
+- **System Observability and Monitoring:** Integrated comprehensive monitoring tools such as ELK stack and AWS CloudWatch into the system. This integration allowed for detailed observability and proactive monitoring of the system's health, leading to quicker resolution of potential issues and minimal downtime.
+
+**3. Version Control System:**
+
+We used Git for version control, ensuring that all code changes were tracked and managed efficiently across the development team.
+
+**4. Team and Agile Methodology:**
+
+I worked within a team of ten developers and engineers. As part of an Agile Scrum team, my role was to lead backend development and ensure that all integrations met our high standards for security and efficiency. We adhered to Agile methodologies, participating in daily stand-ups, sprint planning, and review meetings to ensure that project milestones were met on schedule.
+
+
+**Project 2 Introduction:**
+
+At Massachusetts General Hospital (Mass General), I was involved in developing the QuickMed online medical registration system, a project aimed at enhancing the convenience and efficiency of healthcare services. QuickMed is designed to enable patients to check for available appointments and book them online, thereby reducing the need for in-person visits and streamlining the process of medical consultations. This system was particularly focused on improving patient experience and operational efficiency within Mass General's healthcare ecosystem.
+
+**Your Main Responsibilities:**
+
+**a. Tech Stacks Used:**
+
+- **Frontend:** React.js, Redux, Material-UI, Next.js
+- **Backend:** SpringBoot, Hibernate, Lombok, Swagger2, ELK, Spring Data Redis, OpenFeign, XXL-JOB
+- **Database:** MySQL, Redis
+- **Message Queues:** RocketMQ for event-driven communication and data streaming
+- **AWS Services:** AWS S3 for storage solutions
+- **Security:** Implemented advanced security features to protect patient data and ensure compliance with healthcare regulations.
+- **Testing:** Utilized JMeter for performance testing and functional testing of RESTful APIs, and Mockito for unit testing.
+- **DevOps:** Configured and managed CI/CD pipelines using Jenkins for continuous integration and deployment processes.
+- **Frontend:** Utilized React for building a responsive and dynamic Single Page Application (SPA), enhancing user interaction and data synchronization with the server.
+
+**b. General Overview of the Project Formation:**
+
+The QuickMed system was developed using a microservices architecture to ensure scalability and independent management of each service component. This approach allowed for efficient integration of various hospital systems and streamlined updates without significant downtimes.
+
+**c. Features and Functionalities Created by You:**
+
+- **Backend Infrastructure:** Leveraged SpringBoot and Spring Cloud technologies to develop robust backend services tailored to the specific needs of Mass General. Integrated Lombok to reduce boilerplate code and enhance maintainability.
+- **API Documentation and Collaboration:** Implemented Swagger2 to generate comprehensive API documentation, facilitating easier collaboration and alignment with frontend developers and other stakeholders.
+- **Performance Enhancement:** Achieved a significant reduction in system downtime through the implementation of the ELK stack for proactive monitoring and issue detection, leading to a marked improvement in system reliability.
+
+**d. Advanced Functionalities and Attractive Elements:**
+
+- **Real-Time Patient Data Handling:** Utilized Spring Data Redis to implement caching mechanisms that significantly reduced the load on the database, enabling faster access to frequently requested data like appointment slots and doctor schedules.
+- **Inter-Service Communication:** Employed OpenFeign to facilitate seamless HTTP communication between different microservices, enhancing the integration and scalability of system components.
+- **Task Scheduling and Management:** Configured XXL-JOB to manage periodic tasks such as data synchronization and system maintenance, ensuring reliability and timely updates within the QuickMed system.
+
+**3. Version Control System:**
+
+Git was employed as the version control system, ensuring effective collaboration and version management of codebases across the development team.
+
+**4. Team and Agile Methodology:**
+
+I worked in a diverse team of developers, system architects, and project managers. We followed Agile Scrum methodologies, engaging in regular sprints, stand-up meetings, and retrospectives to ensure continuous improvement and alignment with project goals. My role involved leading the backend development and ensuring seamless integration with other system components.
+
+
+**Project 3 Introduction:**
+
+While working at Yougo in Beijing, I was integral to the development of the "Excellent Selection" e-commerce system. This high-performance platform was designed to manage high traffic and concurrency, typical of large-scale e-commerce operations. Our goal was to create a robust system capable of supporting a wide range of e-commerce activities including product management, transactions, marketing, reviews, payment processing, user permissions, and instant messaging.
+
+**Your Main Responsibilities:**
+
+**a. Tech Stacks Used:**
+
+- **Frontend:** Vue.js, ElementUI, Ajax
+- **Backend:** SpringBoot, SpringCloud Alibaba (including components like Nacos, Seata, and Sentinel)
+- **Database:** MySQL, MongoDB
+- **Message Queues:** RocketMQ for robust event-driven communication and data streaming
+- **DevOps and Monitoring:** Nginx, JMeter, Alibaba Cloud Object Storage Service (OSS), Docker for containerization
+
+**b. General Overview of the Project Formation:**
+
+The system was structured around a microservices architecture using Spring Cloud Alibaba, allowing for the modularization of each component. This structure supported the system's high scalability requirements and enabled independent deployment and scaling of services.
+
+**c. Features and Functionalities Created by You:**
+
+- **Microservices Architecture:** I implemented a microservices architecture with SpringBoot and SpringCloud Alibaba, enabling the system to efficiently manage separate modules for different functionalities. This architecture facilitated easier updates and maintenance without disrupting the entire platform.
+- **Fault Tolerance:** Integrated Sentinel to ensure fault tolerance and resilience in our distributed environment, maintaining system stability under high traffic and during potential service disruptions.
+- **Data Handling and Transaction Management:** Utilized Seata for distributed transaction management, ensuring data consistency and integrity across various services. This was crucial for transaction-heavy operations like payments and order processing.
+
+**d. Advanced Functionalities and Attractive Elements:**
+
+- **Real-Time Search and Analytics:** Leveraged Elasticsearch for its powerful real-time search and analytics capabilities, which allowed users to swiftly find products and access reviews and other content, enhancing the user experience significantly.
+- **Data Caching and Session Management:** Employed Redis as an in-memory data store for caching frequently accessed data such as product listings and user sessions, which greatly improved the responsiveness and efficiency of the system.
+- **Event-Driven Communication:** Utilized RocketMQ for event-driven communication between microservices, facilitating seamless integration and real-time data synchronization across the platform.
+
+**3. Version Control System:**
+
+For version control, we used Git to manage our codebase effectively, ensuring proper tracking of changes and collaboration across the development team.
+
+**4. Team and Agile Methodology:**
+
+I was part of a dynamic development team consisting of approximately 15 members, including software engineers, product managers, and QA specialists. We adhered to Agile Scrum methodologies, conducting daily stand-ups, sprint planning, and reviews to ensure that development was aligned with business goals and timelines. My role involved leading several key aspects of backend development and ensuring robust integration with front-end systems and third-party services.
+
+
+Here's a detailed 3-4 minute introduction to your project at YunDa, specifically the development of the Freight Management System:
+
+---
+
+**Project 4 Introduction:**
+
+At YunDa in Beijing, I was heavily involved in developing the Freight Management System, a comprehensive platform designed to provide enhanced management services for international logistics agents. This system was tailored to handle the complexities of freight operations, offering functionalities such as role management, statistical reports, basic information management, waybill management, financial management, and system management. Our goal was to facilitate efficient and effective logistics operations through a robust technological solution.
+
+**Your Main Responsibilities:**
+
+**a. Tech Stacks Used:**
+
+- **Frontend:** HTML, JSP, Servlets
+- **Backend:** Spring, Spring MVC, Hibernate, Shiro, Maven
+- **Database:** Oracle Database
+- **Other Tools:** Tomcat as the web server and deployment container
+
+**b. General Overview of the Project Formation:**
+
+The system was developed using a layered architecture, incorporating MVC design patterns to separate the business logic from the user interface, which allowed for greater modularity and easier maintenance.
+
+**c. Features and Functionalities Created by You:**
+
+- **Role and Access Management:** I implemented comprehensive role and access management capabilities using Shiro, which helped in defining and enforcing security policies that are crucial for the logistics sector.
+- **Statistical Reporting:** Developed advanced statistical reporting tools that enabled logistics managers to track and analyze operations effectively, improving decision-making processes.
+- **Waybill Management System:** Designed and implemented a robust waybill management system that streamlined the processing and tracking of shipments, enhancing the operational efficiency of the logistics services.
+
+**d. Advanced Functionalities and Attractive Elements:**
+
+- **RESTful Service Integration:** Utilized RESTful web services to facilitate communication between the front-end and back-end systems, ensuring seamless data exchange and operations.
+- **Database Interactions:** Developed complex SQL statements and procedures to fetch and manipulate data from the Oracle database, ensuring high performance and data integrity.
+- **Security Enhancements:** Configured Spring Security within the Spring framework to provide comprehensive security and authentication mechanisms, safeguarding sensitive logistical data.
+
+**3. Version Control System:**
+
+Git was used as the version control system to manage and track changes in the project, facilitating collaboration among the development team.
+
+**4. Team and Agile Methodology:**
+
+I worked within a team of 12 developers, adopting Agile methodologies to ensure rapid and adaptive responses to changes. My role was to lead the back-end development, focusing on integrating and implementing business logic with high efficiency. We engaged in regular Agile practices such as sprints, daily stand-ups, and retrospective meetings to continuously improve our processes and output.
+
 
 ## 3. How did you do agile in your team? Typical Day?
 https://aws.amazon.com/what-is/scrum/?nc1=h_ls
